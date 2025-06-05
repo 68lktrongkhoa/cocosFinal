@@ -1,6 +1,6 @@
 {
   "ver": "2.3.3",
-  "uuid": "50731b2c-84c0-4202-832b-517d11e4ca5e",
+  "uuid": "f6e72072-4efe-41ca-b723-369eb6490178",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -9,10 +9,10 @@
   "packable": true,
   "platformSettings": {},
   "subMetas": {
-    "BorderFrame_Square02_BgGlow": {
+    "Button_Circle_01_White_Gradient": {
       "ver": "1.0.4",
-      "uuid": "9c9c3af7-ba00-4a75-a76c-fe8793c96d18",
-      "rawTextureUuid": "50731b2c-84c0-4202-832b-517d11e4ca5e",
+      "uuid": "d4cdb5d3-7f16-4ccb-9290-01ea63ff1031",
+      "rawTextureUuid": "f6e72072-4efe-41ca-b723-369eb6490178",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -20,10 +20,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 125,
-      "height": 125,
-      "rawWidth": 125,
-      "rawHeight": 125,
+      "width": 134,
+      "height": 91,
+      "rawWidth": 134,
+      "rawHeight": 91,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

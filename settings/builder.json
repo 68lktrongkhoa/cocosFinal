@@ -1,0 +1,50 @@
+{
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "host": "",
+    "pathPattern": "",
+    "recordPath": "",
+    "scheme": "https",
+    "skipRecord": false
+  },
+  "appBundle": false,
+  "baidugame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "testappid",
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "encryptJs": true,
+  "excludeScenes": [],
+  "fb-instant-games": {},
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.cocosFinal",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait",
+    "zip": false
+  },
+  "startScene": "e5e6d788-d9f1-4572-9b60-2999a080f92d",
+  "title": "cocosFinal",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "orientation": "portrait",
+    "separate_engine": false,
+    "subContext": ""
+  },
+  "xxteaKey": "61ec82bb-c51f-46",
+  "zipCompressJs": true
+}

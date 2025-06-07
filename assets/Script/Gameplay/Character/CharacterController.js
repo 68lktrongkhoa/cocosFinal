@@ -1,41 +1,43 @@
-// Learn cc.Class:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+import IdleState from './States/IdleState.js';
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        yPositions: {
+            default: [],
+            type: [cc.Float]
+        },
+        moveDuration: {
+            default: 0.2,
+            type: cc.Float
+        },
     },
 
-    // LIFE-CYCLE CALLBACKS:
+    onLoad() {
+        if (this.yPositions.length < 3) {
+            this.enabled = false; 
+            return;
+        }
 
-    // onLoad () {},
-
-    start () {
-
+        this.currentPositionIndex = 1;
+        this.node.y = this.yPositions[this.currentPositionIndex];
+        
+        this.state = null;
+        this.setState(new IdleState(this)); 
     },
 
-    // update (dt) {},
+    handleInput(command) {
+        if (this.state) {
+            this.state.handleInput(command);
+        }
+    },
+
+    setState(newState) {
+        if (this.state) {
+            this.state.exit();
+        }
+        this.state = newState;
+        this.state.enter();
+    },
 });

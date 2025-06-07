@@ -176,7 +176,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "5b1b6080-c4be-4098-af5b-15fbddd7baf9"
     },
     "fileId": "18+VU7tAhNS4uftTHkQ7I5",
     "sync": false
@@ -209,7 +209,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 20.64,
+      "width": 30,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -261,7 +261,7 @@
     "_lineHeight": 40,
     "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "5113c9a3-ca3c-4fb8-9a88-48ea001f83ae"
+      "__uuid__": "411dce67-53a2-445f-be4c-7dfc3321856d"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -279,7 +279,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "5b1b6080-c4be-4098-af5b-15fbddd7baf9"
     },
     "fileId": "ceR0DvS7JGsa/wI05dZRg5",
     "sync": false
@@ -312,7 +312,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 101.44,
+      "width": 91.11,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -322,7 +322,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": -18,
       "y": 0,
       "z": 0
     },
@@ -364,7 +364,7 @@
     "_lineHeight": 40,
     "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "5113c9a3-ca3c-4fb8-9a88-48ea001f83ae"
+      "__uuid__": "411dce67-53a2-445f-be4c-7dfc3321856d"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -382,7 +382,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "5b1b6080-c4be-4098-af5b-15fbddd7baf9"
     },
     "fileId": "74ANCVxvNFf5LJcaQ7J9Z8",
     "sync": false
@@ -415,7 +415,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.12,
+      "width": 80,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -467,7 +467,7 @@
     "_lineHeight": 40,
     "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "5113c9a3-ca3c-4fb8-9a88-48ea001f83ae"
+      "__uuid__": "411dce67-53a2-445f-be4c-7dfc3321856d"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -485,7 +485,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "5b1b6080-c4be-4098-af5b-15fbddd7baf9"
     },
     "fileId": "b7PzXARTdPJ7VAWJUkulzr",
     "sync": false
@@ -496,7 +496,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "5b1b6080-c4be-4098-af5b-15fbddd7baf9"
     },
     "fileId": "66WCWGQyRDxpSLwz56q0kH",
     "sync": false

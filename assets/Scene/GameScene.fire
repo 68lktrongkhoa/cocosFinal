@@ -162,7 +162,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 247.68326548234947
+      "z": 248.54929088613392
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -589,9 +589,9 @@
     },
     "_enabled": true,
     "yPositions": [
-      -300,
+      0,
       -150,
-      0
+      -300
     ],
     "moveDuration": 0.2,
     "_id": "e4gP41iWpFoqSOnlZ9w4iR"

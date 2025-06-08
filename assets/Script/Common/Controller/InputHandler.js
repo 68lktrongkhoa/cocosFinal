@@ -5,6 +5,11 @@ cc.Class({
         characterNode: {
             default: null,
             type: cc.Node
+        },
+
+        buttonHandler: {
+            default: null,
+            type: require('ButtonHandler')
         }
     },
 
@@ -24,19 +29,25 @@ cc.Class({
 
     onKeyDown(event) {
         let command = null;
+        let buttonType = null;
         switch(event.keyCode) {
             case cc.macro.KEY.up:
             case cc.macro.KEY.w:
                 command = "MOVE_UP";
+                buttonType = 'UP';
                 break;
             case cc.macro.KEY.down:
             case cc.macro.KEY.s:
                 command = "MOVE_DOWN";
+                buttonType = 'DOWN';
                 break;
         }
 
         if (command) {
             this.characterController.handleInput(command);
+            if (buttonType) {
+                this.buttonHandler.playButtonEffect(buttonType);
+            }
         }
     },
 });

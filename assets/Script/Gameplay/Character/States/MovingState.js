@@ -1,41 +1,42 @@
-// Learn cc.Class:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+import State from '../../../Common/Patterns/State.js';
+import IdleState from './IdleState.js';
 
-cc.Class({
-    extends: cc.Component,
+export default class MovingState extends State {
 
-    properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
-    },
+    constructor(controller, direction) {
+        super(controller);
+        this.moveDirection = direction;
+    }
 
-    // LIFE-CYCLE CALLBACKS:
+    enter() {
+        const currentIndex = this.controller.currentPositionIndex;
+        const maxIndex = this.controller.yPositions.length - 1;
+        let targetIndex = currentIndex;
 
-    // onLoad () {},
+        if (this.moveDirection === 'MOVE_UP') {
+            targetIndex = currentIndex - 1;
+        } else if (this.moveDirection === 'MOVE_DOWN') {
+            targetIndex = currentIndex + 1;
+        }
 
-    start () {
+        targetIndex = Math.max(0, Math.min(targetIndex, maxIndex));
 
-    },
+        if (targetIndex === currentIndex) {
+            this.controller.setState(new IdleState(this.controller));
+            return;
+        }
 
-    // update (dt) {},
-});
+        this.controller.currentPositionIndex = targetIndex;
+        const targetY = this.controller.yPositions[targetIndex];
+
+        cc.tween(this.controller.node)
+            .to(this.controller.moveDuration, { position: cc.v3(this.controller.node.x, targetY, 0) }, { easing: 'quadOut' })
+            .call(() => {
+                this.controller.setState(new IdleState(this.controller));
+            })
+            .start();
+    }
+
+    handleInput(command) {
+    }
+}

@@ -8,9 +8,10 @@ const GameConfig = {
     },
 
     SOUND: {
-        BGM_VOLUME: 0.5,
-        SFX_VOLUME: 1.0,
-        ENABLED: true
+        MUSIC_VOLUME: 0.5,
+        MUSIC_ENABLED: true,
+        SOUND_VOLUME: 1.0,
+        SOUND_ENABLED: true,
     },
 
     PLAYER_DEFAULT: {

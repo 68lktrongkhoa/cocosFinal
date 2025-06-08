@@ -1,5 +1,6 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
+const GameConfig = require("GameConfig");
 cc.Class({
     extends: cc.Component,
 
@@ -20,7 +21,12 @@ cc.Class({
     },
 
     onLoad () {
-        this.playMusic();
+        isPlayingSound = GameConfig.SOUND.SOUND_ENABLED;
+        if(GameConfig.SOUND.MUSIC_ENABLED) {
+            this.playMusic();
+        }
+        this.setSoundVolume(GameConfig.SOUND.SOUND_VOLUME);
+        this.setMusicVolume(GameConfig.SOUND.MUSIC_VOLUME);
         this.registerEvents();
     },
 

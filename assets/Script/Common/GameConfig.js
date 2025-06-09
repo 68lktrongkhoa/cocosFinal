@@ -7,18 +7,16 @@ const GameConfig = {
         GAME: 'GameScene',
     },
 
-    SOUND: {
-        BGM_VOLUME: 0.5,
-        SFX_VOLUME: 1.0,
-        ENABLED: true
-    },
-
     PLAYER_DEFAULT: {
         DAMAGE: 10,
     },
 
     CASTLE_DEFAULT: {
         HP: 3,
+    },
+
+    LOCAL_STORAGE: {
+        SOUND_DATA: 'soundData',
     },
 };
 

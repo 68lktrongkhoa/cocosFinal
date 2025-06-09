@@ -983,7 +983,9 @@
       "__id__": 22
     },
     "_enabled": true,
-    "progressBar": null,
+    "progressBar": {
+      "__id__": 14
+    },
     "_id": "19PJZNxUtBx4LyjGRMh3pQ"
   }
 ]

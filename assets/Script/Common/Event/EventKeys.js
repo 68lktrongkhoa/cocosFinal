@@ -2,8 +2,8 @@ module.exports = {
     POPUP: {
         SHOW_SETTING: 'showSettingPopup',
         HIDE_SETTING: 'hideSettingPopup',
-        SHOW_RANK: 'showRankPopup',
-        HIDE_RANK: 'hideRankPopup',
+        SHOW_HIGHSCORE: 'showHighScorePopup',
+        HIDE_HIGHSCORE: 'hideHighScorePopup',
     },
 
     SOUND:{

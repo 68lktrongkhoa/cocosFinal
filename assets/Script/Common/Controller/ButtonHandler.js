@@ -71,7 +71,7 @@ cc.Class({
         const targetNode = this._getTargetNode(buttonType);
         if (!targetNode) return;
 
-        cc.Tween.stopAllByTarget(targetNode);
+        targetNode.stopAllActions();
         const originalScale = this.originalScales.get(targetNode) || 1;
         
         cc.tween(targetNode)
@@ -83,7 +83,7 @@ cc.Class({
         const targetNode = this._getTargetNode(buttonType);
         if (!targetNode) return;
 
-        cc.Tween.stopAllByTarget(targetNode);
+        targetNode.stopAllActions();
         const originalScale = this.originalScales.get(targetNode) || 1;
 
         cc.tween(targetNode)

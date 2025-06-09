@@ -12,10 +12,15 @@ const MainController = cc.Class({
         this.init();
     },
 
+    onDestroy() {
+        cc.log('MainController destroyed');
+    },
+
     init() {
         cc.log('\n\nMainController initialized');
         this._initSingleton();
         this._initFSM();
+        this.persistRootNodeList = [];
     },
 
     _initSingleton() {
@@ -93,14 +98,24 @@ const MainController = cc.Class({
             MainController.instance = null;
         }
 
+        for(let i = 0; i < this.persistRootNodeList.length; i++) {
+            const node = this.persistRootNodeList[i];
+            if (node && cc.game.isPersistRootNode(node)) {
+                cc.game.removePersistRootNode(node);
+                cc.log('Removed persist root node:', node.name);
+            }
+        }
+
+        this.persistRootNodeList = null;
         cc.game.removePersistRootNode(this.node);
         cc.log('Is persist root node ', cc.game.isPersistRootNode(this.node));
 
         cc.director.loadScene(GameConfig.PORTAL);
     },
 
-    onDestroy() {
-        cc.log('MainController destroyed');
+    addPersistRootNode(node){
+        cc.game.addPersistRootNode(node);
+        this.persistRootNodeList.push(node);
     }
 });
 

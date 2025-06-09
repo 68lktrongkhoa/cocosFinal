@@ -1,6 +1,7 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
 const GameConfig = require("GameConfig");
+const MainController = require('MainController');
 cc.Class({
     extends: cc.Component,
 
@@ -17,7 +18,7 @@ cc.Class({
     },
 
     onLoad () {
-        cc.game.addPersistRootNode(this.node);
+        MainController.instance.addPersistRootNode(this.node);
         this.loadSoundData();
         if (this.musicEnabled) {
             this.playMusic();

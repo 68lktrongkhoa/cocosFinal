@@ -19,47 +19,83 @@ cc.Class({
         if (this.buttonHandlerNode) {
             this.buttonHandlerComponent = this.buttonHandlerNode.getComponent(ButtonHandler);
         } else {
-            cc.warn("Note have 'Button Handler Node' of InputHandler!");
+            cc.warn("Not have buttonHandlerNode for InputHandler!");
         }
+        this.keysDown = {};
+        this.isFireButtonPressed = false;
     },
 
     onEnable() {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+
+        if (this.buttonHandlerNode) {
+            this.buttonHandlerNode.on('ui-command', this.onUICommand, this);
+        }
     },
 
     onDisable() {
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+
+        if (this.buttonHandlerNode) {
+            this.buttonHandlerNode.off('ui-command', this.onUICommand, this);
+        }
     },
 
-    processCommand(command, isPressed = true) {
-        if (!this.characterController) return;
-        this.characterController.handleInput(command, isPressed);
+    onUICommand(eventData) {
+        this.processCommand(eventData.command, eventData.isPressed);
+    },
+
+    onKeyDown(event) {
+        const keyCode = event.keyCode;
+        if (this.keysDown[keyCode]) return;
+        this.keysDown[keyCode] = true;
+
+        this._processKeyboard(keyCode, true);
+    },
+    
+    onKeyUp(event) {
+        const keyCode = event.keyCode;
+        this.keysDown[keyCode] = false; 
+
+        this._processKeyboard(keyCode, false);
+    },
+
+    processCommand(command, isPressed) {
+        if (this.characterController) {
+            this.characterController.handleInput(command, isPressed);
+        }
 
         if (this.buttonHandlerComponent) {
             let buttonType = null;
             if (command === "MOVE_UP") buttonType = 'UP';
             if (command === "MOVE_DOWN") buttonType = 'DOWN';
-            if (command === "FIRE" && isPressed) buttonType = 'FIRE'; 
+            if (command === "FIRE") buttonType = 'FIRE';
 
             if (buttonType) {
-                this.buttonHandlerComponent.playButtonEffect(buttonType);
+                if (isPressed) {
+                    this.buttonHandlerComponent.playButtonPressEffect(buttonType);
+                } else {
+                    if (buttonType === 'FIRE') {
+                        this.buttonHandlerComponent.playButtonReleaseEffect(buttonType);
+                    }
+                }
             }
         }
     },
 
-    onKeyDown(event) {
-        switch(event.keyCode) {
-            case cc.macro.KEY.up: case cc.macro.KEY.w: this.processCommand("MOVE_UP"); break;
-            case cc.macro.KEY.down: case cc.macro.KEY.s: this.processCommand("MOVE_DOWN"); break;
-            case cc.macro.KEY.space: this.processCommand("FIRE", true); break; 
-        }
-    },
-    
-    onKeyUp(event) {
-        switch(event.keyCode) {
-            case cc.macro.KEY.space: this.processCommand("FIRE", false); break;
+    _processKeyboard(keyCode, isPressed) {
+        switch(keyCode) {
+            case cc.macro.KEY.up: case cc.macro.KEY.w:
+                if (isPressed) this.processCommand("MOVE_UP", true);
+                break;
+            case cc.macro.KEY.down: case cc.macro.KEY.s:
+                if (isPressed) this.processCommand("MOVE_DOWN", true);
+                break;
+            case cc.macro.KEY.space:
+                this.processCommand("FIRE", isPressed);
+                break; 
         }
     }
 });

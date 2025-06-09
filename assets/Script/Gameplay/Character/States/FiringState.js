@@ -3,14 +3,14 @@ import IdleState from './IdleState.js';
 
 export default class FiringState extends State {
     enter() {
-        this.controller.fire(); 
+        this.controller.fireBullet(); 
         this.fireTimer = 0;
     }
 
     update(dt) {
         this.fireTimer += dt;
         if (this.fireTimer >= 1 / this.controller.fireRate) {
-            this.controller.fire();
+            this.controller.fireBullet();
             this.fireTimer -= (1 / this.controller.fireRate);
         }
     }

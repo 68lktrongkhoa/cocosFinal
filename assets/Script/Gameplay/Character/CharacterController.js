@@ -17,11 +17,6 @@ cc.Class({
             type: cc.Node
         },
 
-        bulletController: {
-            default: null,
-            type: require('BulletController')
-        },
-
         fireRate: {
             default: 5,
             type: cc.Float,
@@ -61,18 +56,16 @@ cc.Class({
         }
     },
 
-    fire() {
-        if (!this.bulletController || !this.firePoint) {
-            console.warn("Have not BulletController or FirePoint!");
-            return;
-        }
+    fireBullet() {
         this.spineAnim.setAnimation(1, 'shoot', false);
 
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
-        const firePointNodePos = this.bulletController.node.parent.convertToNodeSpaceAR(firePointWorldPos);
-
-        this.bulletController.getBullet(firePointNodePos, shootDirection);
+        
+        this.node.emit('fire-bullet', {
+            position: firePointWorldPos,
+            direction: shootDirection
+        });
     },
 
     setState(newState) {

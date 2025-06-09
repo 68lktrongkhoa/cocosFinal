@@ -9,7 +9,6 @@ cc.Class({
 
     init(bulletController, direction) {
         this.bulletController = bulletController;
-        console.log("Bullet.init được gọi với hướng:", direction);
 
         this.direction = direction;
 

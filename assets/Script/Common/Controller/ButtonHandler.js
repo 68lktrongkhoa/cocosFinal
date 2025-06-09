@@ -2,6 +2,14 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        duration: {
+            default: 0.1,
+            type: cc.Float
+        },
+        zoomScale: {
+            default: 1.2,
+            type: cc.Float
+        },
         upButtonNode: {
             default: null,
             type: cc.Node
@@ -17,10 +25,10 @@ cc.Class({
     },
 
     onLoad() {
-
-        if (this.upButtonNode) this.originalUpScale = this.upButtonNode.scale;
-        if (this.downButtonNode) this.originalDownScale = this.downButtonNode.scale;
-        if (this.fireButtonNode) this.originalFireScale = this.fireButtonNode.scale;
+        this.originalScales = new Map();
+        if (this.upButtonNode) this.originalScales.set(this.upButtonNode, this.upButtonNode.scale);
+        if (this.downButtonNode) this.originalScales.set(this.downButtonNode, this.downButtonNode.scale);
+        if (this.fireButtonNode) this.originalScales.set(this.fireButtonNode, this.fireButtonNode.scale);
     },
 
     onEnable() {
@@ -42,39 +50,51 @@ cc.Class({
             this.fireButtonNode.off(cc.Node.EventType.TOUCH_CANCEL, this.onFireUp, this);
         }
     },
-    
+
     onMoveUp() {
-        if (this.inputHandler) this.inputHandler.processCommand("MOVE_UP");
+        this.node.emit('ui-command', { command: "MOVE_UP" });
     },
 
     onMoveDown() {
-        if (this.inputHandler) this.inputHandler.processCommand("MOVE_DOWN");
+        this.node.emit('ui-command', { command: "MOVE_DOWN" });
     },
     
     onFireDown() {
-        if (this.inputHandler) this.inputHandler.processCommand("FIRE", true);
+        this.node.emit('ui-command', { command: "FIRE", isPressed: true });
     },
 
     onFireUp() {
-        if (this.inputHandler) this.inputHandler.processCommand("FIRE", false);
+        this.node.emit('ui-command', { command: "FIRE", isPressed: false });
     },
 
-    playButtonEffect(buttonType) {
-        let targetNode = null;
-        if (buttonType === 'UP') targetNode = this.upButtonNode;
-        if (buttonType === 'DOWN') targetNode = this.downButtonNode;
-        if (buttonType === 'FIRE') targetNode = this.fireButtonNode;
-        
-        if (targetNode) {
-            const originalScale = targetNode.scale;
-            const buttonComp = targetNode.getComponent(cc.Button);
-            const zoomScale = buttonComp ? buttonComp.zoomScale : 1.2;
-            const duration = buttonComp ? buttonComp.duration : 0.1;
+    playButtonPressEffect(buttonType) {
+        const targetNode = this._getTargetNode(buttonType);
+        if (!targetNode) return;
 
-            cc.tween(targetNode)
-                .to(duration / 2, { scale: originalScale * zoomScale })
-                .to(duration / 2, { scale: originalScale })
-                .start();
-        }
+        cc.Tween.stopAllByTarget(targetNode);
+        const originalScale = this.originalScales.get(targetNode) || 1;
+        
+        cc.tween(targetNode)
+            .to(this.duration / 2, { scale: originalScale * this.zoomScale })
+            .start();
+    },
+
+    playButtonReleaseEffect(buttonType) {
+        const targetNode = this._getTargetNode(buttonType);
+        if (!targetNode) return;
+
+        cc.Tween.stopAllByTarget(targetNode);
+        const originalScale = this.originalScales.get(targetNode) || 1;
+
+        cc.tween(targetNode)
+            .to(this.duration / 2, { scale: originalScale })
+            .start();
+    },
+
+    _getTargetNode(buttonType) {
+        if (buttonType === 'UP') return this.upButtonNode;
+        if (buttonType === 'DOWN') return this.downButtonNode;
+        if (buttonType === 'FIRE') return this.fireButtonNode;
+        return null;
     }
 });

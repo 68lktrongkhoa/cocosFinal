@@ -16,5 +16,20 @@ module.exports = {
         STOP_MUSIC: 'stopMusic',
         ENABLE_SOUND: 'enableSound',
         PLAY_ONLCICK_SOUND: 'playOnclickSound',
+    },
+
+    GAME: {
+        START: 'gameStart',
+        OVER: 'gameOver',
+        ADD_SCORE: 'gameAddScore',
+    },
+
+    MONSTER: {
+        ON_DIE: 'monsterOnDie',
+    },
+
+    UPDATE_UI:{
+        TIME: 'updateTime',
+        SCORE: 'updateScore',
     }
 };

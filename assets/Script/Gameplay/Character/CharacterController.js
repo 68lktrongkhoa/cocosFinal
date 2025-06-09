@@ -1,4 +1,6 @@
 import IdleState from './States/IdleState.js';
+const Emitter = require('../../Common/Event/Emitter'); 
+const EventKey = require('../../Common/Event/EventKeys');
 
 cc.Class({
     extends: cc.Component,
@@ -63,8 +65,7 @@ cc.Class({
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
         
-        this.node.emit('fire-projectile', {
-            type: projectileType,
+        Emitter.emit(EventKey.GAMEPLAY.FIRE_BULLET, {
             position: firePointWorldPos,
             direction: shootDirection
         });

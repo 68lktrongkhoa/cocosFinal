@@ -2,8 +2,11 @@ module.exports = {
     POPUP: {
         SHOW_SETTING: 'showSettingPopup',
         HIDE_SETTING: 'hideSettingPopup',
-        SHOW_RANK: 'showRankPopup',
-        HIDE_RANK: 'hideRankPopup',
+        SHOW_HIGHSCORE: 'showHighScorePopup',
+        HIDE_HIGHSCORE: 'hideHighScorePopup',
+    },
+    GAMEPLAY: {
+        FIRE_BULLET: 'GAMEPLAY_FIRE_BULLET',
     },
 
     SOUND:{
@@ -13,5 +16,20 @@ module.exports = {
         STOP_MUSIC: 'stopMusic',
         ENABLE_SOUND: 'enableSound',
         PLAY_ONLCICK_SOUND: 'playOnclickSound',
+    },
+
+    GAME: {
+        START: 'gameStart',
+        OVER: 'gameOver',
+        ADD_SCORE: 'gameAddScore',
+    },
+
+    MONSTER: {
+        ON_DIE: 'monsterOnDie',
+    },
+
+    UPDATE_UI:{
+        TIME: 'updateTime',
+        SCORE: 'updateScore',
     }
 };

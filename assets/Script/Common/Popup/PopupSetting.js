@@ -1,11 +1,18 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
+const GameConfig = require("GameConfig");
 cc.Class({
     extends: require("PopupItem"),
 
     properties: {
         musicToggle: cc.Toggle,
+        musicSlider: cc.Slider,
         soundToggle: cc.Toggle,
+        soundSlider: cc.Slider,
+    },
+
+    onLoad() {
+        this.loadSoundData();
     },
 
     onMusicToggleChange(toggle){
@@ -43,4 +50,21 @@ cc.Class({
         }
         Emitter.emit(EventKeys.SOUND.SET_SOUND_VOLUME, volume);
     },
+
+    loadSoundData(){
+        const dataString = cc.sys.localStorage.getItem('SoundData');
+        if (dataString) {
+            const data = JSON.parse(dataString);
+            this.musicToggle.isChecked = data.MUSIC_ENABLED;
+            this.musicSlider.progress = data.MUSIC_VOLUME;
+            this.soundToggle.isChecked = data.SOUND_ENABLED;
+            this.soundSlider.progress = data.SOUND_VOLUME;
+        } else {
+            this.musicToggle.isChecked = true;
+            this.soundSlider.progress = 1;
+            this.soundToggle.isChecked = true;
+            this.soundSlider.progress = 1;
+        }
+
+    }
 });

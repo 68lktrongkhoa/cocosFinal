@@ -49,7 +49,6 @@ cc.Class({
     },
 
     removeEvents(){
-        Emitter.removeEvent(EventKeys.POPUP.SHOW_SETTING, this.showSetting);
-        Emitter.removeEvent(EventKeys.POPUP.HIDE_SETTING, this.hideSetting);
+        Emitter.removeEventsByTarget(this);
     },
 });

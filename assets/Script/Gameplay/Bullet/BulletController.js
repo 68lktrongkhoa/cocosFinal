@@ -6,14 +6,25 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        characterNode: {
+            default: null,
+            type: cc.Node
+        },
         poolSize: 20,
     },
 
     onLoad() {
         this.bulletPool = new cc.NodePool();
-        for (let i = 0; i < this.poolSize; ++i) {
-            let bullet = cc.instantiate(this.bulletPrefab);
-            this.bulletPool.put(bullet);
+        if (this.characterNode) {
+            this.characterNode.on('fire-bullet', this.onCharacterFire, this);
+        } else {
+            cc.warn("Not have Character Node for BulletController!");
+        }
+    },
+    
+    onDestroy() {
+        if (this.characterNode) {
+            this.characterNode.off('fire-bullet', this.onCharacterFire, this);
         }
     },
 
@@ -37,6 +48,14 @@ cc.Class({
         }
         return bullet;
     },
+    onCharacterFire(eventData) {
+        const worldPos = eventData.position;
+        const direction = eventData.direction;
+
+        const firePointNodePos = this.node.parent.convertToNodeSpaceAR(worldPos);
+        this.getBullet(firePointNodePos, direction);
+    },
+
 
     putBullet(bullet) {
         this.bulletPool.put(bullet);

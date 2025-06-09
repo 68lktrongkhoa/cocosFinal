@@ -1,5 +1,3 @@
-const { SOUND } = require("./Event/EventKeys");
-
 const GameConfig = {
     PORTAL: 'PortalScene',
 
@@ -18,7 +16,7 @@ const GameConfig = {
     },
 
     LOCAL_STORAGE: {
-        SOUND_DATA: 'SoundData',
+        SOUND_DATA: 'soundData',
     },
 };
 

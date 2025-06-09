@@ -108,11 +108,7 @@ cc.Class({
     },
 
     removeEvents() {
-        Emitter.removeEvent(EventKeys.SOUND.PLAY_ONCLICK_SOUND, this.playOnclickSound);
-        Emitter.removeEvent(EventKeys.SOUND.SET_MUSIC_VOLUME, this.setMusicVolume);
-        Emitter.removeEvent(EventKeys.SOUND.STOP_MUSIC, this.stopMusic);
-        Emitter.removeEvent(EventKeys.SOUND.SET_SOUND_VOLUME, this.setSoundVolume);
-        Emitter.removeEvent(EventKeys.SOUND.SET_IS_PLAYING_SOUND, this.setIsPlayingSound);
+        Emitter.removeEventsByTarget(this);
     },
 
 });

@@ -821,7 +821,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Move Button Up",
+    "_name": "Move Up Button",
     "_objFlags": 0,
     "_parent": {
       "__id__": 16
@@ -889,7 +889,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Icon Button Up",
+    "_name": "Icon ",
     "_objFlags": 0,
     "_parent": {
       "__id__": 17
@@ -979,7 +979,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "InnerBg DecoLine",
+    "_name": "InnerBg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 17
@@ -1392,7 +1392,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Move Button Down",
+    "_name": "Move Down Button",
     "_objFlags": 0,
     "_parent": {
       "__id__": 16
@@ -1460,7 +1460,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "icon_button_down",
+    "_name": "Icon",
     "_objFlags": 0,
     "_parent": {
       "__id__": 30
@@ -1550,7 +1550,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "InnerBg DecoLine ",
+    "_name": "InnerBg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 30
@@ -2151,7 +2151,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Icon Joystick Action ",
+    "_name": "Icon",
     "_objFlags": 0,
     "_parent": {
       "__id__": 39

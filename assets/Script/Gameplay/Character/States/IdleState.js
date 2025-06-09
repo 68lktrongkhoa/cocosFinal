@@ -4,6 +4,7 @@ import FiringState from './FiringState.js';
 
 export default class IdleState extends State {
     enter() {
+        this.controller.spineAnim.setAnimation(0, 'hoverboard', true);
     }
 
     handleInput(command, isPressed) {

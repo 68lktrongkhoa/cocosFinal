@@ -26,19 +26,27 @@ cc.Class({
             default: 5,
             type: cc.Float,
         },
+        spineAnim: {
+            default: null,
+            type: sp.Skeleton,
+        },
     },
 
     onLoad() {
-        if (this.yPositions.length < 3) {
-            this.enabled = false;
-            return;
-        }
+        this.spineAnim.setCompleteListener(this.onSpineAnimationComplete.bind(this));
 
         this.currentPositionIndex = 1;
         this.node.y = this.yPositions[this.currentPositionIndex];
 
         this.state = null;
-        this.setState(new IdleState(this));
+        this.spineAnim.setAnimation(0, 'portal', false);
+    },
+    onSpineAnimationComplete(trackEntry) {
+        const animName = trackEntry.animation.name;
+
+        if (animName === 'portal') {
+            this.setState(new IdleState(this));
+        }
     },
 
     update(dt) {
@@ -58,6 +66,7 @@ cc.Class({
             console.warn("Have not BulletController or FirePoint!");
             return;
         }
+        this.spineAnim.setAnimation(1, 'shoot', false);
 
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
@@ -73,4 +82,9 @@ cc.Class({
         this.state = newState;
         this.state.enter();
     },
+    onDestroy() {
+        if (this.spineAnim) {
+            this.spineAnim.setCompleteListener(null);
+        }
+    }
 });

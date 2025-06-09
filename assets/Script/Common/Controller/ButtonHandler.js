@@ -21,7 +21,7 @@ cc.Class({
         fireButtonNode: {
             default: null,
             type: cc.Node
-        },
+        }
     },
 
     onLoad() {

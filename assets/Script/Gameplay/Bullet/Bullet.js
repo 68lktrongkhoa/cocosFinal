@@ -28,7 +28,7 @@ cc.Class({
 
     onCollisionEnter(other, self) {
         if (other.getComponent('Enemy')) {
-            this.bulletController.putBullet(this.node);
+            this.bulletController.putProjectile(this.node)
         }
     },
 
@@ -44,7 +44,7 @@ cc.Class({
             this.node.y > halfHeight + 100 ||
             this.node.y < -halfHeight - 100) 
         {
-            this.bulletController.putBullet(this.node);
+            this.bulletController.putProjectile(this.node)
         }
     }
 });

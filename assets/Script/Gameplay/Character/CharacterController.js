@@ -6,27 +6,15 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        yPositions: {
-            default: [],
-            type: [cc.Float]
-        },
-        moveDuration: {
-            default: 0.2,
-            type: cc.Float
-        },
-        firePoint: {
+        yPositions: { default: [], type: [cc.Float] },
+        moveDuration: { default: 0.2, type: cc.Float },
+        firePoint: { default: null, type: cc.Node },
+        fireRate: { default: 10, type: cc.Float },
+        spineAnim: { default: null, type: sp.Skeleton },
+        projectileController: {
             default: null,
-            type: cc.Node
-        },
-
-        fireRate: {
-            default: 5,
-            type: cc.Float,
-        },
-        spineAnim: {
-            default: null,
-            type: sp.Skeleton,
-        },
+            type: require('ProjectileController')
+        }
     },
 
     onLoad() {
@@ -37,10 +25,16 @@ cc.Class({
 
         this.state = null;
         this.spineAnim.setAnimation(0, 'portal', false);
+        
+        if (this.fireRate > 0) {
+            this._fireInterval = 1 / this.fireRate;
+        } else {
+            this._fireInterval = 0;
+        }
     },
+
     onSpineAnimationComplete(trackEntry) {
         const animName = trackEntry.animation.name;
-
         if (animName === 'portal') {
             this.setState(new IdleState(this));
         }
@@ -52,14 +46,21 @@ cc.Class({
         }
     },
 
+    getFireInterval() {
+        return this._fireInterval;
+    },
+
     handleInput(command, isPressed) {
         if (this.state) {
             this.state.handleInput(command, isPressed);
         }
     },
 
-    fireBullet() {
-        this.spineAnim.setAnimation(1, 'shoot', false);
+    fireProjectile() {
+        const projectileType = this.projectileController.getCurrentProjectileType();
+        
+        let animName = (projectileType === 'laser') ? 'shoot_special' : 'shoot';
+        this.spineAnim.setAnimation(1, animName, false);
 
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
@@ -69,6 +70,18 @@ cc.Class({
             direction: shootDirection
         });
     },
+    
+    moveUp() {
+        if (this.currentPositionIndex <= 0) return;
+        this.currentPositionIndex--;
+        cc.tween(this.node).to(this.moveDuration, { y: this.yPositions[this.currentPositionIndex] }).start();
+    },
+
+    moveDown() {
+        if (this.currentPositionIndex >= this.yPositions.length - 1) return;
+        this.currentPositionIndex++;
+        cc.tween(this.node).to(this.moveDuration, { y: this.yPositions[this.currentPositionIndex] }).start();
+    },
 
     setState(newState) {
         if (this.state) {
@@ -77,6 +90,7 @@ cc.Class({
         this.state = newState;
         this.state.enter();
     },
+    
     onDestroy() {
         if (this.spineAnim) {
             this.spineAnim.setCompleteListener(null);

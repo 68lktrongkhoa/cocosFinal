@@ -4,8 +4,8 @@ cc.Class({
 
     properties: {
         content: cc.Node,
-        highScoreItemPrefab: cc.Prefab,
-        highScoreItemList: [require("HighScoreItem")],
+        highScoreCellPrefab: cc.Prefab,
+        highScoreCellList: [require("HighScoreCell")],
     },
 
     onLoad(){

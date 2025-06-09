@@ -6862,7 +6862,7 @@
         "__id__": 163
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 3,
     "_components": [
       {
@@ -8222,10 +8222,10 @@
     "content": {
       "__id__": 173
     },
-    "highScoreItemPrefab": {
+    "highScoreCellPrefab": {
       "__uuid__": "5b1b6080-c4be-4098-af5b-15fbddd7baf9"
     },
-    "highScoreItemList": [],
+    "highScoreCellList": [],
     "_id": "d9PtmTA1dMXIeVnCfgLfnE"
   },
   {

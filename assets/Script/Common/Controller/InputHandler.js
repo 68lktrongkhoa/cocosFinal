@@ -1,5 +1,6 @@
 const CharacterController = require('./Gameplay/Character/CharacterController'); 
 const ButtonHandler = require('./ButtonHandler'); 
+const ProjectileController = require('./Gameplay/ProjectileController');
 
 cc.Class({
     extends: cc.Component,
@@ -12,7 +13,15 @@ cc.Class({
         buttonHandlerNode: {
             default: null,
             type: cc.Node
-        }
+        },
+        skillButton: {
+            default: null,
+            type: cc.Button
+        },
+        projectileController: {
+            default: null,
+            type: ProjectileController
+        },
     },
 
     onLoad() {
@@ -22,7 +31,6 @@ cc.Class({
             cc.warn("Not have buttonHandlerNode for InputHandler!");
         }
         this.keysDown = {};
-        this.isFireButtonPressed = false;
     },
 
     onEnable() {
@@ -32,6 +40,9 @@ cc.Class({
         if (this.buttonHandlerNode) {
             this.buttonHandlerNode.on('ui-command', this.onUICommand, this);
         }
+        if (this.skillButton) {
+            this.skillButton.node.on('click', this.onSkillButtonClick, this);
+        }
     },
 
     onDisable() {
@@ -40,6 +51,9 @@ cc.Class({
 
         if (this.buttonHandlerNode) {
             this.buttonHandlerNode.off('ui-command', this.onUICommand, this);
+        }
+        if (this.skillButton) {
+            this.skillButton.node.off('click', this.onSkillButtonClick, this);
         }
     },
 
@@ -62,9 +76,27 @@ cc.Class({
         this._processKeyboard(keyCode, false);
     },
 
+    onSkillButtonClick() {
+        this.processCommand("TOGGLE_WEAPON", true);
+    },
+
     processCommand(command, isPressed) {
         if (this.characterController) {
             this.characterController.handleInput(command, isPressed);
+        }
+        if (command === "TOGGLE_WEAPON") {
+            if (this.projectileController) {
+                this.projectileController.handleInput(command, isPressed);
+            } else {
+                cc.warn("ProjectileController is not assigned in InputHandler.");
+            }
+        } 
+        else {
+            if (this.characterController) {
+                this.characterController.handleInput(command, isPressed);
+            } else {
+                cc.warn("CharacterController is not assigned in InputHandler.");
+            }
         }
 
         if (this.buttonHandlerComponent) {
@@ -96,6 +128,9 @@ cc.Class({
             case cc.macro.KEY.space:
                 this.processCommand("FIRE", isPressed);
                 break; 
+            case cc.macro.KEY.e:
+                if (isPressed) this.processCommand("TOGGLE_WEAPON", true);
+                break;
         }
     }
 });

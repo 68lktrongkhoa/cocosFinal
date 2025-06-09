@@ -1,6 +1,7 @@
 const Emitter = require("Emitter");
 const EventKeys = require("EventKeys");
 const GameConfig = require("GameConfig");
+const MainController = require('MainController');
 cc.Class({
     extends: cc.Component,
 
@@ -14,11 +15,11 @@ cc.Class({
     },
 
     onLoad() {
+        MainController.instance.addPersistRootNode(this.node);
         this.backPanel.active = false;
         this.hideSetting();
         this.hideHighScore();
         this.registerEvents();
-        cc.game.addPersistRootNode(this.node);
     },
 
     onDestroy() {

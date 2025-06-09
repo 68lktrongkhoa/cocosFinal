@@ -10,4 +10,12 @@ cc.Class({
     hideSettingPopup(){
         Emitter.emit(EventKeys.POPUP.HIDE_SETTING);
     },
+
+    showHighScorePopup() {
+        Emitter.emit(EventKeys.POPUP.SHOW_HIGHSCORE);
+    },
+
+    hideHighScorePopup() {
+        Emitter.emit(EventKeys.POPUP.HIDE_HIGHSCORE);
+    },
 });

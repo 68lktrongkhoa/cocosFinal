@@ -17,6 +17,7 @@ const GameConfig = {
 
     LOCAL_STORAGE: {
         SOUND_DATA: 'soundData',
+        HIGHSCORE_DATA: 'highScoreData',
     },
 };
 

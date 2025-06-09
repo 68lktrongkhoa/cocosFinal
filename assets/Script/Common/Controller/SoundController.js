@@ -1,6 +1,6 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
-
+const GameConfig = require("GameConfig");
 cc.Class({
     extends: cc.Component,
 
@@ -17,6 +17,7 @@ cc.Class({
     },
 
     onLoad () {
+        cc.game.addPersistRootNode(this.node);
         this.loadSoundData();
         if (this.musicEnabled) {
             this.playMusic();
@@ -32,7 +33,7 @@ cc.Class({
     },
 
     loadSoundData() {
-        const dataString = cc.sys.localStorage.getItem('SoundData');
+        const dataString = cc.sys.localStorage.getItem(GameConfig.LOCAL_STORAGE.SOUND_DATA);
         if (dataString) {
             const data = JSON.parse(dataString);
             this.musicEnabled = data.MUSIC_ENABLED;
@@ -54,7 +55,7 @@ cc.Class({
             SOUND_ENABLED: this.soundEnabled,
             SOUND_VOLUME: this.soundVolume,
         };
-        cc.sys.localStorage.setItem('SoundData', JSON.stringify(data));
+        cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.SOUND_DATA, JSON.stringify(data));
     },
 
     registerEvents() {

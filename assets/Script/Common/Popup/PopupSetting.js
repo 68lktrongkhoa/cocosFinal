@@ -52,7 +52,7 @@ cc.Class({
     },
 
     loadSoundData(){
-        const dataString = cc.sys.localStorage.getItem('SoundData');
+        const dataString = cc.sys.localStorage.getItem(GameConfig.LOCAL_STORAGE.SOUND_DATA);
         if (dataString) {
             const data = JSON.parse(dataString);
             this.musicToggle.isChecked = data.MUSIC_ENABLED;

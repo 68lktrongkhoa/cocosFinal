@@ -1,3 +1,5 @@
+const { SOUND } = require("./Event/EventKeys");
+
 const GameConfig = {
     PORTAL: 'PortalScene',
 
@@ -13,6 +15,10 @@ const GameConfig = {
 
     CASTLE_DEFAULT: {
         HP: 3,
+    },
+
+    LOCAL_STORAGE: {
+        SOUND_DATA: 'SoundData',
     },
 };
 

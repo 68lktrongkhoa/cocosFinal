@@ -1,0 +1,54 @@
+const Emitter = require("Emitter");
+const EventKeys = require("EventKeys");
+cc.Class({
+    extends: cc.Component,
+
+    properties: {
+        backPanel: cc.Node,
+        popupSetting: require("PopupItem"),
+        isShowing: {
+            default: false,
+        }
+    },
+
+    onLoad() {
+        this.backPanel.active = false;
+        this.hideSetting();
+        this.registerEvents();
+    },
+
+    onDestroy() {
+        this.removeEvents();
+    },
+
+    registerEvents(){
+        Emitter.registerEvent(EventKeys.POPUP.SHOW_SETTING, this.showSetting, this);
+        Emitter.registerEvent(EventKeys.POPUP.HIDE_SETTING, this.hideSetting, this);
+    },
+
+    showSetting(){
+        if(this.getIsShowing()){
+            return;
+        }
+        this.popupSetting.show();
+        this.setIsShowing(true);
+    },
+
+    hideSetting(){
+        this.popupSetting.hide();
+        this.setIsShowing(false);
+    },
+
+    setIsShowing(isShowing) {
+        this.backPanel.active = isShowing;
+        this.isShowing = isShowing;
+    },
+
+    getIsShowing() {
+        return this.isShowing;
+    },
+
+    removeEvents(){
+        Emitter.removeEventsByTarget(this);
+    },
+});

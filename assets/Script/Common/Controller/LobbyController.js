@@ -1,5 +1,6 @@
 const Emitter = require("Emitter");
 const EventKeys = require("EventKeys");
+const MainController = require('MainController');
 cc.Class({
     extends: cc.Component,
 
@@ -17,5 +18,13 @@ cc.Class({
 
     hideHighScorePopup() {
         Emitter.emit(EventKeys.POPUP.HIDE_HIGHSCORE);
+    },
+
+    playGame(){
+        MainController.instance.transition('playGame');
+    },
+
+    exitGame(){
+        MainController.instance.transition('exitGame');
     },
 });

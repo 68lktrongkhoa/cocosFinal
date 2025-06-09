@@ -10,20 +10,20 @@ cc.Class({
 
     onLoad(){
         for(let i = 0; i < 5; i++){
-            const item = cc.instantiate(this.highScoreItemPrefab);
+            const item = cc.instantiate(this.highScoreCellPrefab);
             item.parent = this.content;
-            const highScoreItem = item.getComponent("HighScoreItem");
-            this.highScoreItemList.push(highScoreItem);
+            const highScoreCell = item.getComponent("HighScoreCell");
+            this.highScoreCellList.push(highScoreCell);
         }
     },
 
     show(highScoreData){
         this._super();
-        for(let i = 0; i < this.highScoreItemList.length; i++){
+        for(let i = 0; i < this.highScoreCellList.length; i++){
             if(i < highScoreData.length){
-                this.highScoreItemList[i].setInfo(highScoreData[i]);
+                this.highScoreCellList[i].setInfo(highScoreData[i]);
             } else {
-                this.highScoreItemList[i].node.active = false;
+                this.highScoreCellList[i].node.active = false;
             }
         }
     },

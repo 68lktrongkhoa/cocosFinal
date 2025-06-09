@@ -1,53 +1,65 @@
+const CharacterController = require('./Gameplay/Character/CharacterController'); 
+const ButtonHandler = require('./ButtonHandler'); 
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        characterNode: {
+        characterController: {
+            default: null,
+            type: CharacterController
+        },
+        buttonHandlerNode: {
             default: null,
             type: cc.Node
-        },
-
-        buttonHandler: {
-            default: null,
-            type: require('ButtonHandler')
         }
     },
 
     onLoad() {
-
-        this.characterController = this.characterNode.getComponent('CharacterController');
-        if (!this.characterController) {
-            return;
+        if (this.buttonHandlerNode) {
+            this.buttonHandlerComponent = this.buttonHandlerNode.getComponent(ButtonHandler);
+        } else {
+            cc.warn("Note have 'Button Handler Node' of InputHandler!");
         }
+    },
 
+    onEnable() {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
     },
 
-    onDestroy() {
+    onDisable() {
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
     },
 
-    onKeyDown(event) {
-        let command = null;
-        let buttonType = null;
-        switch(event.keyCode) {
-            case cc.macro.KEY.up:
-            case cc.macro.KEY.w:
-                command = "MOVE_UP";
-                buttonType = 'UP';
-                break;
-            case cc.macro.KEY.down:
-            case cc.macro.KEY.s:
-                command = "MOVE_DOWN";
-                buttonType = 'DOWN';
-                break;
-        }
+    processCommand(command, isPressed = true) {
+        if (!this.characterController) return;
+        this.characterController.handleInput(command, isPressed);
 
-        if (command) {
-            this.characterController.handleInput(command);
+        if (this.buttonHandlerComponent) {
+            let buttonType = null;
+            if (command === "MOVE_UP") buttonType = 'UP';
+            if (command === "MOVE_DOWN") buttonType = 'DOWN';
+            if (command === "FIRE" && isPressed) buttonType = 'FIRE'; 
+
             if (buttonType) {
-                this.buttonHandler.playButtonEffect(buttonType);
+                this.buttonHandlerComponent.playButtonEffect(buttonType);
             }
         }
     },
+
+    onKeyDown(event) {
+        switch(event.keyCode) {
+            case cc.macro.KEY.up: case cc.macro.KEY.w: this.processCommand("MOVE_UP"); break;
+            case cc.macro.KEY.down: case cc.macro.KEY.s: this.processCommand("MOVE_DOWN"); break;
+            case cc.macro.KEY.space: this.processCommand("FIRE", true); break; 
+        }
+    },
+    
+    onKeyUp(event) {
+        switch(event.keyCode) {
+            case cc.macro.KEY.space: this.processCommand("FIRE", false); break;
+        }
+    }
 });

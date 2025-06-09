@@ -74,7 +74,7 @@
         "__id__": 26
       },
       {
-        "__id__": 51
+        "__id__": 52
       },
       {
         "__id__": 28
@@ -84,7 +84,7 @@
     "_level": 1,
     "_components": [
       {
-        "__id__": 53
+        "__id__": 54
       }
     ],
     "_prefab": null,
@@ -168,7 +168,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 439.0748797187104
+      "z": 439.9409051224949
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -706,6 +706,9 @@
       },
       {
         "__id__": 39
+      },
+      {
+        "__id__": 51
       }
     ],
     "_active": true,
@@ -2387,6 +2390,60 @@
   },
   {
     "__type__": "cc.Node",
+    "_name": "Skill Lazer Button",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 15
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 3,
+    "_components": [],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 350,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "groupIndex": 0,
+    "_id": "3eAm+kAXFCG6j/LZE4YFex"
+  },
+  {
+    "__type__": "cc.Node",
     "_name": "BulletController",
     "_objFlags": 0,
     "_parent": {
@@ -2397,7 +2454,7 @@
     "_level": 2,
     "_components": [
       {
-        "__id__": 52
+        "__id__": 53
       }
     ],
     "_prefab": null,
@@ -2448,14 +2505,11 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 51
+      "__id__": 52
     },
     "_enabled": true,
     "bulletPrefab": {
       "__uuid__": "fd8ef128-b0f1-43cd-9b4b-701ef28a8bdc"
-    },
-    "characterNode": {
-      "__id__": 9
     },
     "poolSize": 20,
     "_id": "e8d4ApD2tFzbEe66wNiNTA"

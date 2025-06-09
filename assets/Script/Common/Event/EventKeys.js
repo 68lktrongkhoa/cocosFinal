@@ -5,6 +5,9 @@ module.exports = {
         SHOW_RANK: 'showRankPopup',
         HIDE_RANK: 'hideRankPopup',
     },
+    GAMEPLAY: {
+        FIRE_BULLET: 'GAMEPLAY_FIRE_BULLET',
+    },
 
     SOUND:{
         SET_MUSIC_VOLUME: 'setMusicVolume',

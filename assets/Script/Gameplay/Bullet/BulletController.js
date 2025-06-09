@@ -1,3 +1,5 @@
+const Emitter = require('../../Common/Event/Emitter'); 
+const EventKey = require('../../Common/Event/EventKeys');
 cc.Class({
     extends: cc.Component,
 
@@ -6,20 +8,19 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        characterNode: {
-            default: null,
-            type: cc.Node
-        },
         poolSize: 20,
     },
 
     onLoad() {
         this.bulletPool = new cc.NodePool();
-        if (this.characterNode) {
-            this.characterNode.on('fire-bullet', this.onCharacterFire, this);
-        } else {
-            cc.warn("Not have Character Node for BulletController!");
-        }
+        
+    },
+    onEnable() {
+        Emitter.registerEvent(EventKey.GAMEPLAY.FIRE_BULLET, this.onCharacterFire, this);
+    },
+
+    onDisable() {
+        Emitter.removeEventsByTarget(this);
     },
     
     onDestroy() {

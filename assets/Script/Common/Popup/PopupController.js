@@ -4,6 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        backPanel: cc.Node,
         popupSetting: require("PopupItem"),
         isShowing: {
             default: false,
@@ -11,6 +12,7 @@ cc.Class({
     },
 
     onLoad() {
+        this.backPanel.active = false;
         this.hideSetting();
         this.registerEvents();
     },
@@ -38,6 +40,7 @@ cc.Class({
     },
 
     setIsShowing(isShowing) {
+        this.backPanel.active = isShowing;
         this.isShowing = isShowing;
     },
 

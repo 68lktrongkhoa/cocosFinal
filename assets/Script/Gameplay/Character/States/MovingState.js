@@ -1,10 +1,8 @@
-import State from '../../../Common/Patterns/State.js';
 import IdleState from './IdleState.js';
 
-export default class MovingState extends State {
-
+export default class MovingState {
     constructor(controller, direction) {
-        super(controller);
+        this.controller = controller;
         this.moveDirection = direction;
     }
 
@@ -14,9 +12,9 @@ export default class MovingState extends State {
         let targetIndex = currentIndex;
 
         if (this.moveDirection === 'MOVE_UP') {
-            targetIndex = currentIndex - 1;
+            targetIndex--;
         } else if (this.moveDirection === 'MOVE_DOWN') {
-            targetIndex = currentIndex + 1;
+            targetIndex++;
         }
 
         targetIndex = Math.max(0, Math.min(targetIndex, maxIndex));
@@ -30,13 +28,13 @@ export default class MovingState extends State {
         const targetY = this.controller.yPositions[targetIndex];
 
         cc.tween(this.controller.node)
-            .to(this.controller.moveDuration, { position: cc.v3(this.controller.node.x, targetY, 0) }, { easing: 'quadOut' })
+            .to(this.controller.moveDuration, 
+                { y: targetY },
+                { easing: 'quadOut' } 
+            )
             .call(() => {
                 this.controller.setState(new IdleState(this.controller));
             })
             .start();
-    }
-
-    handleInput(command) {
     }
 }

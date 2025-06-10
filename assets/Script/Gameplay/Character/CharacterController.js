@@ -1,7 +1,7 @@
 import IdleState from './States/IdleState.js';
-import StunnedState from './States/StunnedState.js';
-const Emitter = require('../../Common/Event/Emitter'); 
-const EventKey = require('../../Common/Event/EventKeys');
+const Emitter = require('./Emitter'); 
+const EventKey = require('./EventKeys');
+const ProjectileController = require('ProjectileController');
 
 cc.Class({
     extends: cc.Component,
@@ -10,11 +10,10 @@ cc.Class({
         yPositions: { default: [], type: [cc.Float] },
         moveDuration: { default: 0.2, type: cc.Float },
         firePoint: { default: null, type: cc.Node },
-        fireRate: { default: 10, type: cc.Float },
         spineAnim: { default: null, type: sp.Skeleton },
         projectileController: {
             default: null,
-            type: require('ProjectileController')
+            type: ProjectileController
         }
     },
 
@@ -25,14 +24,8 @@ cc.Class({
         this.node.y = this.yPositions[this.currentPositionIndex];
 
         this.state = null;
+        this._fireCooldown = 0;
         this.spineAnim.setAnimation(0, 'portal', false);
-        
-        if (this.fireRate > 0) {
-            this._fireInterval = 1 / this.fireRate;
-        } else {
-            this._fireInterval = 0;
-        }
-        cc.director.getCollisionManager().enabled = true;
     },
 
     onCollisionEnter(other, self) {
@@ -57,26 +50,33 @@ cc.Class({
     },
 
     update(dt) {
+        if (this._fireCooldown > 0) {
+            this._fireCooldown -= dt;
+        }
         if (this.state && this.state.update) {
             this.state.update(dt);
         }
     },
 
     getFireInterval() {
-        return this._fireInterval;
+        if (this.projectileController) {
+            return this.projectileController.getCurrentFireInterval();
+        }
+        return 0;
     },
 
     handleInput(command, isPressed) {
-        if (this.state) {
+        if (command === "FIRE") {
+            this.isFireButtonPressed = isPressed;
+        }
+        if (this.state && this.state.handleInput ) {
             this.state.handleInput(command, isPressed);
         }
     },
 
     fireProjectile() {
         const projectileType = this.projectileController.getCurrentProjectileType();
-        
         this.spineAnim.setAnimation(1, 'shoot', false);
-
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
         
@@ -86,17 +86,13 @@ cc.Class({
             direction: shootDirection
         });
     },
-    
-    moveUp() {
-        if (this.currentPositionIndex <= 0) return;
-        this.currentPositionIndex--;
-        cc.tween(this.node).to(this.moveDuration, { y: this.yPositions[this.currentPositionIndex] }).start();
-    },
 
-    moveDown() {
-        if (this.currentPositionIndex >= this.yPositions.length - 1) return;
-        this.currentPositionIndex++;
-        cc.tween(this.node).to(this.moveDuration, { y: this.yPositions[this.currentPositionIndex] }).start();
+    tryToFire() {
+        if (this._fireCooldown > 0) {
+            return;
+        }
+        this.fireProjectile();
+        this._fireCooldown = this.getFireInterval();
     },
 
     setState(newState) {

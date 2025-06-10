@@ -52,11 +52,11 @@ cc.Class({
     },
 
     onMoveUp() {
-        this.node.emit('ui-command', { command: "MOVE_UP" });
+        this.node.emit('ui-command', { command: "MOVE_UP", isPressed: true }); 
     },
 
     onMoveDown() {
-        this.node.emit('ui-command', { command: "MOVE_DOWN" });
+        this.node.emit('ui-command', { command: "MOVE_DOWN", isPressed: true });
     },
     
     onFireDown() {
@@ -65,6 +65,19 @@ cc.Class({
 
     onFireUp() {
         this.node.emit('ui-command', { command: "FIRE", isPressed: false });
+    },
+
+    playButtonTapEffect(buttonType) {
+        const targetNode = this._getTargetNode(buttonType);
+        if (!targetNode) return;
+
+        targetNode.stopAllActions();
+        const originalScale = this.originalScales.get(targetNode) || 1;
+        
+        cc.tween(targetNode)
+            .to(this.duration / 2, { scale: originalScale * this.zoomScale })
+            .to(this.duration / 2, { scale: originalScale })
+            .start();
     },
 
     playButtonPressEffect(buttonType) {

@@ -1,58 +1,66 @@
-import BulletState from './WeaponStates/BulletState.js';
 const Emitter = require('../../Common/Event/Emitter'); 
 const EventKey = require('../../Common/Event/EventKeys');
+const GameEnums = require('../../Common/GameEnums');
+const WeaponStats = require('../../Common/WeaponStats');
+
+const ProjectileType = GameEnums.ProjectileType;
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        cooldown: {
-            default: 15.0,
-            type: cc.Float,
-        },
-        progressBar: {
-            default: null,
-            type: cc.ProgressBar
-        },
-        button: {
-            default: null,
-            type: cc.Button
-        },
-        cooldownLabel: {
-            default: null,
-            type: cc.Label
-        },
-        bulletPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
-        laserPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
+        cooldown: { default: 15.0, type: cc.Float },
+        progressBar: { default: null, type: cc.ProgressBar },
+        button: { default: null, type: cc.Button },
+        cooldownLabel: { default: null, type: cc.Label },
+        bulletPrefab: { default: null, type: cc.Prefab },
+        laserPrefab: { default: null, type: cc.Prefab },
         poolSize: 20,
+        weaponStats: {
+            default: [],
+            type: [WeaponStats]
+        },
     },
+    _cooldownSprite: null,
 
     onLoad() {
         this.bulletPool = new cc.NodePool('Bullet');
         this.laserPool = new cc.NodePool('Laser');
         Emitter.registerEvent(EventKey.GAMEPLAY.FIRE_PROJECTILE, this.onCharacterFire, this);
-        this.state = null;
-        this.setState(new BulletState(this));
+        this.currentWeaponIndex = 0;
+        this.weaponStatsMap = new Map();
+        this.weaponStats.forEach(stat => {
+            this.weaponStatsMap.set(stat.type, stat);
+        });
+        if (this.progressBar) {
+            this._cooldownSprite = this.progressBar.getComponent(cc.Sprite);
+            if (!this._cooldownSprite) {
+                cc.warn("Node chứa ProgressBar cần phải có cả component Sprite để hiển thị cooldown hình tròn!");
+            }
+        }
         this.cooldownTimer = 0;
+        if(this.button) this.button.interactable = true;
+        if(this.progressBar) this.progressBar.progress = false;
+        if(this.cooldownLabel) this.cooldownLabel.node.active = false;
     },
 
     update(dt) {
         if (this.cooldownTimer > 0) {
             this.cooldownTimer -= dt;
-            
+            const fillValue = this.cooldownTimer / this.cooldown;
+            if (this.progressBar) {
+                this.progressBar.progress = Math.max(0, fillValue);
+            }
+            if (this._cooldownSprite) {
+                this._cooldownSprite.fillRange = Math.max(0, fillValue);
+            }
             const progress = 1 - (this.cooldownTimer / this.cooldown);
             if(this.progressBar) this.progressBar.progress = Math.max(0, progress);
             if(this.cooldownLabel) this.cooldownLabel.string = Math.ceil(this.cooldownTimer);
-
             if (this.cooldownTimer <= 0) {
                 this.cooldownTimer = 0;
                 if(this.button) this.button.interactable = true;
-                if(this.progressBar) this.progressBar.progress = 1;
+                if(this.progressBar) this.progressBar.progress = false;
                 if(this.cooldownLabel) this.cooldownLabel.node.active = false;
             }
         }
@@ -65,27 +73,48 @@ cc.Class({
     },
 
     handleInput(command, isPressed) {
-        if (isPressed && this.cooldownTimer <= 0) {
-            if (this.state && this.state.handleInput) {
-                this.state.handleInput(command);
-            }
+        if (command === "TOGGLE_WEAPON" && isPressed) {
+            this.trySwitchWeapon();
         }
+    },
+
+    trySwitchWeapon() {
+        if (this.cooldownTimer > 0) {
+            
+            return; 
+        }
+    
+        if (this.weaponStats.length <= 1) return;
+        this.currentWeaponIndex = (this.currentWeaponIndex + 1) % this.weaponStats.length;
+    
+        this.startCooldown();
+    },
+
+    getCurrentFireInterval() {
+        const currentType = this.getCurrentProjectileType();
+        const currentStats = this.weaponStatsMap.get(currentType);
+        if (currentStats && currentStats.fireRate > 0) {
+            return 1 / currentStats.fireRate;
+        }
+        return 0;
     },
     
     getCurrentProjectileType() {
-        return this.state.getProjectileType();
+        if (this.weaponStats.length > 0) {
+            return this.weaponStats[this.currentWeaponIndex].type;
+        }
+        return ProjectileType.BULLET;
     },
 
     startCooldown() {
         this.cooldownTimer = this.cooldown;
         if(this.button) this.button.interactable = false;
         if(this.cooldownLabel) this.cooldownLabel.node.active = true;
-    },
-
-    setState(newState) {
-        if (this.state && this.state.exit) this.state.exit();
-        this.state = newState;
-        if (this.state && this.state.enter) this.state.enter();
+        if (this.progressBar) {
+            this.progressBar.node.active = true;
+        }
+        if (this.progressBar) this.progressBar.progress = 1;
+        if (this._cooldownSprite) this._cooldownSprite.fillRange = 1;
     },
     
     onCharacterFire(eventData) {
@@ -93,7 +122,6 @@ cc.Class({
         const direction = eventData.direction;
         const projectileType = eventData.type;
         const firePointNodePos = this.node.parent.convertToNodeSpaceAR(worldPos);
-
         this.getProjectile(projectileType, firePointNodePos, direction);
     },
 
@@ -102,7 +130,10 @@ cc.Class({
         let pool = null;
         let prefab = null;
 
-        if (type === 'laser') {
+        const typeString = Object.keys(ProjectileType)[type].toLowerCase();
+        const componentName = typeString.charAt(0).toUpperCase() + typeString.slice(1);
+
+        if (type === ProjectileType.LASER) {
             pool = this.laserPool;
             prefab = this.laserPrefab;
         } else { 
@@ -114,27 +145,20 @@ cc.Class({
             projectile = pool.get();
         } else {
             projectile = cc.instantiate(prefab);
-            console.warn(`Pool for ${type} is empty, creating new one.`);
         }
 
         if (projectile) {
             projectile.parent = this.node.parent;
             projectile.position = position;
-
-            let script = projectile.getComponent(type.charAt(0).toUpperCase() + type.slice(1));
-            if (script) {
+            let script = projectile.getComponent(componentName);
+            if (script && script.init) {
                 script.init(this, direction);
             }
         }
-        return projectile;
     },
 
     putProjectile(projectile) {
-        if (!projectile || !cc.isValid(projectile)) {
-            cc.warn("Attempting to put an invalid projectile back to pool.");
-            return;
-        }
-
+        if (!projectile || !cc.isValid(projectile)) return;
         if (projectile.getComponent('Laser')) {
             this.laserPool.put(projectile);
         } else if (projectile.getComponent('Bullet')) {

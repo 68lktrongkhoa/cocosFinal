@@ -1,7 +1,7 @@
 import IdleState from './IdleState.js';
 
-const STUN_DURATION = 5; // Thời gian choáng 3 giây
-const BLINK_INTERVAL = 0.2; // Thời gian mỗi lần chớp/tắt
+const STUN_DURATION = 5;
+const BLINK_INTERVAL = 0.2;
 
 export default class StunnedState {
     constructor(controller) {

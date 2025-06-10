@@ -28,6 +28,20 @@ cc.Class({
         this.spineAnim.setAnimation(0, 'portal', false);
     },
 
+    onCollisionEnter(other, self) {
+        if (other.node.group === 'Enemy') {
+            this.getStunned();
+        }
+    },
+
+    getStunned() {
+        if (this.state instanceof StunnedState) {
+            return;
+        } else {
+            this.setState(new StunnedState(this));
+        }
+    },
+    
     onSpineAnimationComplete(trackEntry) {
         const animName = trackEntry.animation.name;
         if (animName === 'portal') {

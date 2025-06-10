@@ -1,6 +1,6 @@
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
-const { MONSTER_SPAWN_SCORE, MonsterConfig } = require('MonsterConfig');
+const MonsterConfig = require('MonsterConfig');
 
 const MONSTER_Y_POSITIONS = [40, -130, -300];
 const SPAWN_DISTANCE_X = 50;
@@ -17,6 +17,7 @@ cc.Class({
     onLoad() {
         this.registerEvent();
         this.monsterList = [];
+        this.monsterCount = 0;
         this.spawnedBossScore = new Set();
         this.spawnedDragonScore = new Set();
     },
@@ -46,13 +47,14 @@ cc.Class({
         this.monsterList.push(monster);
 
         const type = this.getMonsterType();
-        const config = MonsterConfig[type];
-        monster.getComponent('Monster').initWithConfig(config);
+        const difficulty = Math.pow(MonsterConfig.difficulty.scale, Math.floor(this.monsterCount / MonsterConfig.difficulty.step));
+        monster.getComponent('Monster').initWithConfig(type, difficulty);
+        this.monsterCount++;
     },
 
     getMonsterType() {
-        const boss = MONSTER_SPAWN_SCORE.BOSS;
-        const dragon = MONSTER_SPAWN_SCORE.DRAGON;
+        const boss = MonsterConfig.MONSTER_SPAWN_SCORE.BOSS;
+        const dragon = MonsterConfig.MONSTER_SPAWN_SCORE.DRAGON;
 
         for (let score of boss) {
             if (this.gameController.getScore() >= score && !this.spawnedBossScore.has(score)) {

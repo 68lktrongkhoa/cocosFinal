@@ -1,14 +1,15 @@
 const Emitter = require("Emitter");
 const EventKeys = require("EventKeys");
-const GameConfig = require("GameConfig");
 const MainController = require('MainController');
+const DataStorageController = require('DataStorageController');
 cc.Class({
     extends: cc.Component,
 
     properties: {
         backPanel: cc.Node,
         popupSetting: require("PopupItem"),
-        popupHighScore: require("PopupHighScore"),
+        popupHighScore: require("PopupItem"),
+        popupUpgrade: require("PopupItem"),
         isShowing: {
             default: false,
         }
@@ -19,6 +20,7 @@ cc.Class({
         this.backPanel.active = false;
         this.hideSetting();
         this.hideHighScore();
+        this.hideUpgrade();
         this.registerEvents();
     },
 
@@ -31,6 +33,8 @@ cc.Class({
         Emitter.registerEvent(EventKeys.POPUP.HIDE_SETTING, this.hideSetting, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_HIGHSCORE, this.showHighScore, this);
         Emitter.registerEvent(EventKeys.POPUP.HIDE_HIGHSCORE, this.hideHighScore, this);
+        Emitter.registerEvent(EventKeys.POPUP.SHOW_UPGRADE, this.showUpgrade, this);
+        Emitter.registerEvent(EventKeys.POPUP.HIDE_UPGRADE, this.hideUpgrade, this);
     },
 
     showSetting(){
@@ -60,14 +64,21 @@ cc.Class({
         this.setIsShowing(false);
     },
 
-    loadHighScoreData() {
-        const dataString = cc.sys.localStorage.getItem(GameConfig.LOCAL_STORAGE.HIGHSCORE_DATA);
-        if (dataString) {
-            const data = JSON.parse(dataString);
-            return data;
-        } else {
-            return [];
+    showUpgrade() {
+        if (this.getIsShowing()) {
+            return;
         }
+        this.popupUpgrade.show();
+        this.setIsShowing(true);
+    },
+
+    hideUpgrade() {
+        this.popupUpgrade.hide();
+        this.setIsShowing(false);
+    },
+
+    loadHighScoreData() {
+        return DataStorageController.getHighScoreData();
     },
 
     setIsShowing(isShowing) {

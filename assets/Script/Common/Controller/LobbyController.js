@@ -20,6 +20,14 @@ cc.Class({
         Emitter.emit(EventKeys.POPUP.HIDE_HIGHSCORE);
     },
 
+    showUpgradePopup() {
+        Emitter.emit(EventKeys.POPUP.SHOW_UPGRADE);
+    },
+
+    hideUpgradePopup() {
+        Emitter.emit(EventKeys.POPUP.HIDE_UPGRADE);
+    },
+
     playGame(){
         MainController.instance.transition('playGame');
     },

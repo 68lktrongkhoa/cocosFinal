@@ -1,6 +1,8 @@
 const StateMachine = require('javascript-state-machine');
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
+const MonsterConfig = require('MonsterConfig');
+const GameConfig = require('GameConfig');
 
 cc.Class({
     extends: cc.Component,
@@ -13,13 +15,16 @@ cc.Class({
         this._initFSM();
     },
 
-    initWithConfig(config) {
-        this.speed = config.speed;
-        this.maxHp = config.hp;
-        this.hp = config.hp;
-        this.reward = config.reward;
+    initWithConfig(type = 'mob', difficulty = 1) {
+        const baseStat = MonsterConfig.baseStat;
+        const config = MonsterConfig[type];
+
+        this.maxHp = baseStat.hp * config.hpScale * difficulty;
+        this.hp = baseStat.hp * config.hpScale * difficulty;
+        this.speed = baseStat.speed * config.speedScale * difficulty;
+        this.reward = Math.ceil(baseStat.reward * config.rewardScale * difficulty);
         this.healthProgressBar.progress = 1;
-        this.type = config.type;
+        this.type = type;
         this.node.opacity = 255;
         this.node.scale = config.scale;
         this._loadSprite(config.sprite);
@@ -163,31 +168,32 @@ cc.Class({
         this.healthProgressBar.progress = this.hp / this.maxHp;
     },
 
+    getGunDamage(type, level = 1) {
+        if (type === 'bullet') {
+            return GameConfig.STAT.GUN.BULLET[level - 1].damage;
+        }
+        if (type === 'laser') {
+            return GameConfig.STAT.GUN.LASER[level - 1].damage;
+        }
+        return 0;
+    },
+
     onCollisionEnter(other, self) {
         if (this.fsm.is('dead')) return;
 
-        const bulletScript = other.getComponent('Bullet');
-        if (bulletScript) {
-            const damageAmount = bulletScript.damage;
+        if (other.node.group === 'Bullet') {
+            const name = other.node.name.toString();;
+            let damageAmount = 0;
+            if (name.includes('Bullet')) {
+                damageAmount = this.getGunDamage('bullet', 1);
+                const bulletScript = other.getComponent('Bullet');
+                bulletScript.bulletController.putProjectile(other.node);
+            }
+            if (name.includes('Lazer')) {
+                damageAmount = this.getGunDamage('laser', 1);
+            }
             this.takeDamage(damageAmount);
-            
-            bulletScript.bulletController.putProjectile(other.node);
-            
-            return;
         }
-        const laserScript = other.getComponent('Laser');
-        if (laserScript) {
-        const damageAmount = laserScript.damage
-        
-        this.takeDamage(damageAmount);
-        
-       
-        }
-
-        // if (other.node.group === 'Bullet') {
-        //     this.takeDamage(5);
-        //     other.node.destroy();
-        // }
     },
 
     onDestroy() {

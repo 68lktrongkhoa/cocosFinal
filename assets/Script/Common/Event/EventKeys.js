@@ -4,6 +4,8 @@ module.exports = {
         HIDE_SETTING: 'hideSettingPopup',
         SHOW_HIGHSCORE: 'showHighScorePopup',
         HIDE_HIGHSCORE: 'hideHighScorePopup',
+        SHOW_UPGRADE: 'showUpgradePopup',
+        HIDE_UPGRADE: 'hideUpgradePopup',
     },
     GAMEPLAY: {
         FIRE_BULLET: 'GAMEPLAY_FIRE_BULLET',
@@ -20,9 +22,11 @@ module.exports = {
     },
 
     GAME: {
+        INIT: 'gameInit',
         START: 'gameStart',
         OVER: 'gameOver',
         ADD_SCORE: 'gameAddScore',
+        OPENING_DONE: 'gameOpeningDone',
     },
 
     MONSTER: {
@@ -32,5 +36,6 @@ module.exports = {
     UPDATE_UI:{
         TIME: 'updateTime',
         SCORE: 'updateScore',
+        HEALTH: 'updateHealth',
     }
 };

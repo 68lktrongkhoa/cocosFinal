@@ -1,7 +1,7 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
-const GameConfig = require("GameConfig");
 const MainController = require('MainController');
+const DataStorageController = require('DataStorageController');
 cc.Class({
     extends: cc.Component,
 
@@ -31,32 +31,6 @@ cc.Class({
     onDestroy() {
         this.stopMusic();
         this.removeEvents();       
-    },
-
-    loadSoundData() {
-        const dataString = cc.sys.localStorage.getItem(GameConfig.LOCAL_STORAGE.SOUND_DATA);
-        if (dataString) {
-            const data = JSON.parse(dataString);
-            this.musicEnabled = data.MUSIC_ENABLED;
-            this.musicVolume = data.MUSIC_VOLUME;
-            this.soundEnabled = data.SOUND_ENABLED;
-            this.soundVolume = data.SOUND_VOLUME;
-        } else {
-            this.musicEnabled = true;
-            this.musicVolume = 1;
-            this.soundEnabled = true;
-            this.soundVolume = 1;
-        }
-    },
-
-    saveSoundData() {
-        const data = {
-            MUSIC_ENABLED: this.musicEnabled,
-            MUSIC_VOLUME: this.musicVolume,
-            SOUND_ENABLED: this.soundEnabled,
-            SOUND_VOLUME: this.soundVolume,
-        };
-        cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.SOUND_DATA, JSON.stringify(data));
     },
 
     registerEvents() {
@@ -112,4 +86,21 @@ cc.Class({
         Emitter.removeEventsByTarget(this);
     },
 
+    loadSoundData() {
+        const data = DataStorageController.getSoundData();
+        this.musicEnabled = data.MUSIC_ENABLED;
+        this.musicVolume = data.MUSIC_VOLUME;
+        this.soundEnabled = data.SOUND_ENABLED;
+        this.soundVolume = data.SOUND_VOLUME;
+    },
+
+    saveSoundData() {
+        const data = {
+            MUSIC_ENABLED: this.musicEnabled,
+            MUSIC_VOLUME: this.musicVolume,
+            SOUND_ENABLED: this.soundEnabled,
+            SOUND_VOLUME: this.soundVolume,
+        };
+        DataStorageController.setSoundData(data);
+    },
 });

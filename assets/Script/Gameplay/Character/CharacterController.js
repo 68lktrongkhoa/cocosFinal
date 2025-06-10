@@ -1,4 +1,5 @@
 import IdleState from './States/IdleState.js';
+import StunnedState from './States/StunnedState.js';
 const Emitter = require('../../Common/Event/Emitter'); 
 const EventKey = require('../../Common/Event/EventKeys');
 
@@ -31,8 +32,23 @@ cc.Class({
         } else {
             this._fireInterval = 0;
         }
+        cc.director.getCollisionManager().enabled = true;
     },
 
+    onCollisionEnter(other, self) {
+        if (other.node.group === 'Enemy') {
+            this.getStunned();
+        }
+    },
+
+    getStunned() {
+        if (this.state instanceof StunnedState) {
+            return;
+        } else {
+            this.setState(new StunnedState(this));
+        }
+    },
+    
     onSpineAnimationComplete(trackEntry) {
         const animName = trackEntry.animation.name;
         if (animName === 'portal') {
@@ -84,11 +100,13 @@ cc.Class({
     },
 
     setState(newState) {
-        if (this.state) {
+        if (this.state && this.state.exit) {
             this.state.exit();
         }
         this.state = newState;
-        this.state.enter();
+        if (this.state && this.state.enter) {
+            this.state.enter();
+        }
     },
     
     onDestroy() {

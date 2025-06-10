@@ -22,7 +22,6 @@ cc.Class({
     },
 
     init() {
-        cc.log('MonsterController init');
         this.isGameOver = false;
         this.currentInterval = SPAWN_INTERVAL;
         this.spawnNextMonster();
@@ -31,7 +30,6 @@ cc.Class({
     spawnNextMonster() {
         if (!this.isGameOver) {
             this.spawnRandomMonster();
-            cc.log('MonsterController spawnNextMonster', this.currentInterval);
             this.currentInterval = Math.max(this.currentInterval * 0.999, 1);
             this.scheduleOnce(() => {
                 this.spawnNextMonster();
@@ -111,7 +109,6 @@ cc.Class({
     },
 
     onDestroy() {
-        cc.log('onDestroy MonsterController')
         this.unschedule(this.spawnRandomMonster);
         Emitter.removeEventsByTarget(this);
         this.clearAllMonsters();

@@ -55,10 +55,8 @@ cc.Class({
                 onHit: () => this._handleHit(),
                 onDie: () => this._handleDie(),
                 onTransition: (transition) => {
-                    cc.log(`Transitioning from ${transition.from} to ${transition.to}`);
                 },
                 onInvalidTransition: (transition, from) => {
-                    cc.warn(`Invalid state attempted: ${transition} from ${from}`);
                 }
             }
         });
@@ -168,13 +166,30 @@ cc.Class({
     onCollisionEnter(other, self) {
         if (this.fsm.is('dead')) return;
 
-        if (other.node.group === 'Bullet') {
-            this.takeDamage(5);
-            other.node.destroy();
+        const bulletScript = other.getComponent('Bullet');
+        if (bulletScript) {
+            const damageAmount = bulletScript.damage;
+            this.takeDamage(damageAmount);
+            
+            bulletScript.bulletController.putProjectile(other.node);
+            
+            return;
         }
+        const laserScript = other.getComponent('Laser');
+        if (laserScript) {
+        const damageAmount = laserScript.damage
+        
+        this.takeDamage(damageAmount);
+        
+       
+        }
+
+        // if (other.node.group === 'Bullet') {
+        //     this.takeDamage(5);
+        //     other.node.destroy();
+        // }
     },
 
     onDestroy() {
-        cc.log('onDestroy MonsterItem')
     }
 });

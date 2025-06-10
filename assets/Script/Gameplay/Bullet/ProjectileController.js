@@ -1,4 +1,6 @@
 import BulletState from './WeaponStates/BulletState.js';
+const Emitter = require('../../Common/Event/Emitter'); 
+const EventKey = require('../../Common/Event/EventKeys');
 cc.Class({
     extends: cc.Component,
 
@@ -27,23 +29,13 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        characterNode: {
-            default: null,
-            type: cc.Node
-        },
         poolSize: 20,
     },
 
     onLoad() {
         this.bulletPool = new cc.NodePool('Bullet');
         this.laserPool = new cc.NodePool('Laser');
-
-        if (this.characterNode) {
-            this.characterNode.on('fire-projectile', this.onCharacterFire, this);
-        } else {
-            cc.warn("Not have Character Node for ProjectileController!");
-        }
-
+        Emitter.registerEvent(EventKey.GAMEPLAY.FIRE_PROJECTILE, this.onCharacterFire, this);
         this.state = null;
         this.setState(new BulletState(this));
         this.cooldownTimer = 0;
@@ -67,9 +59,7 @@ cc.Class({
     },
     
     onDestroy() {
-        if (this.characterNode) {
-            this.characterNode.off('fire-projectile', this.onCharacterFire, this);
-        }
+        Emitter.removeEventsByTarget(this);
         this.bulletPool.clear();
         this.laserPool.clear();
     },

@@ -59,13 +59,13 @@ cc.Class({
     fireProjectile() {
         const projectileType = this.projectileController.getCurrentProjectileType();
         
-        let animName = (projectileType === 'laser') ? 'shoot_special' : 'shoot';
-        this.spineAnim.setAnimation(1, animName, false);
+        this.spineAnim.setAnimation(1, 'shoot', false);
 
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
         
-        Emitter.emit(EventKey.GAMEPLAY.FIRE_BULLET, {
+        Emitter.emit(EventKey.GAMEPLAY.FIRE_PROJECTILE, {
+            type: projectileType,
             position: firePointWorldPos,
             direction: shootDirection
         });

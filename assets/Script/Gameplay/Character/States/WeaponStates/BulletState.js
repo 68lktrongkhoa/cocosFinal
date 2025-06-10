@@ -5,7 +5,7 @@ export default class BulletState {
         this.controller = projectileController;
     }
 
-    enter() { cc.log("Weapon Mode: BULLET"); }
+    enter() { }
     exit() {}
     update(dt) {}
 

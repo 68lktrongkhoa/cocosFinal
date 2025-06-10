@@ -1,6 +1,6 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
-const GameConfig = require("GameConfig");
+const DataStorageController = require('DataStorageController');
 cc.Class({
     extends: require("PopupItem"),
 

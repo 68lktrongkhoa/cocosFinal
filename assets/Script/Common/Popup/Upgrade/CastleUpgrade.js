@@ -10,6 +10,11 @@ cc.Class({
         },
     },
 
+    onLoad() {
+        this.upgradeKey = 'castle';
+        this._super();
+    },
+
     setInfoLabel(){
         this._super();
         this.healthLabel.string = this.health;

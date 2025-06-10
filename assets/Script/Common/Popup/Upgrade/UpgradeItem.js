@@ -1,3 +1,4 @@
+const DataStorageController = require("DataStorageController");
 
 cc.Class({
     extends: cc.Component,
@@ -17,6 +18,9 @@ cc.Class({
         },
         levelLabel: cc.Label,
         buttonLabel: cc.Label,
+        upgradeKey: {
+            default: '',
+        },
     },
 
     onLoad() {
@@ -44,7 +48,18 @@ cc.Class({
 
     loadConfigInfo() {},
 
-    loadLocalData() {},
-    
-    saveLocalData() {},
+    loadLocalData() {
+        const stat = DataStorageController.getUpgradeStat();
+        console.log("loadLocalData", stat);
+        if (stat[this.upgradeKey] != null) {
+            this.level = stat[this.upgradeKey];
+        }
+        
+    },
+
+    saveLocalData() {
+        const stat = DataStorageController.getUpgradeStat();
+        stat[this.upgradeKey] = this.level;
+        DataStorageController.setUpgradeStat(stat);
+    },
 });

@@ -43,6 +43,25 @@ const DataStorageController = cc.Class({
         setHighScoreData(data) {
            //Implement 
         },
+
+        getUpgradeStat() {
+            const dataString = cc.sys.localStorage.getItem(GameConfig.LOCAL_STORAGE.UPGRADE_STAT);
+            if (dataString) {
+                return JSON.parse(dataString);
+            } else {
+                return {
+                    castle: 1,
+                    skill: 1,
+                    laser: 1,
+                    bullet: 1
+                };
+            }
+        },
+        setUpgradeStat(stat) {
+            cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.UPGRADE_STAT, JSON.stringify(stat));
+            console.log("Upgrade stat saved:", stat);
+            
+        },
     },
 
     onLoad() {

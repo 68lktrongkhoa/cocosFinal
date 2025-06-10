@@ -10,6 +10,11 @@ cc.Class({
         },
     },
 
+    onLoad() {
+        this.upgradeKey = 'skill';
+        this._super();
+    },
+
     setInfoLabel(){
         this._super();
         this.cooldownLabel.string = this.cooldown;

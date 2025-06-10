@@ -15,6 +15,11 @@ cc.Class({
         },
     },
 
+    onLoad() {
+        this.upgradeKey = 'laser';
+        this._super();
+    },
+    
     setInfoLabel(){
         this._super();
         this.damageLabel.string = this.damage;

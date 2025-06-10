@@ -16,6 +16,11 @@ cc.Class({
         },
     },
 
+    onLoad() {
+        this.upgradeKey = 'bullet';
+        this._super();
+    },
+    
     setInfoLabel(){
         this._super();
         this.damageLabel.string = this.damage;

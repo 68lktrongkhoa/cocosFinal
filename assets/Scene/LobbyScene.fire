@@ -8377,7 +8377,7 @@
         "__id__": 209
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 2,
     "_components": [
       {
@@ -10894,6 +10894,7 @@
     "buttonLabel": {
       "__id__": 238
     },
+    "upgradeKey": "",
     "damageLabel": {
       "__id__": 225
     },
@@ -12515,6 +12516,7 @@
     "buttonLabel": {
       "__id__": 272
     },
+    "upgradeKey": "",
     "damageLabel": {
       "__id__": 259
     },
@@ -13800,6 +13802,7 @@
     "buttonLabel": {
       "__id__": 299
     },
+    "upgradeKey": "",
     "healthLabel": {
       "__id__": 293
     },
@@ -15081,6 +15084,7 @@
     "buttonLabel": {
       "__id__": 326
     },
+    "upgradeKey": "",
     "cooldownLabel": {
       "__id__": 320
     },

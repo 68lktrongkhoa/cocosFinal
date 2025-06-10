@@ -2,7 +2,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        duration: 0.2, 
+        duration: 5, 
+        damage: {
+            default: 10,
+            type: cc.Integer
+        }
     },
 
     init(projectileController, direction) {
@@ -20,6 +24,5 @@ cc.Class({
             }
         }, this.duration);
     },
-
     
 });

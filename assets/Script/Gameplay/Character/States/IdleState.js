@@ -1,23 +1,26 @@
-import State from '../../../Common/Patterns/State.js';
 import FiringState from './FiringState.js';
 import MovingState from './MovingState.js';
 
-export default class IdleState extends State {
+export default class IdleState {
     constructor(controller) {
-        super();
         this.controller = controller;
     }
 
     enter() {
+        if (this.controller.isFireButtonPressed) {
+            this.controller.setState(new FiringState(this.controller));
+            return;
+        }
         this.controller.spineAnim.setAnimation(0, 'hoverboard', true);
     }
     
     handleInput(command, isPressed) {
-        if (command === 'MOVE_UP' || command === 'MOVE_DOWN') {
-            this.controller.setState(new MovingState(this.controller, command));
-        }
-        if (command === "FIRE" && isPressed) {
-            this.controller.setState(new FiringState(this.controller));
+        if (isPressed) {
+            if (command === 'MOVE_UP' || command === 'MOVE_DOWN') {
+                this.controller.setState(new MovingState(this.controller, command));
+            } else if (command === "FIRE") {
+                this.controller.setState(new FiringState(this.controller));
+            }
         }
     }
 }

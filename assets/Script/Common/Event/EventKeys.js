@@ -4,6 +4,8 @@ module.exports = {
         HIDE_SETTING: 'hideSettingPopup',
         SHOW_HIGHSCORE: 'showHighScorePopup',
         HIDE_HIGHSCORE: 'hideHighScorePopup',
+        SHOW_UPGRADE: 'showUpgradePopup',
+        HIDE_UPGRADE: 'hideUpgradePopup',
     },
     GAMEPLAY: {
         FIRE_BULLET: 'GAMEPLAY_FIRE_BULLET',

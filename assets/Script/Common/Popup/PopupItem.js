@@ -6,10 +6,6 @@ cc.Class({
         animation: cc.Animation
     },
 
-    onLoad() {
-        this.animation = this.getComponent(cc.Animation);
-    },
-
     show(){
         this.playPopupAnimation();
         this.node.active = true;

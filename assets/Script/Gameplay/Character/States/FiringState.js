@@ -1,34 +1,26 @@
-// FiringState.js
-
-import State from '../../../Common/Patterns/State.js';
 import IdleState from './IdleState.js';
+import MovingState from './MovingState.js';
 
-export default class FiringState extends State {
+export default class FiringState {
     constructor(controller) {
-        super();
         this.controller = controller;
     }
 
     enter() {
         const fireInterval = this.controller.getFireInterval();
-
-        this.controller.fireProjectile();
+        this.controller.tryToFire();
 
         if (fireInterval > 0) {
-            this.controller.schedule(
-                this.controller.fireProjectile, 
-                fireInterval, 
-                cc.macro.REPEAT_FOREVER, 
-                fireInterval 
-            );
+            this.controller.schedule(this.controller.tryToFire, fireInterval);
         }
     }
 
-
     handleInput(command, isPressed) {
         if (isPressed) {
-            if (command === "MOVE_UP") this.controller.moveUp();
-            else if (command === "MOVE_DOWN") this.controller.moveDown();
+            if (command === "MOVE_UP" || command === "MOVE_DOWN") {
+                this.controller.setState(new MovingState(this.controller, command));
+                return;
+            }
         }
 
         if (command === "FIRE" && !isPressed) {
@@ -37,6 +29,7 @@ export default class FiringState extends State {
     }
     
     exit() {
-        this.controller.unschedule(this.controller.fireProjectile);
+        this.controller.unschedule(this.controller.tryToFire);
     }
+
 }

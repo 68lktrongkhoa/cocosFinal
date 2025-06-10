@@ -1,6 +1,6 @@
 const CharacterController = require('./Gameplay/Character/CharacterController'); 
 const ButtonHandler = require('./ButtonHandler'); 
-const ProjectileController = require('./Gameplay/ProjectileController');
+const ProjectileController = require('../../Gameplay/Bullet/ProjectileController');
 
 cc.Class({
     extends: cc.Component,
@@ -58,7 +58,8 @@ cc.Class({
     },
 
     onUICommand(eventData) {
-        this.processCommand(eventData.command, eventData.isPressed);
+        const isPressed = eventData.isPressed === undefined ? true : eventData.isPressed;
+        this.processCommand(eventData.command, isPressed);
     },
 
     onKeyDown(event) {
@@ -85,19 +86,10 @@ cc.Class({
             this.characterController.handleInput(command, isPressed);
         }
         if (command === "TOGGLE_WEAPON") {
-            if (this.projectileController) {
+            if (isPressed && this.projectileController) {
                 this.projectileController.handleInput(command, isPressed);
-            } else {
-                cc.warn("ProjectileController is not assigned in InputHandler.");
             }
         } 
-        else {
-            if (this.characterController) {
-                this.characterController.handleInput(command, isPressed);
-            } else {
-                cc.warn("CharacterController is not assigned in InputHandler.");
-            }
-        }
 
         if (this.buttonHandlerComponent) {
             let buttonType = null;
@@ -106,10 +98,14 @@ cc.Class({
             if (command === "FIRE") buttonType = 'FIRE';
 
             if (buttonType) {
-                if (isPressed) {
-                    this.buttonHandlerComponent.playButtonPressEffect(buttonType);
-                } else {
-                    if (buttonType === 'FIRE') {
+                if (buttonType === 'UP' || buttonType === 'DOWN') {
+                    if (isPressed) {
+                        this.buttonHandlerComponent.playButtonTapEffect(buttonType);
+                    }
+                } else if (buttonType === 'FIRE') {
+                    if (isPressed) {
+                        this.buttonHandlerComponent.playButtonPressEffect(buttonType);
+                    } else {
                         this.buttonHandlerComponent.playButtonReleaseEffect(buttonType);
                     }
                 }

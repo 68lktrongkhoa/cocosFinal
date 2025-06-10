@@ -5,6 +5,10 @@ cc.Class({
         speed: {
             default: 1500
         },
+        damage: {
+            default: 3,
+            type: cc.Integer
+        }
     },
 
     init(bulletController, direction) {
@@ -28,6 +32,10 @@ cc.Class({
 
     onCollisionEnter(other, self) {
         if (other.getComponent('Enemy')) {
+            const enemyScript = other.getComponent('Enemy');
+            if (enemyScript && enemyScript.takeDamage) {
+                enemyScript.takeDamage(this.damage);
+            }
             this.bulletController.putProjectile(this.node)
         }
     },

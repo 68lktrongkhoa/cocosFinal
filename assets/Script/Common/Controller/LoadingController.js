@@ -38,7 +38,6 @@ cc.Class({
                     progressMap[sceneName] = 1;
                     scenesLoaded++;
                     if (scenesLoaded === totalScenes) {
-                        cc.log('All scenes preloaded successfully.');
                         MainController.instance.transition('startGame');
                     }
                 });
@@ -46,6 +45,5 @@ cc.Class({
     },
 
     onDestroy() {
-        cc.log('LoadingController destroyed');
     }
 });

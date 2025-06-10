@@ -15,7 +15,6 @@ cc.Class({
     },
 
     init() {
-        cc.log('UIController init');
         this.scoreLabel.string = 'Score: 0';
         this.timeLabel.string = 'Time: 0';
     },
@@ -34,7 +33,6 @@ cc.Class({
     },
 
     onDestroy() {
-        cc.log('onDestroy RoomController');
         Emitter.removeEventsByTarget(this);
     }
 

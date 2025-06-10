@@ -13,11 +13,11 @@ const MainController = cc.Class({
     },
 
     onDestroy() {
-        cc.log('MainController destroyed');
+        
     },
 
     init() {
-        cc.log('\n\nMainController initialized');
+        
         this._initSingleton();
         this._initFSM();
         this.persistRootNodeList = [];
@@ -51,7 +51,6 @@ const MainController = cc.Class({
                 onBackToLobby: () => this.onSceneSwitch(GameConfig.SCENE.LOBBY),
                 onExitGame: () => this.onExitGame(),
                 onTransition: (transition) => {
-                    cc.log(`Transitioning from ${transition.from} to ${transition.to}`);
                 },
                 onInvalidTransition: (transition, from) => {
                     cc.warn(`Invalid state attempted: ${transition} from ${from}`);
@@ -69,32 +68,25 @@ const MainController = cc.Class({
     },
 
     onStartGame() {
-        cc.log('Is persist root node', cc.game.isPersistRootNode(this.node));
-
         this.onSceneSwitch(GameConfig.SCENE.LOBBY);
     },
 
     onPauseGame() {
-        cc.log('Game paused');
         cc.game.pause();
     },
 
     onResumeGame() {
-        cc.log('Game resumed');
         cc.game.resume();
     },
 
     onSceneSwitch(sceneName) {
-        cc.log('MainController switching to scene:', sceneName);
         cc.director.loadScene(sceneName);
     },
 
     onExitGame() {
-        cc.log('\n\nExiting game → back to Portal');
         cc.sys.localStorage.clear();
 
         if (MainController.instance === this) {
-            cc.log('MainController instance cleared');
             MainController.instance = null;
         }
 
@@ -102,13 +94,11 @@ const MainController = cc.Class({
             const node = this.persistRootNodeList[i];
             if (node && cc.game.isPersistRootNode(node)) {
                 cc.game.removePersistRootNode(node);
-                cc.log('Removed persist root node:', node.name);
             }
         }
 
         this.persistRootNodeList = null;
         cc.game.removePersistRootNode(this.node);
-        cc.log('Is persist root node ', cc.game.isPersistRootNode(this.node));
 
         cc.director.loadScene(GameConfig.PORTAL);
     },

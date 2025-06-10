@@ -32,12 +32,10 @@ class Emitter {
     }
 
     removeEvent(event, callback) {
-        cc.log(`Removing event: ${event}`);
         this._emiter.removeListener(event, callback);
     }
 
     removeEventsByTarget(context) {
-        cc.log(`Removing events for context:`, context);
         const listeners = this._listenerMap.get(context);
         if (listeners) {
             for (const { event, callback } of listeners) {
@@ -48,7 +46,6 @@ class Emitter {
     }
 
     destroy() {
-        cc.log('Emitter destroyed');
         this._emiter.removeAllListeners();
         this._listenerMap.clear();
     }

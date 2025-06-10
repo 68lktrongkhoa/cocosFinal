@@ -5,7 +5,7 @@ export default class LaserState {
         this.controller = projectileController;
     }
 
-    enter() { cc.log("Weapon Mode: LASER"); }
+    enter() {}
     exit() {}
     update(dt) {}
 

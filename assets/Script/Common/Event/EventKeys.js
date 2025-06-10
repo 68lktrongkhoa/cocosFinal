@@ -7,6 +7,7 @@ module.exports = {
     },
     GAMEPLAY: {
         FIRE_BULLET: 'GAMEPLAY_FIRE_BULLET',
+        FIRE_PROJECTILE: 'GAMEPLAY_FIRE_PROJECTILE',
     },
 
     SOUND:{

@@ -11,7 +11,6 @@ cc.Class({
     },
 
     init() {
-        cc.log('GameController init');
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
 
@@ -49,7 +48,6 @@ cc.Class({
     },
 
     onDestroy() {
-        cc.log('onDestroy RoomController');
         Emitter.removeEventsByTarget(this);
     }
 });

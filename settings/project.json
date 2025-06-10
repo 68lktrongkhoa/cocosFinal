@@ -6,7 +6,9 @@
     ],
     [
       false,
-      false
+      false,
+      null,
+      true
     ],
     [
       false,
@@ -16,7 +18,7 @@
     ],
     [
       false,
-      false,
+      true,
       true,
       false
     ]
@@ -48,7 +50,7 @@
     "height": 640,
     "width": 960
   },
-  "start-scene": "9faa4d34-1349-41a2-b3d3-041bb7b14e7d",
+  "start-scene": "7ff13012-3272-4913-9f6d-588747ae19ba",
   "use-customize-simulator": true,
   "use-project-simulator-setting": false
 }

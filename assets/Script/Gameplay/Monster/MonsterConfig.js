@@ -2,7 +2,7 @@ const basePath = 'Sprite/Monster/';
 
 const MonsterConfig = {
     MONSTER_Y_POSITIONS: [40, -130, -300],
-    SPAWN_DISTANCE_X: -100,
+    SPAWN_DISTANCE_X: 0,
     SPAWN_INTERVAL: 3,
 
     DIFFICULTY: {
@@ -54,7 +54,7 @@ const MonsterConfig = {
     },
 
     MONSTER_SPAWN_SCORE: {
-        BOSS: [500, 1000, 1500, 2000, 2500, 3000, 3500],
+        BOSS: [50, 1000, 1500, 2000, 2500, 3000, 3500],
         DRAGON: [400, 900, 1400, 1900, 2400, 2900, 3400]
     }
 };

@@ -1,5 +1,6 @@
 const Emitter = require('Emitter');
 const EventKeys = require('EventKeys');
+const GameConfig = require('GameConfig');
 cc.Class({
     extends: cc.Component,
 
@@ -7,9 +8,8 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClick, this);
     },
 
-    onClick(event) {
-        
-        Emitter.emit(EventKeys.SOUND.PLAY_ONCLICK_SOUND);
+    onClick() {
+        Emitter.emit(EventKeys.SOUND.PLAY_SFX, GameConfig.SOUND.CLICK);
     },
 
     onDestroy() {

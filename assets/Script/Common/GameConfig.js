@@ -1,3 +1,4 @@
+
 const GameConfig = {
     PORTAL: 'PortalScene',
 
@@ -66,6 +67,15 @@ const GameConfig = {
                 { level: 9, cooldown: 7, duration: 2, cost: 0 }
             ]
         }
+    },
+
+    SOUND: {
+        CLICK: 'click',
+        GUN: 'gun',
+        LASER: 'laser',
+        HIT: 'hit',
+        UPGRADE: 'upgrade',
+        VICTORY: 'victory',
     }
 };
 

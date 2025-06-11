@@ -19,7 +19,7 @@ module.exports = {
         PLAY_MUSIC: 'playMusic',
         STOP_MUSIC: 'stopMusic',
         ENABLE_SOUND: 'enableSound',
-        PLAY_ONLCICK_SOUND: 'playOnclickSound',
+        PLAY_SFX: 'playSFX',
         CHANGE_CURRENT_BGM: 'changeCurrentBGM',
     },
 

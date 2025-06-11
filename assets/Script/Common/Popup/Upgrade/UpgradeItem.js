@@ -1,6 +1,7 @@
 const DataStorageController = require("DataStorageController");
 const Emitter = require("Emitter");
 const EventKeys = require("EventKeys");
+const GameConfig = require("GameConfig");
 cc.Class({
     extends: cc.Component,
 
@@ -28,14 +29,28 @@ cc.Class({
     onLoad() {
         this.loadLocalData();
         this.setInfoLabel();
+        this.registerEvent();
+    },
+
+    onDestroy(){
+        this.removeEvents();
+    },
+
+    registerEvent() {
+        Emitter.registerEvent(EventKeys.UI.UPDATE_SCORE, this.setUpgradeButtonState, this);
+    },
+
+    removeEvents() {
+        Emitter.removeEventsByTarget(this);
     },
 
     upgrade(){
         if(this.level < this.maxLevel){
             this.level++;
-            this.setScore();
+            this.saveScore();
             this.setInfoLabel();
-            this.saveLocalData();
+            this.saveStatData();
+            Emitter.emit(EventKeys.SOUND.PLAY_SFX, GameConfig.SOUND.UPGRADE);
         }
     },
 
@@ -47,6 +62,10 @@ cc.Class({
             this.buttonLabel.string = "MAX";
         }
         this.levelLabel.string = "LVL " + this.level;
+        this.setUpgradeButtonState();
+    },
+
+    setUpgradeButtonState() {
         if(this.upgradeCost > DataStorageController.getScoreData()){
             this.upgradeButton.interactable = false;
             this.upgradeButton.node.opacity = 150;
@@ -66,13 +85,13 @@ cc.Class({
         
     },
 
-    saveLocalData() {
+    saveStatData() {
         const stat = DataStorageController.getUpgradeStat();
         stat[this.upgradeKey] = this.level;
         DataStorageController.setUpgradeStat(stat);
     },
 
-    setScore(){
+    saveScore(){
         DataStorageController.setScoreData(-this.upgradeCost);
         Emitter.emit(EventKeys.UI.UPDATE_SCORE);
     },

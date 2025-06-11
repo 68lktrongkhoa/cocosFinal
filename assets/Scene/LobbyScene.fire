@@ -165,7 +165,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 517.8831914630944
+      "z": 264.2060707592514
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -2281,7 +2281,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 416.16,
+      "width": 399.59,
       "height": 104.8
     },
     "_anchorPoint": {
@@ -3535,7 +3535,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 232.34,
+      "width": 213.04,
       "height": 54.4
     },
     "_anchorPoint": {
@@ -4024,6 +4024,21 @@
       "__uuid__": "7a0ccd47-eff1-4f66-88fd-03f58d7d9c98"
     },
     "currentBMG": null,
+    "gunSFX": {
+      "__uuid__": "79c760ab-8d61-4542-a9a9-11c18ad29dd8"
+    },
+    "hitSFX": {
+      "__uuid__": "a261b10d-1d25-41a1-b3b1-a623b959bafe"
+    },
+    "laserSFX": {
+      "__uuid__": "bc7eac03-0f89-4803-8015-3e34c2e72650"
+    },
+    "upgradeSFX": {
+      "__uuid__": "a60d9338-49ed-4fb1-9f22-0d4fafe1b909"
+    },
+    "victorySFX": {
+      "__uuid__": "6c10b656-1ee1-4b27-85d4-9993ebfb7a27"
+    },
     "_id": "91QUAlCQ1ErYyKoCpJfRrc"
   },
   {
@@ -8631,7 +8646,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 198.92,
+      "width": 188.91,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -9651,7 +9666,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.4,
+      "width": 52.04,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -9956,7 +9971,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 21.08,
+      "width": 20,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -10046,7 +10061,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 60.72,
+      "width": 52,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -10290,7 +10305,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 21.08,
+      "width": 20,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -10380,7 +10395,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 49.68,
+      "width": 44,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -11324,7 +11339,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.4,
+      "width": 52.04,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -11629,7 +11644,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 21.08,
+      "width": 20,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -11719,7 +11734,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 60.72,
+      "width": 52,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -11963,7 +11978,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 21.08,
+      "width": 20,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -12053,7 +12068,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 49.68,
+      "width": 44,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -12997,7 +13012,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.4,
+      "width": 52.04,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -13299,7 +13314,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 21.08,
+      "width": 20,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -13389,7 +13404,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 48.72,
+      "width": 41,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -14329,7 +14344,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.4,
+      "width": 52.04,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -14631,7 +14646,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 21.08,
+      "width": 20,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -14721,7 +14736,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 68.71,
+      "width": 65,
       "height": 50.4
     },
     "_anchorPoint": {

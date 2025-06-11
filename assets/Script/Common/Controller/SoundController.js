@@ -22,7 +22,27 @@ cc.Class({
         currentBMG: {
             type: cc.AudioSource,
             default: null,
-        }
+        },
+        gunSFX:{
+            type: cc.AudioClip,
+            default: null
+        },
+        hitSFX:{
+            type: cc.AudioClip,
+            default: null
+        },
+        laserSFX:{
+            type: cc.AudioClip,
+            default: null
+        },
+        upgradeSFX:{
+            type: cc.AudioClip,
+            default: null
+        },
+        victorySFX:{
+            type: cc.AudioClip,
+            default: null
+        },
     },
 
     onLoad () {
@@ -43,7 +63,7 @@ cc.Class({
     },
 
     registerEvents() {
-        Emitter.registerEvent(EventKeys.SOUND.PLAY_ONCLICK_SOUND, this.playOnclickSound, this);
+        Emitter.registerEvent(EventKeys.SOUND.PLAY_SFX, this.playSoundEffect, this);
         Emitter.registerEvent(EventKeys.SOUND.STOP_MUSIC, this.stopMusic, this);
         Emitter.registerEvent(EventKeys.SOUND.PLAY_MUSIC, this.playMusic, this);
         Emitter.registerEvent(EventKeys.SOUND.SET_SOUND_VOLUME, this.setSoundVolume, this);
@@ -53,6 +73,9 @@ cc.Class({
     },
     
     playMusic(){
+        if(!this.getIsMusicEnable()){
+            return;
+        }
         cc.audioEngine.playMusic(this.currentBMG, true);
         this.musicEnabled = true;
         this.saveSoundData();
@@ -70,11 +93,33 @@ cc.Class({
         this.saveSoundData();
     },
 
-    playOnclickSound(){
+    playSoundEffect(sound){
         if(!this.getIsSoundEnable()){
             return;
         }
-        cc.audioEngine.playEffect(this.audioClick, false, 1);
+        switch (sound) {
+            case GameConfig.SOUND.CLICK:
+                cc.audioEngine.playEffect(this.audioClick, false, this.soundVolume);
+                break;
+            case GameConfig.SOUND.GUN:
+                cc.audioEngine.playEffect(this.gunSFX, false, this.soundVolume);
+                break;
+            case GameConfig.SOUND.LASER:
+                cc.audioEngine.playEffect(this.laserSFX, false, this.soundVolume);
+                break;
+            case GameConfig.SOUND.HIT:
+                cc.audioEngine.playEffect(this.hitSFX, false, this.soundVolume);
+                break;
+            case GameConfig.SOUND.UPGRADE:
+                cc.audioEngine.playEffect(this.upgradeSFX, false, this.soundVolume);
+                break;
+            case GameConfig.SOUND.VICTORY:
+                cc.audioEngine.playMusic(this.victorySFX, false, this.musicVolume);
+                break;
+            default:
+                console.warn('Unknown sound effect:', sound);
+                return;
+        }
     },
 
     setSoundVolume(volume) {
@@ -90,6 +135,10 @@ cc.Class({
 
     getIsSoundEnable() {
         return this.soundEnabled;
+    },
+
+    getIsMusicEnable() {
+        return this.musicEnabled;
     },
 
     removeEvents() {

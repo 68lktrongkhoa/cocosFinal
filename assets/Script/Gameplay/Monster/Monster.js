@@ -99,9 +99,7 @@ cc.Class({
         const icon = this.node.getChildByName('Icon');
         icon.stopAllActions();
 
-        Emitter.emit(Events.GAME.ADD_SCORE, this.reward);
-
-
+        Emitter.emit(Events.GAME.ADD_SCORE, this.reward, this.node.position);
         const originalPos = this.node.position;
 
         cc.tween(icon)

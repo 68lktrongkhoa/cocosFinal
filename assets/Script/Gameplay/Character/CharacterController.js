@@ -1,4 +1,5 @@
 import IdleState from './States/IdleState.js';
+import StunnedState from './States/StunnedState.js';
 const Emitter = require('./Emitter'); 
 const EventKey = require('./EventKeys');
 const ProjectileController = require('ProjectileController');
@@ -26,6 +27,8 @@ cc.Class({
         this.state = null;
         this._fireCooldown = 0;
         this.spineAnim.setAnimation(0, 'portal', false);
+        this.isFireButtonPressed = false;
+        Emitter.registerEvent(EventKey.GAMEPLAY.WEAPON_SWITCHED, this.resetFireCooldown, this);
     },
 
     onCollisionEnter(other, self) {
@@ -109,5 +112,9 @@ cc.Class({
         if (this.spineAnim) {
             this.spineAnim.setCompleteListener(null);
         }
-    }
+        Emitter.removeEventsByTarget(this);
+    },
+    resetFireCooldown() {
+        this._fireCooldown = 0;
+    },
 });

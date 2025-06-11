@@ -4,6 +4,16 @@ const GameConfig = require('GameConfig');
 
 cc.Class({
     extends: cc.Component,
+    properties: {
+        playerNode: {
+            default: null,
+            type: cc.Node
+        },
+        buttonsNode: {
+            default: null,
+            type: cc.Node
+        }
+    },
 
     onLoad() {
         this.registerEvent();
@@ -33,14 +43,23 @@ cc.Class({
     },
 
     registerEvent() {
+        Emitter.registerEvent(Events.GAME.INIT, this.onGameInit, this);
         Emitter.registerEvent(Events.GAME.START, this.onGameStart, this);
         Emitter.registerEvent(Events.GAME.OPENING_DONE, this.onInitPlayerAnimation, this);
         Emitter.registerEvent(Events.GAME.OVER, this.onGameOver, this);
         Emitter.registerEvent(Events.GAME.ADD_SCORE, this.addScore, this);
+        
     },
 
     onInitPlayerAnimation(){
+        this.playerNode.active = true;
+        this.buttonsNode.active = true;
         Emitter.emit(Events.GAME.PLAYER_ANIMATION_DONE);
+    },
+
+    onGameInit() {
+        this.playerNode.active = false;
+        this.buttonsNode.active = false;
     },
 
     onGameStart() {

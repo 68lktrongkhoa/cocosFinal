@@ -15,9 +15,9 @@ cc.Class({
         this._initFSM();
     },
 
-    initWithConfig(type = 'mob', difficulty = 1) {
-        const baseStat = MonsterConfig.baseStat;
-        const config = MonsterConfig[type];
+    initWithConfig(type = 'MOB', difficulty = 1) {
+        const baseStat = MonsterConfig.BASE_STAT;
+        const config = MonsterConfig[type.toString().toUpperCase()];
 
         this.maxHp = baseStat.hp * config.hpScale * difficulty;
         this.hp = baseStat.hp * config.hpScale * difficulty;
@@ -187,6 +187,8 @@ cc.Class({
             if (name.includes('Bullet')) {
                 damageAmount = this.getGunDamage('bullet', 1);
                 const bulletScript = other.getComponent('Bullet');
+                cc.log(other)
+                cc.log(bulletScript)
                 bulletScript.bulletController.putProjectile(other.node);
             }
             if (name.includes('Lazer')) {

@@ -1,18 +1,19 @@
 const basePath = 'Sprite/Monster/';
 
 const MonsterConfig = {
-    difficulty: {
+    DIFFICULTY: {
         scale: 1.1,
         step: 50
     },
 
-    baseStat: {
+    BASE_STAT: {
         hp: 50,
         speed: 5,
         reward: 5
+
     },
 
-    mob: {
+    MOB: {
         hpScale: 1,
         speedScale: 8,
         rewardScale: 1,
@@ -20,7 +21,7 @@ const MonsterConfig = {
         sprite: basePath + 'Mob',
     },
 
-    elite: {
+    ELITE: {
         hpScale: 2,
         speedScale: 4,
         rewardScale: 2,
@@ -28,7 +29,7 @@ const MonsterConfig = {
         sprite: basePath + 'Elite',
     },
 
-    dragon: {
+    DRAGON: {
         hpScale: 4,
         speedScale: 2,
         rewardScale: 4,
@@ -36,7 +37,7 @@ const MonsterConfig = {
         sprite: basePath + 'Dragon',
     },
 
-    boss: {
+    BOSS: {
         hpScale: 10,
         speedScale: 1,
         rewardScale: 10,

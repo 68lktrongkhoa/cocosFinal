@@ -47,8 +47,8 @@ cc.Class({
         this.monsterList.push(monster);
 
         const type = this.getMonsterType();
-        const difficulty = Math.pow(MonsterConfig.difficulty.scale, Math.floor(this.monsterCount / MonsterConfig.difficulty.step));
-        monster.getComponent('Monster').initWithConfig(type, difficulty);
+        this.difficulty = Math.pow(MonsterConfig.DIFFICULTY.scale, Math.floor(this.monsterCount / MonsterConfig.DIFFICULTY.step));
+        monster.getComponent('Monster').initWithConfig(type, this.difficulty);
         this.monsterCount++;
     },
 
@@ -59,18 +59,20 @@ cc.Class({
         for (let score of boss) {
             if (this.gameController.getScore() >= score && !this.spawnedBossScore.has(score)) {
                 this.spawnedBossScore.add(score);
-                return 'boss';
+                return 'BOSS';
             }
         }
 
         for (let score of dragon) {
             if (this.gameController.getScore() >= score && !this.spawnedDragonScore.has(score)) {
                 this.spawnedDragonScore.add(score);
-                return 'dragon';
+                return 'DRAGON';
             }
         }
 
-        return Math.random() < 0.9 ? 'mob' : 'elite';
+        const eliteRate = Math.min(0.6, 0.1 * this.difficulty);
+
+        return Math.random() > eliteRate ? 'ELITE' : 'MOB';
     },
 
     getRandomSpawnPosition() {

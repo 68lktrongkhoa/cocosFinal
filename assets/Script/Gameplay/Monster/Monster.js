@@ -187,8 +187,6 @@ cc.Class({
             if (name.includes('Bullet')) {
                 damageAmount = this.getGunDamage('bullet', 1);
                 const bulletScript = other.getComponent('Bullet');
-                cc.log(other)
-                cc.log(bulletScript)
                 bulletScript.bulletController.putProjectile(other.node);
             }
             if (name.includes('Lazer')) {

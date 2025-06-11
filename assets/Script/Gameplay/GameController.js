@@ -30,6 +30,7 @@ cc.Class({
         this.hp = GameConfig.STAT.CASTLE[castleLevel - 1].health;
         Emitter.emit(Events.GAME.INIT);
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
+        Emitter.emit(Events.SOUND.CHANGE_CURRENT_BGM,GameConfig.SCENE.GAME);
     },
 
     addScore(reward) {

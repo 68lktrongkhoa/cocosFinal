@@ -1,4 +1,6 @@
 const DataStorageController = require("DataStorageController");
+const Emitter = require("Emitter");
+const EventKeys = require("EventKeys");
 cc.Class({
     extends: cc.Component,
 
@@ -31,6 +33,7 @@ cc.Class({
     upgrade(){
         if(this.level < this.maxLevel){
             this.level++;
+            this.setScore();
             this.setInfoLabel();
             this.saveLocalData();
         }
@@ -67,5 +70,10 @@ cc.Class({
         const stat = DataStorageController.getUpgradeStat();
         stat[this.upgradeKey] = this.level;
         DataStorageController.setUpgradeStat(stat);
+    },
+
+    setScore(){
+        DataStorageController.setScoreData(-this.upgradeCost);
+        Emitter.emit(EventKeys.UI.UPDATE_SCORE);
     },
 });

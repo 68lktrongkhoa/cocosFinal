@@ -2,7 +2,7 @@ const Emitter = require("Emitter");
 const EventKeys = require("EventKeys");
 const MainController = require('MainController');
 const DataStorageController = require('DataStorageController');
-const { removeEventsByTarget } = require("../Event/Emitter");
+const GameConfig = require('GameConfig');
 cc.Class({
     extends: cc.Component,
 
@@ -11,7 +11,9 @@ cc.Class({
     },
 
     onLoad() {
-        this.updareScore();
+        this.updateScore();
+        Emitter.emit(EventKeys.SOUND.CHANGE_CURRENT_BGM,GameConfig.SCENE.LOBBY);
+        this.registerEvents();
     },
 
     onDestroy() {
@@ -19,7 +21,7 @@ cc.Class({
     },
 
     registerEvents() {
-        Emitter.registerEvent(EventKeys.UI.UPDATE_SCORE, this.updareScore, this);
+        Emitter.registerEvent(EventKeys.UI.UPDATE_SCORE, this.updateScore, this);
     },
 
     removeEvents() {
@@ -45,7 +47,7 @@ cc.Class({
         MainController.instance.transition('exitGame');
     },
 
-    updareScore(){
+    updateScore(){
         const score = DataStorageController.getScoreData();
         this.scoreLabel.string = score.toString();
     }

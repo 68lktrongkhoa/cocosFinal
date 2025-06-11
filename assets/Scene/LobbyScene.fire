@@ -165,7 +165,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 264.2060707592514
+      "z": 332.327029672808
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -8339,7 +8339,7 @@
     "vertical": true,
     "inertia": true,
     "brake": 0.2,
-    "elastic": true,
+    "elastic": false,
     "bounceDuration": 0.2,
     "scrollEvents": [],
     "cancelInnerEvents": true,
@@ -15486,7 +15486,7 @@
     "vertical": true,
     "inertia": true,
     "brake": 0.75,
-    "elastic": true,
+    "elastic": false,
     "bounceDuration": 0.23,
     "scrollEvents": [],
     "cancelInnerEvents": true,

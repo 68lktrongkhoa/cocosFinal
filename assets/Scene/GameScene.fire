@@ -177,7 +177,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 370.65887281973977
+      "z": 371.5248982235242
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -1101,7 +1101,7 @@
         "__id__": 22
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 2,
     "_components": [],
     "_prefab": null,
@@ -3527,7 +3527,7 @@
         "__id__": 175
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 5,
     "_components": [],
     "_prefab": {
@@ -8692,7 +8692,7 @@
         "__id__": 288
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 5,
     "_components": [],
     "_prefab": {
@@ -11418,6 +11418,9 @@
     },
     "healthNode": {
       "__id__": 82
+    },
+    "buttonsNode": {
+      "__id__": 23
     },
     "_id": "9225grc6VAIaPYA0wFlsnG"
   },

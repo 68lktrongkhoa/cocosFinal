@@ -11,7 +11,8 @@ cc.Class({
         gameStartOverlay: cc.Node,
         gameOverOverlay: cc.Node,
         ingameOverlay: cc.Node,
-        healthNode: cc.Node
+        healthNode: cc.Node,
+        buttonsNode: cc.Node
     },
 
     onLoad() {
@@ -104,16 +105,31 @@ cc.Class({
     },
 
     hideIngameOverlay() {
+
+        cc.tween(this.buttonsNode)
+            .to(1, { opacity: 0 })
+            .start();
+
         cc.tween(this.ingameOverlay)
             .to(1, { opacity: 0 })
             .start();
+
+        this.buttonsNode.active = false;
         this.ingameOverlay.active = false;
     },
 
     showIngameOverlay() {
         this.ingameOverlay.active = true;
+        this.buttonsNode.active = true;
+
         this.ingameOverlay.opacity = 0;
+        this.buttonsNode.opacity = 0;
+        
         cc.tween(this.ingameOverlay)
+            .to(1, { opacity: 255 })
+            .start();
+        
+        cc.tween(this.buttonsNode)
             .to(1, { opacity: 255 })
             .start();
         Emitter.emit(Events.GAME.START);

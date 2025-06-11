@@ -52,23 +52,26 @@ cc.Class({
         Emitter.registerEvent(Events.GAME.TRY_AGAIN, this.initGame, this);
         Emitter.registerEvent(Events.GAME.OPENING_DONE, this.onInitPlayerAnimation, this);
         Emitter.registerEvent(Events.GAME.ADD_SCORE, this.addScore, this);
-        
+
     },
 
-    onInitPlayerAnimation(){
+    onInitPlayerAnimation() {
         this.playerNode.active = true;
-        this.buttonsNode.active = true;
+        // this.buttonsNode.active = true;
     },
 
     onGameInit() {
         this.playerNode.active = false;
-        this.buttonsNode.active = false;
+        // this.buttonsNode.active = false;
     },
 
     onCastleHit(damage) {
         this.hp -= damage;
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
         if (this.hp <= 0) {
+
+            this.playerNode.active = false;
+            // this.buttonsNode.active = false;
             this.node.stopAllActions();
             DataStorageController.setHighScoreData(this.score, this.time);
             DataStorageController.setScoreData(this.score);

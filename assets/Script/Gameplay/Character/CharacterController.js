@@ -19,6 +19,12 @@ cc.Class({
     },
 
     onLoad() {
+        Emitter.registerEvent(EventKey.GAMEPLAY.WEAPON_SWITCHED, this.resetFireCooldown, this);
+        Emitter.registerEvent(EventKey.GAME.OPENING_DONE, this.init, this);
+
+    },
+
+    init() {
         this.spineAnim.setCompleteListener(this.onSpineAnimationComplete.bind(this));
 
         this.currentPositionIndex = 1;
@@ -28,7 +34,6 @@ cc.Class({
         this._fireCooldown = 0;
         this.spineAnim.setAnimation(0, 'portal', false);
         this.isFireButtonPressed = false;
-        Emitter.registerEvent(EventKey.GAMEPLAY.WEAPON_SWITCHED, this.resetFireCooldown, this);
     },
 
     onCollisionEnter(other, self) {
@@ -49,7 +54,6 @@ cc.Class({
         const animName = trackEntry.animation.name;
         if (animName === 'portal') {
             Emitter.emit(EventKey.GAME.PLAYER_ANIMATION_DONE);
-
             this.setState(new IdleState(this));
         }
     },

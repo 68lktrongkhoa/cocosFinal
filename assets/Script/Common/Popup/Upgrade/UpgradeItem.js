@@ -50,7 +50,6 @@ cc.Class({
 
     loadLocalData() {
         const stat = DataStorageController.getUpgradeStat();
-        console.log("loadLocalData", stat);
         if (stat[this.upgradeKey] != null) {
             this.level = stat[this.upgradeKey];
         }

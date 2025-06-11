@@ -180,18 +180,27 @@ cc.Class({
 
     onCollisionEnter(other, self) {
         if (this.fsm.is('dead')) return;
-
+    
         if (other.node.group === 'Bullet') {
-            const name = other.node.name.toString();;
+            const name = other.node.name.toString();
             let damageAmount = 0;
+    
             if (name.includes('Bullet')) {
                 damageAmount = this.getGunDamage('bullet', 1);
+    
                 const bulletScript = other.getComponent('Bullet');
-                bulletScript.bulletController.putProjectile(other.node);
+                if (bulletScript) {
+                    bulletScript.returnToPool(); 
+                } else {
+                    other.node.destroy();
+                }
             }
+    
             if (name.includes('Lazer')) {
+                
                 damageAmount = this.getGunDamage('laser', 1);
             }
+    
             this.takeDamage(damageAmount);
         }
     },

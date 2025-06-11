@@ -126,7 +126,6 @@ cc.Class({
     },
 
     init() {
-        cc.log('UIController init');
         this.scoreLabel.string = '0';
         this.timeLabel.string = '00:00';
 
@@ -161,7 +160,6 @@ cc.Class({
     },
 
     registerEvent() {
-        cc.log('UIController registerEvent');
         Emitter.registerEvent(Events.GAME.INIT, this.init, this);
         Emitter.registerEvent(Events.GAME.PLAYER_ANIMATION_DONE, this.showIngameOverlay, this);
         Emitter.registerEvent(Events.UPDATE_UI.TIME, this.onTimerUpdate, this);

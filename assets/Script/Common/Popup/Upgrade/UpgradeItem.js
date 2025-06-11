@@ -27,9 +27,9 @@ cc.Class({
     },
 
     onLoad() {
+        this.registerEvent();
         this.loadLocalData();
         this.setInfoLabel();
-        this.registerEvent();
     },
 
     onDestroy(){

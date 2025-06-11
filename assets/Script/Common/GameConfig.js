@@ -12,6 +12,7 @@ const GameConfig = {
         SOUND_DATA: 'soundData',
         HIGHSCORE_DATA: 'highScoreData',
         SCORE_DATA: 'scoreData',
+        UPGRADE_STAT: 'upgradeStat',
         HIGHSCORE_MAX_LENGTH: 5,
     },
 

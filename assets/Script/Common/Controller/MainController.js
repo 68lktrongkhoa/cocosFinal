@@ -84,8 +84,6 @@ const MainController = cc.Class({
     },
 
     onExitGame() {
-        cc.sys.localStorage.clear();
-
         if (MainController.instance === this) {
             MainController.instance = null;
         }
@@ -101,6 +99,8 @@ const MainController = cc.Class({
         cc.game.removePersistRootNode(this.node);
 
         cc.director.loadScene(GameConfig.PORTAL);
+
+        cc.sys.localStorage.clear();   
     },
 
     addPersistRootNode(node){

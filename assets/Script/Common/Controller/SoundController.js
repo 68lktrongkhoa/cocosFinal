@@ -29,7 +29,7 @@ cc.Class({
     },
 
     onDestroy() {
-        this.stopMusic();
+        cc.audioEngine.stopMusic();
         this.removeEvents();       
     },
 

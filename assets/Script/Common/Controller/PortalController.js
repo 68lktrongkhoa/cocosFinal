@@ -6,8 +6,4 @@ cc.Class({
     onClickLaunchGame() {
         cc.director.loadScene('LoadingScene');
     },
-
-    onClickTest() {
-        MainController.instance.startGame();
-    }
 });

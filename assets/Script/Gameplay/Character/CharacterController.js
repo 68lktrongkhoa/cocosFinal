@@ -1,7 +1,7 @@
 import IdleState from './States/IdleState.js';
 import StunnedState from './States/StunnedState.js';
-const Emitter = require('./Emitter'); 
-const EventKey = require('./EventKeys');
+const Emitter = require('Emitter');
+const EventKey = require('EventKeys');
 const ProjectileController = require('ProjectileController');
 
 cc.Class({
@@ -44,10 +44,12 @@ cc.Class({
             this.setState(new StunnedState(this));
         }
     },
-    
+
     onSpineAnimationComplete(trackEntry) {
         const animName = trackEntry.animation.name;
         if (animName === 'portal') {
+            Emitter.emit(EventKey.GAME.PLAYER_ANIMATION_DONE);
+
             this.setState(new IdleState(this));
         }
     },
@@ -72,7 +74,7 @@ cc.Class({
         if (command === "FIRE") {
             this.isFireButtonPressed = isPressed;
         }
-        if (this.state && this.state.handleInput ) {
+        if (this.state && this.state.handleInput) {
             this.state.handleInput(command, isPressed);
         }
     },
@@ -82,7 +84,7 @@ cc.Class({
         this.spineAnim.setAnimation(1, 'shoot', false);
         const shootDirection = this.node.scaleX > 0 ? cc.v2(1, 0) : cc.v2(-1, 0);
         const firePointWorldPos = this.firePoint.parent.convertToWorldSpaceAR(this.firePoint.position);
-        
+
         Emitter.emit(EventKey.GAMEPLAY.FIRE_PROJECTILE, {
             type: projectileType,
             position: firePointWorldPos,
@@ -107,7 +109,7 @@ cc.Class({
             this.state.enter();
         }
     },
-    
+
     onDestroy() {
         if (this.spineAnim) {
             this.spineAnim.setCompleteListener(null);

@@ -1,53 +1,61 @@
 const basePath = 'Sprite/Monster/';
 
 const MonsterConfig = {
+    MONSTER_Y_POSITIONS: [40, -130, -300],
+    SPAWN_DISTANCE_X: -100,
+    SPAWN_INTERVAL: 3,
+
     DIFFICULTY: {
         scale: 1.1,
         step: 50
     },
 
     BASE_STAT: {
-        hp: 50,
-        speed: 5,
-        reward: 5
-
+        hp: 20,
+        speed: 25,
+        reward: 10,
+        damage: 1
     },
 
     MOB: {
         hpScale: 1,
         speedScale: 8,
         rewardScale: 1,
+        damageScale: 1,
         scale: 0.4,
         sprite: basePath + 'Mob',
     },
 
     ELITE: {
-        hpScale: 2,
-        speedScale: 4,
+        hpScale: 3,
+        speedScale: 6,
         rewardScale: 2,
+        damageScale: 2,
         scale: 0.5,
         sprite: basePath + 'Elite',
     },
 
     DRAGON: {
-        hpScale: 4,
-        speedScale: 2,
+        hpScale: 6,
+        speedScale: 4,
         rewardScale: 4,
+        damageScale: 3,
         scale: 0.6,
         sprite: basePath + 'Dragon',
     },
 
     BOSS: {
         hpScale: 10,
-        speedScale: 1,
+        speedScale: 2,
         rewardScale: 10,
+        damageScale: 4,
         scale: 1,
         sprite: basePath + 'Boss',
     },
 
     MONSTER_SPAWN_SCORE: {
-        BOSS: [100, 500, 1500, 3000, 5000],
-        DRAGON: [50, 250, 750, 1000, 1250, 1750, 2000, 2250, 2500, 2750, 3250, 3500, 3750, 4000, 4250, 4500, 4750]
+        BOSS: [500, 1000, 1500, 2000, 2500, 3000, 3500],
+        DRAGON: [400, 900, 1400, 1900, 2400, 2900, 3400]
     }
 };
 module.exports = MonsterConfig

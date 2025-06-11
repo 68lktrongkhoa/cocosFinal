@@ -1,6 +1,7 @@
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
 const GameConfig = require('GameConfig');
+const DataStorageController = require('DataStorageController');
 
 cc.Class({
     extends: cc.Component,
@@ -28,7 +29,9 @@ cc.Class({
 
     initGame() {
         this.isGameStart = false;
-        this.hp = GameConfig.STAT.CASTLE[0].hp;
+        const data = DataStorageController.getUpgradeStat()
+        const castleLevel = data.castle;
+        this.hp = GameConfig.STAT.CASTLE[castleLevel - 1].health;
         Emitter.emit(Events.GAME.INIT);
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
     },
@@ -44,9 +47,10 @@ cc.Class({
 
     registerEvent() {
         Emitter.registerEvent(Events.GAME.INIT, this.onGameInit, this);
+        Emitter.registerEvent(Events.CASTLE.ON_HIT, this.onCastleHit, this);
         Emitter.registerEvent(Events.GAME.START, this.onGameStart, this);
+        Emitter.registerEvent(Events.GAME.TRY_AGAIN, this.initGame, this);
         Emitter.registerEvent(Events.GAME.OPENING_DONE, this.onInitPlayerAnimation, this);
-        Emitter.registerEvent(Events.GAME.OVER, this.onGameOver, this);
         Emitter.registerEvent(Events.GAME.ADD_SCORE, this.addScore, this);
         
     },
@@ -54,7 +58,6 @@ cc.Class({
     onInitPlayerAnimation(){
         this.playerNode.active = true;
         this.buttonsNode.active = true;
-        Emitter.emit(Events.GAME.PLAYER_ANIMATION_DONE);
     },
 
     onGameInit() {
@@ -62,15 +65,22 @@ cc.Class({
         this.buttonsNode.active = false;
     },
 
+    onCastleHit(damage) {
+        this.hp -= damage;
+        Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
+        if (this.hp <= 0) {
+            this.node.stopAllActions();
+            DataStorageController.setHighScoreData(this.score, this.time);
+            DataStorageController.setScoreData(this.score);
+            Emitter.emit(Events.GAME.OVER, this.score, this.time);
+        }
+    },
+
     onGameStart() {
         this.elapsed = 0;
         this.time = 0;
         this.score = 0;
         this.isGameStart = true;
-    },
-
-    onGameOver() {
-        this.node.stopAllActions();
     },
 
     update(dt) {

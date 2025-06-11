@@ -13,11 +13,11 @@ const MainController = cc.Class({
     },
 
     onDestroy() {
-        
+
     },
 
     init() {
-        
+
         this._initSingleton();
         this._initFSM();
         this.persistRootNodeList = [];
@@ -40,7 +40,7 @@ const MainController = cc.Class({
                 { name: 'playGame', from: 'lobby', to: 'play' },
                 { name: 'pauseGame', from: 'play', to: 'pause' },
                 { name: 'resumeGame', from: 'pause', to: 'play' },
-                { name: 'backToLobby', from: 'pause', to: 'lobby' },
+                { name: 'backToLobby', from: ['pause', 'play'], to: 'lobby' },
                 { name: 'exitGame', from: 'lobby', to: 'end' },
             ],
             methods: {
@@ -88,7 +88,7 @@ const MainController = cc.Class({
             MainController.instance = null;
         }
 
-        for(let i = 0; i < this.persistRootNodeList.length; i++) {
+        for (let i = 0; i < this.persistRootNodeList.length; i++) {
             const node = this.persistRootNodeList[i];
             if (node && cc.game.isPersistRootNode(node)) {
                 cc.game.removePersistRootNode(node);
@@ -103,7 +103,7 @@ const MainController = cc.Class({
         cc.sys.localStorage.clear();   
     },
 
-    addPersistRootNode(node){
+    addPersistRootNode(node) {
         cc.game.addPersistRootNode(node);
         this.persistRootNodeList.push(node);
     }

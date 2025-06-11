@@ -2,10 +2,6 @@ const Emitter = require('Emitter');
 const Events = require('EventKeys');
 const MonsterConfig = require('MonsterConfig');
 
-const MONSTER_Y_POSITIONS = [40, -130, -300];
-const SPAWN_DISTANCE_X = 50;
-const SPAWN_INTERVAL = 4;
-
 cc.Class({
     extends: cc.Component,
 
@@ -16,25 +12,27 @@ cc.Class({
 
     onLoad() {
         this.registerEvent();
-        this.monsterList = [];
-        this.monsterCount = 0;
-        this.spawnedBossScore = new Set();
-        this.spawnedDragonScore = new Set();
     },
 
     init() {
+        this.monsterList = [];
+        this.monsterCount = 0;
         this.isGameOver = false;
-        this.currentInterval = SPAWN_INTERVAL;
+        this.currentInterval = MonsterConfig.SPAWN_INTERVAL;
+        this.spawnedBossScore = new Set();
+        this.spawnedDragonScore = new Set();
         this.spawnNextMonster();
     },
 
-    spawnNextMonster() {
+    spawnNextMonster(isStop = false) {
         if (!this.isGameOver) {
             this.spawnRandomMonster();
-            this.currentInterval = Math.max(this.currentInterval * 0.999, 1);
-            this.scheduleOnce(() => {
-                this.spawnNextMonster();
-            }, this.currentInterval);
+            this.currentInterval = Math.max(this.currentInterval * 0.99, 1);
+            if (!isStop) {
+                this.scheduleOnce(() => {
+                    this.spawnNextMonster();
+                }, this.currentInterval);
+            }
         }
     },
 
@@ -46,8 +44,8 @@ cc.Class({
         this.node.addChild(monster);
         this.monsterList.push(monster);
 
-        const type = this.getMonsterType();
         this.difficulty = Math.pow(MonsterConfig.DIFFICULTY.scale, Math.floor(this.monsterCount / MonsterConfig.DIFFICULTY.step));
+        const type = this.getMonsterType();
         monster.getComponent('Monster').initWithConfig(type, this.difficulty);
         this.monsterCount++;
     },
@@ -70,14 +68,13 @@ cc.Class({
             }
         }
 
-        const eliteRate = Math.min(0.6, 0.1 * this.difficulty);
-
-        return Math.random() > eliteRate ? 'ELITE' : 'MOB';
+        const eliteRate = Math.min(0.4, 0.1 * this.difficulty);
+        return Math.random() < eliteRate ? 'ELITE' : 'MOB';
     },
 
     getRandomSpawnPosition() {
-        const randomY = MONSTER_Y_POSITIONS[Math.floor(Math.random() * MONSTER_Y_POSITIONS.length)] + 25;
-        const startX = cc.winSize.width / 2 + SPAWN_DISTANCE_X;
+        const randomY = MonsterConfig.MONSTER_Y_POSITIONS[Math.floor(Math.random() * MonsterConfig.MONSTER_Y_POSITIONS.length)] + 25;
+        const startX = cc.winSize.width / 2 + MonsterConfig.SPAWN_DISTANCE_X;
         return cc.v2(startX, randomY);
     },
 

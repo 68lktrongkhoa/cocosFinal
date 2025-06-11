@@ -1,3 +1,4 @@
+const MainController = require('MainController');
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
 
@@ -15,17 +16,6 @@ cc.Class({
 
     onLoad() {
         this.registerEvent();
-    },
-
-    setupUI() {
-        this.gameOverOverlay.active = false;
-        this.hideGameUI();
-    },
-
-    playOpeningEffects(callback) {
-        this.animateWings();
-        this.animateGlow();
-        callback && callback();
     },
 
     animateWings() {
@@ -47,8 +37,8 @@ cc.Class({
             .start();
     },
 
-    animateGlow() {
-        const glow = this.gameStartOverlay.getChildByName('WhiteGlow');
+    animateGlow(node) {
+        const glow = node.getChildByName('WhiteGlow');
         cc.tween(glow)
             .repeatForever(
                 cc.tween()
@@ -56,6 +46,16 @@ cc.Class({
                     .to(1, { opacity: 0 }, { easing: 'sineIn' })
             )
             .start();
+    },
+
+    animateFlags() {
+        const banner = this.gameOverOverlay.getChildByName('Banner');
+        const leftFlag = banner.getChildByName('LeftFlag');
+        const rightFlag = banner.getChildByName('RightFlag');
+        const angle = leftFlag.angle;
+
+        this.floatTween(leftFlag, angle, 5, 1);
+        this.floatTween(rightFlag, -angle, -5, 1);
     },
 
     startCountdown(onFinish) {
@@ -90,11 +90,6 @@ cc.Class({
         })
     },
 
-    showGameStartOverlay() {
-        this.gameStartOverlay.active = true;
-        this.gameStartOverlay.opacity = 255;
-    },
-
     hideGameStartOverlay() {
         cc.tween(this.gameStartOverlay)
             .to(0.5, { opacity: 0 })
@@ -105,7 +100,6 @@ cc.Class({
     displayGameOverOverlay() {
         this.gameOverOverlay.active = true;
         this.gameOverOverlay.opacity = 0;
-        Emitter.emit(Events.GAME.SHOW_FINAL_SCORE);
         cc.tween(this.gameOverOverlay).to(1, { opacity: 255 }).start();
     },
 
@@ -129,13 +123,18 @@ cc.Class({
         this.scoreLabel.string = '0';
         this.timeLabel.string = '00:00';
 
-        this.gameOverOverlay.active = false;
         this.gameStartOverlay.active = false;
+        this.gameStartOverlay.opacity = 255;
+
+        this.gameOverOverlay.active = false;
+        this.gameOverOverlay.opacity = 255;
+
         this.ingameOverlay.active = false;
+        this.ingameOverlay.opacity = 255;
 
         this.gameStartOverlay.active = true;
         this.animateWings();
-        this.animateGlow();
+        this.animateGlow(this.gameStartOverlay);
         this.startCountdown(() => {
             this.hideGameStartOverlay();
             Emitter.emit(Events.GAME.OPENING_DONE);
@@ -145,6 +144,19 @@ cc.Class({
     onTimerUpdate(seconds) {
         const time = this.formatTimer(seconds);
         this.timeLabel.string = time;
+    },
+
+    onGameOver(score, time) {
+        const bannerNode = this.gameOverOverlay.getChildByName('Banner');
+        const resultNode = this.gameOverOverlay.getChildByName('Result');
+        const scoreLabel = resultNode.getChildByName('ScoreLabel').getComponent(cc.Label);
+        const timeLabel = resultNode.getChildByName('TimeLabel').getComponent(cc.Label);
+        scoreLabel.string = 'Score: ' + score.toString();
+        timeLabel.string = 'Time: ' + this.formatTimer(time);
+        this.hideIngameOverlay();
+        this.displayGameOverOverlay();
+        this.animateFlags();
+        this.animateGlow(bannerNode);
     },
 
     formatTimer(seconds) {
@@ -159,9 +171,18 @@ cc.Class({
         this.scoreLabel.string = score;
     },
 
+    onTryAgainClick() {
+        Emitter.emit(Events.GAME.TRY_AGAIN);
+    },
+
+    onExitClick() {
+        MainController.instance.transition('backToLobby');
+    },
+
     registerEvent() {
         Emitter.registerEvent(Events.GAME.INIT, this.init, this);
         Emitter.registerEvent(Events.GAME.PLAYER_ANIMATION_DONE, this.showIngameOverlay, this);
+        Emitter.registerEvent(Events.GAME.OVER, this.onGameOver, this);
         Emitter.registerEvent(Events.UPDATE_UI.TIME, this.onTimerUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.SCORE, this.onScoreUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.HEALTH, this.onHealthUpdate, this);

@@ -35,8 +35,16 @@ const DataStorageController = cc.Class({
             }
         },
 
-        setHighScoreData(data) {
-           //Implement 
+        setHighScoreData(score, time) {
+            const data = this.getHighScoreData();
+            data.push({ score, time });
+            data.sort((a, b) => {
+                if (b.time !== a.time) {
+                    return b.time - a.time;
+                }
+                return b.score - a.score;
+            });
+            cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.HIGHSCORE_DATA, JSON.stringify(data.slice(0, GameConfig.LOCAL_STORAGE.HIGHSCORE_MAX_LENGTH)));
         },
 
         getUpgradeStat() {
@@ -67,7 +75,9 @@ const DataStorageController = cc.Class({
         },
 
         setScoreData(score) {
-            cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.SCORE_DATA, JSON.stringify(score));
+            const currentScore = this.getScoreData();
+            const newScore = currentScore + score;
+            cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.SCORE_DATA, JSON.stringify(newScore));
         }
     },
 

@@ -31,6 +31,7 @@ cc.Class({
             cc.warn("Not have buttonHandlerNode for InputHandler!");
         }
         this.keysDown = {};
+        this._isShooting = false;
     },
 
     onEnable() {
@@ -57,9 +58,12 @@ cc.Class({
         }
     },
 
+
     onUICommand(eventData) {
-        const isPressed = eventData.isPressed === undefined ? true : eventData.isPressed;
-        this.processCommand(eventData.command, isPressed);
+        if (eventData.command === "FIRE") {
+            this._isShooting = eventData.isPressed;
+        }
+        this.processCommand(eventData.command, eventData.isPressed);
     },
 
     onKeyDown(event) {
@@ -82,21 +86,23 @@ cc.Class({
     },
 
     processCommand(command, isPressed) {
-        if (this.characterController) {
-            this.characterController.handleInput(command, isPressed);
-        }
         if (command === "TOGGLE_WEAPON") {
             if (isPressed && this.projectileController) {
                 this.projectileController.handleInput(command, isPressed);
             }
-        } 
-
+            return; 
+        }
+    
+        if (this.characterController) {
+            this.characterController.handleInput(command, isPressed);
+        }
+    
         if (this.buttonHandlerComponent) {
             let buttonType = null;
             if (command === "MOVE_UP") buttonType = 'UP';
             if (command === "MOVE_DOWN") buttonType = 'DOWN';
             if (command === "FIRE") buttonType = 'FIRE';
-
+    
             if (buttonType) {
                 if (buttonType === 'UP' || buttonType === 'DOWN') {
                     if (isPressed) {
@@ -114,6 +120,9 @@ cc.Class({
     },
 
     _processKeyboard(keyCode, isPressed) {
+        if (keyCode === cc.macro.KEY.space) {
+            this._isShooting = isPressed;
+        }
         switch(keyCode) {
             case cc.macro.KEY.up: case cc.macro.KEY.w:
                 if (isPressed) this.processCommand("MOVE_UP", true);

@@ -21,6 +21,10 @@ cc.Class({
         fireButtonNode: {
             default: null,
             type: cc.Node
+        },
+        skillButton: {
+            default: null,
+            type: cc.Button
         }
     },
 
@@ -51,20 +55,32 @@ cc.Class({
         }
     },
 
-    onMoveUp() {
-        this.node.emit('ui-command', { command: "MOVE_UP", isPressed: true }); 
+    onMoveUp(event) {
+        this.node.emit('ui-command', { command: "MOVE_UP", isPressed: true });
+        event.stopPropagation() 
     },
 
-    onMoveDown() {
+    onMoveDown(event) {
         this.node.emit('ui-command', { command: "MOVE_DOWN", isPressed: true });
+        event.stopPropagation()
     },
     
-    onFireDown() {
+    onFireDown(event) {
+        if (this.skillButton) {
+            this.skillButton.interactable = false; 
+        }
+
         this.node.emit('ui-command', { command: "FIRE", isPressed: true });
+        event.stopPropagation();
     },
 
-    onFireUp() {
+    onFireUp(event) {
+        if (this.skillButton) {
+            this.skillButton.interactable = true; 
+        }
+
         this.node.emit('ui-command', { command: "FIRE", isPressed: false });
+        event.stopPropagation();
     },
 
     playButtonTapEffect(buttonType) {

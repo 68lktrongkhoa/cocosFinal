@@ -88,6 +88,7 @@ cc.Class({
         this.currentWeaponIndex = (this.currentWeaponIndex + 1) % this.weaponStats.length;
     
         this.startCooldown();
+        Emitter.emit(EventKey.GAMEPLAY.WEAPON_SWITCHED);
     },
 
     getCurrentFireInterval() {

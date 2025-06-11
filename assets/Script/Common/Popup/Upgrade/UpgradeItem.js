@@ -1,5 +1,4 @@
 const DataStorageController = require("DataStorageController");
-
 cc.Class({
     extends: cc.Component,
 
@@ -16,11 +15,12 @@ cc.Class({
             type: cc.Integer,
             default: 9,
         },
-        levelLabel: cc.Label,
-        buttonLabel: cc.Label,
         upgradeKey: {
             default: '',
         },
+        levelLabel: cc.Label,
+        buttonLabel: cc.Label,
+        upgradeButton: cc.Button,
     },
 
     onLoad() {
@@ -44,6 +44,13 @@ cc.Class({
             this.buttonLabel.string = "MAX";
         }
         this.levelLabel.string = "LVL " + this.level;
+        if(this.upgradeCost > DataStorageController.getScoreData()){
+            this.upgradeButton.interactable = false;
+            this.upgradeButton.node.opacity = 150;
+        } else {
+            this.upgradeButton.interactable = true;
+            this.upgradeButton.node.opacity = 255;
+        }
     },
 
     loadConfigInfo() {},

@@ -14,6 +14,7 @@ const GameConfig = {
     LOCAL_STORAGE: {
         SOUND_DATA: 'soundData',
         HIGHSCORE_DATA: 'highScoreData',
+        SCORE_DATA: 'scoreData',
     },
 
     STAT: {
@@ -44,12 +45,12 @@ const GameConfig = {
         },
 
         CASTLE: [
-            { level: 1, hp: 1, cost: 1000 },
-            { level: 2, hp: 2, cost: 2000 },
-            { level: 3, hp: 3, cost: 3000 },
-            { level: 4, hp: 4, cost: 4000 },
-            { level: 5, hp: 5, cost: 5000 },
-            { level: 6, hp: 6, cost: 0 },
+            { level: 1, health: 1, cost: 1000 },
+            { level: 2, health: 2, cost: 2000 },
+            { level: 3, health: 3, cost: 3000 },
+            { level: 4, health: 4, cost: 4000 },
+            { level: 5, health: 5, cost: 5000 },
+            { level: 6, health: 6, cost: 0 },
         ],
 
         SKILL: {

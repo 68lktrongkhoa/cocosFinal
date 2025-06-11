@@ -22,6 +22,10 @@ module.exports = {
         PLAY_ONLCICK_SOUND: 'playOnclickSound',
     },
 
+    UI: {
+        UPDATE_SCORE: 'updateScore',
+    },
+
     GAME: {
         INIT: 'gameInit',
         START: 'gameStart',

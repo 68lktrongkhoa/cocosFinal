@@ -13,6 +13,7 @@ cc.Class({
             const item = cc.instantiate(this.highScoreCellPrefab);
             item.parent = this.content;
             const highScoreCell = item.getComponent("HighScoreCell");
+            highScoreCell.setOrderLabel(i + 1);
             this.highScoreCellList.push(highScoreCell);
         }
     },

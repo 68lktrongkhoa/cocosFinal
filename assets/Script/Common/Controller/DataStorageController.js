@@ -59,7 +59,6 @@ const DataStorageController = cc.Class({
         },
         setUpgradeStat(stat) {
             cc.sys.localStorage.setItem(GameConfig.LOCAL_STORAGE.UPGRADE_STAT, JSON.stringify(stat));
-            console.log("Upgrade stat saved:", stat);
             
         },
     },

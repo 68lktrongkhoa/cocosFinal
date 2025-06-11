@@ -1,4 +1,5 @@
 import IdleState from './States/IdleState.js';
+import StunnedState from './States/StunnedState.js';
 const Emitter = require('./Emitter'); 
 const EventKey = require('./EventKeys');
 const ProjectileController = require('ProjectileController');

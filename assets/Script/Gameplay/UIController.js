@@ -120,7 +120,6 @@ cc.Class({
     },
 
     init() {
-        cc.log('UIController init');
         this.scoreLabel.string = '0';
         this.timeLabel.string = '00:00';
 

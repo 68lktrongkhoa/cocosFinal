@@ -69,7 +69,6 @@ cc.Class({
         }
 
         const eliteRate = Math.min(0.4, 0.1 * this.difficulty);
-        cc.log(eliteRate);
         return Math.random() < eliteRate ? 'ELITE' : 'MOB';
     },
 

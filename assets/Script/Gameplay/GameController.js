@@ -31,9 +31,7 @@ cc.Class({
         this.isGameStart = false;
         const data = DataStorageController.getUpgradeStat()
         const castleLevel = data.castle;
-        cc.log('Castle Level:', castleLevel);
         this.hp = GameConfig.STAT.CASTLE[castleLevel - 1].health;
-        cc.log('Castle HP:', this.hp);
         Emitter.emit(Events.GAME.INIT);
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
     },
@@ -48,7 +46,6 @@ cc.Class({
     },
 
     registerEvent() {
-        cc.log('Registering GameController Events');
         Emitter.registerEvent(Events.GAME.INIT, this.onGameInit, this);
         Emitter.registerEvent(Events.CASTLE.ON_HIT, this.onCastleHit, this);
         Emitter.registerEvent(Events.GAME.START, this.onGameStart, this);

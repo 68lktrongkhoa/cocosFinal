@@ -58,7 +58,6 @@ cc.Class({
     onInitPlayerAnimation(){
         this.playerNode.active = true;
         this.buttonsNode.active = true;
-        Emitter.emit(Events.GAME.PLAYER_ANIMATION_DONE);
     },
 
     onGameInit() {

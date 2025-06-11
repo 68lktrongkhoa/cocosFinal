@@ -7,19 +7,21 @@ export default class IdleState {
     }
 
     enter() {
-        if (this.controller.isFireButtonPressed) {
-            this.controller.setState(new FiringState(this.controller));
-            return;
-        }
         this.controller.spineAnim.setAnimation(0, 'hoverboard', true);
+    }
+
+    update(dt) {
+        if (this.controller.isFireButtonPressed) {
+            if (this.controller._fireCooldown <= 0) {
+                this.controller.setState(new FiringState(this.controller));
+            }
+        }
     }
     
     handleInput(command, isPressed) {
         if (isPressed) {
             if (command === 'MOVE_UP' || command === 'MOVE_DOWN') {
                 this.controller.setState(new MovingState(this.controller, command));
-            } else if (command === "FIRE") {
-                this.controller.setState(new FiringState(this.controller));
             }
         }
     }

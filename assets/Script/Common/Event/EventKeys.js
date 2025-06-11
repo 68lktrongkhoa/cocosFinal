@@ -30,12 +30,17 @@ module.exports = {
         INIT: 'gameInit',
         START: 'gameStart',
         OVER: 'gameOver',
+        TRY_AGAIN: 'gameTryAgain',
         ADD_SCORE: 'gameAddScore',
         OPENING_DONE: 'gameOpeningDone',
     },
 
     MONSTER: {
         ON_DIE: 'monsterOnDie',
+    },
+
+    CASTLE:{
+        ON_HIT: 'castleOnHit',
     },
 
     UPDATE_UI:{

@@ -7,14 +7,11 @@ const GameConfig = {
         GAME: 'GameScene',
     },
 
-    PLAYER_DEFAULT: {
-        DAMAGE: 10,
-    },
-
     LOCAL_STORAGE: {
         SOUND_DATA: 'soundData',
         HIGHSCORE_DATA: 'highScoreData',
         SCORE_DATA: 'scoreData',
+        HIGHSCORE_MAX_LENGTH: 5,
     },
 
     STAT: {
@@ -25,22 +22,22 @@ const GameConfig = {
                 { level: 3, damage: 20, reload: 1.75, cost: 2000 },
                 { level: 4, damage: 30, reload: 1.75, cost: 3000 },
                 { level: 5, damage: 40, reload: 1.75, cost: 4000 },
-                { level: 6, damage: 40, reload: 1.5, cost: 5000 },
-                { level: 7, damage: 50, reload: 1.5, cost: 5000 },
+                { level: 6, damage: 50, reload: 1.5, cost: 5000 },
+                { level: 7, damage: 60, reload: 1.5, cost: 5000 },
                 { level: 8, damage: 60, reload: 1.5, cost: 5000 },
                 { level: 9, damage: 60, reload: 1.25, cost: 0 }
             ],
 
             LASER: [
-                { level: 1, damage: 5, reload: 5, cost: 500 },
-                { level: 2, damage: 7, reload: 5, cost: 1000 },
-                { level: 3, damage: 10, reload: 5, cost: 2000 },
-                { level: 4, damage: 10, reload: 4, cost: 3000 },
-                { level: 5, damage: 15, reload: 4, cost: 4000 },
-                { level: 6, damage: 20, reload: 4, cost: 5000 },
-                { level: 7, damage: 20, reload: 3, cost: 5000 },
-                { level: 8, damage: 25, reload: 3, cost: 5000 },
-                { level: 9, damage: 30, reload: 3, cost: 0 }
+                { level: 1, damage: 20, reload: 5, cost: 500 },
+                { level: 2, damage: 30, reload: 5, cost: 1000 },
+                { level: 3, damage: 40, reload: 5, cost: 2000 },
+                { level: 4, damage: 45, reload: 4, cost: 3000 },
+                { level: 5, damage: 55, reload: 4, cost: 4000 },
+                { level: 6, damage: 65, reload: 4, cost: 5000 },
+                { level: 7, damage: 70, reload: 3, cost: 5000 },
+                { level: 8, damage: 80, reload: 3, cost: 5000 },
+                { level: 9, damage: 90, reload: 3, cost: 0 }
             ]
         },
 
@@ -54,6 +51,9 @@ const GameConfig = {
         ],
 
         SKILL: {
+            SWITCH_GUN:[
+                { level: 1, cooldown: 5, cost: 0 },
+            ],
             STUN: [
                 { level: 1, cooldown: 10, duration: 1, cost: 1000 },
                 { level: 2, cooldown: 9.5, duration: 1, cost: 2000 },

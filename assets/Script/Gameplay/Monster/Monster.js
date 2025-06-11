@@ -1,3 +1,4 @@
+const DataStorageController = require('DataStorageController');
 const StateMachine = require('javascript-state-machine');
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
@@ -16,13 +17,15 @@ cc.Class({
     },
 
     initWithConfig(type = 'MOB', difficulty = 1) {
+        difficulty = Math.min(difficulty, 3);
         const baseStat = MonsterConfig.BASE_STAT;
         const config = MonsterConfig[type.toString().toUpperCase()];
 
         this.maxHp = baseStat.hp * config.hpScale * difficulty;
         this.hp = baseStat.hp * config.hpScale * difficulty;
         this.speed = baseStat.speed * config.speedScale * difficulty;
-        this.reward = Math.ceil(baseStat.reward * config.rewardScale * difficulty);
+        this.reward = Math.ceil(baseStat.reward * config.rewardScale);
+        this.damage = baseStat.damage * config.damageScale;
         this.healthProgressBar.progress = 1;
         this.type = type;
         this.node.opacity = 255;
@@ -59,10 +62,7 @@ cc.Class({
                 onMove: () => this._handleMove(),
                 onHit: () => this._handleHit(),
                 onDie: () => this._handleDie(),
-                onTransition: (transition) => {
-                },
-                onInvalidTransition: (transition, from) => {
-                }
+                onEnterDead: () => this._handleEnterDead(),
             }
         });
     },
@@ -74,6 +74,7 @@ cc.Class({
     _handleMove() {
         this.rotation();
         this.moveToLeft(() => {
+            Emitter.emit(Events.CASTLE.ON_HIT, this.damage);
             this.transition('die');
         });
     },
@@ -125,8 +126,17 @@ cc.Class({
             .start();
     },
 
+    _handleEnterDead() {
+        const collider = this.node.getComponent(cc.Collider);
+        if (collider) {
+            collider.enabled = false;
+        }
+    },
+
     transition(name) {
-        this.fsm[name]();
+        if (this.can(name)) {
+            this.fsm[name]();
+        }
     },
 
     can(name) {
@@ -180,27 +190,31 @@ cc.Class({
 
     onCollisionEnter(other, self) {
         if (this.fsm.is('dead')) return;
-    
+
         if (other.node.group === 'Bullet') {
             const name = other.node.name.toString();
+            const data = DataStorageController.getUpgradeStat()
+
             let damageAmount = 0;
-    
+
             if (name.includes('Bullet')) {
-                damageAmount = this.getGunDamage('bullet', 1);
-    
+                const bulletLevel = data.bullet;
+                damageAmount = this.getGunDamage('bullet', bulletLevel);
+
                 const bulletScript = other.getComponent('Bullet');
                 if (bulletScript) {
-                    bulletScript.returnToPool(); 
+                    bulletScript.returnToPool();
                 } else {
                     other.node.destroy();
                 }
             }
-    
+
             if (name.includes('Lazer')) {
-                
-                damageAmount = this.getGunDamage('laser', 1);
+                const laserLevel = data.laser;
+
+                damageAmount = this.getGunDamage('laser', laserLevel);
             }
-    
+
             this.takeDamage(damageAmount);
         }
     },

@@ -10,10 +10,6 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        buttonsNode: {
-            default: null,
-            type: cc.Node
-        }
     },
 
     onLoad() {
@@ -57,12 +53,10 @@ cc.Class({
 
     onInitPlayerAnimation() {
         this.playerNode.active = true;
-        // this.buttonsNode.active = true;
     },
 
     onGameInit() {
         this.playerNode.active = false;
-        // this.buttonsNode.active = false;
     },
 
     onCastleHit(damage) {
@@ -71,7 +65,6 @@ cc.Class({
         if (this.hp <= 0) {
 
             this.playerNode.active = false;
-            // this.buttonsNode.active = false;
             this.node.stopAllActions();
             DataStorageController.setHighScoreData(this.score, this.time);
             DataStorageController.setScoreData(this.score);

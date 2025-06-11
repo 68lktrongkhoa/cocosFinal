@@ -11,6 +11,7 @@ cc.Class({
         gameStartOverlay: cc.Node,
         gameOverOverlay: cc.Node,
         ingameOverlay: cc.Node,
+        warningOverlay: cc.Node,
         healthNode: cc.Node,
         buttonsNode: cc.Node
     },
@@ -124,11 +125,11 @@ cc.Class({
 
         this.ingameOverlay.opacity = 0;
         this.buttonsNode.opacity = 0;
-        
+
         cc.tween(this.ingameOverlay)
             .to(1, { opacity: 255 })
             .start();
-        
+
         cc.tween(this.buttonsNode)
             .to(1, { opacity: 255 })
             .start();
@@ -187,6 +188,27 @@ cc.Class({
         this.scoreLabel.string = score;
     },
 
+    onBossSpawn() {
+        this.warningOverlay.active = true;
+        this.warningOverlay.opacity = 0;
+        this.warningOverlay.stopAllActions();
+
+        cc.tween(this.warningOverlay)
+            .repeatForever(
+                cc.tween()
+                    .to(0.4, { opacity: 255, easing: 'sineInOut' })
+                    .delay(0.2)
+                    .to(0.4, { opacity: 100, easing: 'sineInOut' })
+            )
+            .start();
+
+        this.scheduleOnce(() => {
+            this.warningOverlay.stopAllActions();
+            this.warningOverlay.opacity = 0;
+            this.warningOverlay.active = false;
+        }, 3);
+    },
+
     onTryAgainClick() {
         Emitter.emit(Events.GAME.TRY_AGAIN);
     },
@@ -198,6 +220,7 @@ cc.Class({
     registerEvent() {
         Emitter.registerEvent(Events.GAME.INIT, this.init, this);
         Emitter.registerEvent(Events.GAME.PLAYER_ANIMATION_DONE, this.showIngameOverlay, this);
+        Emitter.registerEvent(Events.GAME.BOSS_SPAWNED, this.onBossSpawn, this);
         Emitter.registerEvent(Events.GAME.OVER, this.onGameOver, this);
         Emitter.registerEvent(Events.UPDATE_UI.TIME, this.onTimerUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.SCORE, this.onScoreUpdate, this);

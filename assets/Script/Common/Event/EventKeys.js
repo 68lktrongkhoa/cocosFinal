@@ -34,6 +34,7 @@ module.exports = {
         TRY_AGAIN: 'gameTryAgain',
         ADD_SCORE: 'gameAddScore',
         OPENING_DONE: 'gameOpeningDone',
+        BOSS_SPAWNED: 'gameBossSpawned',
     },
 
     MONSTER: {

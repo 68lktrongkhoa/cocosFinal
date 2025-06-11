@@ -31,6 +31,9 @@ cc.Class({
         this.node.opacity = 255;
         this.node.scale = config.scale;
         this._loadSprite(config.sprite);
+        if (type === 'BOSS') {
+            Emitter.emit(Events.GAME.BOSS_SPAWNED);
+        }
     },
 
     _loadSprite(spritePath) {
@@ -188,6 +191,7 @@ cc.Class({
 
     onCollisionEnter(other, self) {
         if (this.fsm.is('dead')) return;
+        if (this.node.x > cc.winSize.width / 2 - this.node.width / 2) return;
 
         if (other.node.group === 'Bullet') {
             const name = other.node.name.toString();

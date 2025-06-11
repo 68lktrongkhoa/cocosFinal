@@ -20,6 +20,7 @@ module.exports = {
         STOP_MUSIC: 'stopMusic',
         ENABLE_SOUND: 'enableSound',
         PLAY_ONLCICK_SOUND: 'playOnclickSound',
+        CHANGE_CURRENT_BGM: 'changeCurrentBGM',
     },
 
     UI: {

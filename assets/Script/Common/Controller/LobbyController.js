@@ -2,7 +2,8 @@ const Emitter = require("Emitter");
 const EventKeys = require("EventKeys");
 const MainController = require('MainController');
 const DataStorageController = require('DataStorageController');
-const { removeEventsByTarget } = require("../Event/Emitter");
+const GameConfig = require('GameConfig');
+const { GAME } = require("../Event/EventKeys");
 cc.Class({
     extends: cc.Component,
 
@@ -12,6 +13,7 @@ cc.Class({
 
     onLoad() {
         this.updareScore();
+        Emitter.emit(EventKeys.SOUND.CHANGE_CURRENT_BGM,GameConfig.SCENE.LOBBY);
     },
 
     onDestroy() {

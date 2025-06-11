@@ -30,11 +30,8 @@ cc.Class({
 
     registerEvents(){
         Emitter.registerEvent(EventKeys.POPUP.SHOW_SETTING, this.showSetting, this);
-        Emitter.registerEvent(EventKeys.POPUP.HIDE_SETTING, this.hideSetting, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_HIGHSCORE, this.showHighScore, this);
-        Emitter.registerEvent(EventKeys.POPUP.HIDE_HIGHSCORE, this.hideHighScore, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_UPGRADE, this.showUpgrade, this);
-        Emitter.registerEvent(EventKeys.POPUP.HIDE_UPGRADE, this.hideUpgrade, this);
     },
 
     showSetting(){

@@ -29,24 +29,12 @@ cc.Class({
         Emitter.emit(EventKeys.POPUP.SHOW_SETTING);
     },
 
-    hideSettingPopup() {
-        Emitter.emit(EventKeys.POPUP.HIDE_SETTING);
-    },
-
     showHighScorePopup() {
         Emitter.emit(EventKeys.POPUP.SHOW_HIGHSCORE);
     },
 
-    hideHighScorePopup() {
-        Emitter.emit(EventKeys.POPUP.HIDE_HIGHSCORE);
-    },
-
     showUpgradePopup() {
         Emitter.emit(EventKeys.POPUP.SHOW_UPGRADE);
-    },
-
-    hideUpgradePopup() {
-        Emitter.emit(EventKeys.POPUP.HIDE_UPGRADE);
     },
 
     playGame(){

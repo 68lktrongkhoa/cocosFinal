@@ -84,7 +84,6 @@ cc.Class({
 
     _handleHit() {
         const icon = this.node.getChildByName('Icon');
-        Emitter.emit(Events.SOUND.PLAY_SFX, GameConfig.SOUND.HIT);
         cc.tween(icon)
             .to(0.2, { color: cc.color(255, 0, 0) })
             .to(0.2, { color: cc.color(255, 255, 255) })
@@ -105,7 +104,6 @@ cc.Class({
         Emitter.emit(Events.GAME.ADD_SCORE, this.reward, this.node.position);
         const originalPos = this.node.position;
 
-        Emitter.emit(Events.SOUND.PLAY_SFX, GameConfig.SOUND.HIT);
         cc.tween(icon)
             .to(0.5, { color: cc.color(255, 0, 0) })
             .to(0.5, { color: cc.color(255, 255, 255) })
@@ -169,6 +167,7 @@ cc.Class({
     },
 
     takeDamage(amount) {
+        Emitter.emit(Events.SOUND.PLAY_SFX, GameConfig.SOUND.HIT);
         this.hp -= amount;
 
         if (this.hp <= 0) {

@@ -1,5 +1,7 @@
 const GameConfig = require('GameConfig');
 const StateMachine = require('javascript-state-machine');
+const Emitter = require('Emitter');
+const EventKeys = require('EventKeys');
 
 const MainController = cc.Class({
     extends: cc.Component,
@@ -80,7 +82,13 @@ const MainController = cc.Class({
     },
 
     onSceneSwitch(sceneName) {
-        cc.director.loadScene(sceneName);
+        Emitter.emit(EventKeys.UI.FADE_IN_WAITING);
+        cc.director.loadScene(sceneName, 
+            () => {
+                console.log("load scene callback");
+                
+                Emitter.emit(EventKeys.UI.FADE_OUT_WAITING);
+        });
     },
 
     onExitGame() {

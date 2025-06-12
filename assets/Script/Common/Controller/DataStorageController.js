@@ -12,7 +12,6 @@ const DataStorageController = cc.Class({
             if (dataString) {
                 return JSON.parse(dataString);
             } else {
-                console.log("Sound data not found, returning default values.");
                 return {
                     MUSIC_ENABLED: true,
                     MUSIC_VOLUME: 1,

@@ -29,43 +29,34 @@ cc.Class({
     removeEvents(){
         Emitter.removeEventsByTarget(this);
     },
-    
-    onMusicToggleChange(toggle){
-        if(toggle.isChecked){
-            Emitter.emit(EventKeys.SOUND.PLAY_MUSIC);
-        } else {
-            Emitter.emit(EventKeys.SOUND.STOP_MUSIC);
-        }
-    },
 
     onSoundToggleChange(toggle){
-        if(toggle.isChecked){
-            Emitter.emit(EventKeys.SOUND.ENABLE_SOUND, true);
-        } else {
-            Emitter.emit(EventKeys.SOUND.ENABLE_SOUND, false);
-        }
+        Emitter.emit(EventKeys.SOUND.ENABLE_SOUND, toggle.isChecked);
     },
 
-    onMusicSliderChange(slider){
+    _onSliderChange(slider, toggleComponent, progressComponent, eventKey) {
         const volume = slider.progress;
-        if(volume <= 0) {
-            this.musicToggle.isChecked = false;
-        } else {
-            this.musicToggle.isChecked = true;
-        }
-        this.musicSliderProgress.updateSize(slider);
-        Emitter.emit(EventKeys.SOUND.SET_MUSIC_VOLUME, volume);
+        toggleComponent.isChecked = volume > 0;
+    
+        progressComponent.updateSize(slider);
+        Emitter.emit(eventKey, volume);
     },
-
-    onSoundSliderChange(slider){
-        const volume = slider.progress;
-        if(volume <= 0) {
-            this.soundToggle.isChecked = false;
-        } else {
-            this.soundToggle.isChecked = true;
-        }
-        this.soundSliderProgress.updateSize(slider);
-        Emitter.emit(EventKeys.SOUND.SET_SOUND_VOLUME, volume);
+    onMusicSliderChange(slider) {
+        this._onSliderChange(
+            slider,
+            this.musicToggle,
+            this.musicSliderProgress,
+            EventKeys.SOUND.SET_MUSIC_VOLUME
+        );
+    },
+    
+    onSoundSliderChange(slider) {
+        this._onSliderChange(
+            slider,
+            this.soundToggle,
+            this.soundSliderProgress,
+            EventKeys.SOUND.SET_SOUND_VOLUME
+        );
     },
 
     onResumeClick() {

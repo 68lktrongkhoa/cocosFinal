@@ -86,8 +86,6 @@ const MainController = cc.Class({
         Emitter.emit(EventKeys.UI.FADE_IN_WAITING);
         cc.director.loadScene(sceneName, 
             () => {
-                console.log("load scene callback");
-                
                 Emitter.emit(EventKeys.UI.FADE_OUT_WAITING);
         });
     },
@@ -107,9 +105,7 @@ const MainController = cc.Class({
         this.persistRootNodeList = null;
         cc.game.removePersistRootNode(this.node);
 
-        cc.director.loadScene(GameConfig.PORTAL);
-
-        cc.sys.localStorage.clear();   
+        cc.director.loadScene(GameConfig.PORTAL);   
     },
 
     addPersistRootNode(node) {

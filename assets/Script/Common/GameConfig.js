@@ -76,6 +76,7 @@ const GameConfig = {
         LASER: 'laser',
         HIT: 'hit',
         UPGRADE: 'upgrade',
+        WARNING: 'warning',
         VICTORY: 'victory',
     }
 };

@@ -39,6 +39,10 @@ cc.Class({
             type: cc.AudioClip,
             default: null
         },
+        warningSFX:{
+            type: cc.AudioClip,
+            default: null
+        },
         victorySFX:{
             type: cc.AudioClip,
             default: null
@@ -112,6 +116,9 @@ cc.Class({
                 break;
             case GameConfig.SOUND.UPGRADE:
                 cc.audioEngine.playEffect(this.upgradeSFX, false, this.soundVolume);
+                break;
+            case GameConfig.SOUND.WARNING:
+                cc.audioEngine.playMusic(this.warningSFX, false, this.musicVolume);
                 break;
             case GameConfig.SOUND.VICTORY:
                 cc.audioEngine.playMusic(this.victorySFX, false, this.musicVolume);

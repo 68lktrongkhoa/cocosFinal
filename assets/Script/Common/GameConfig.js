@@ -17,21 +17,21 @@ const GameConfig = {
     },
     PERFORMANCE: {
         POOL_SIZE: {
-            BULLET: 30, 
+            BULLET: 30,
             LASER: 10
         }
     },
 
     GAME: {
         BUFF: {
-            SELECTION_TIME: 10,
+            SELECTION_TIME: 20,
             TYPE: {
                 SCORE: 'scoreBuff',
                 HEALTH: 'healthBuff',
                 DAMAGE: 'damageBuff',
             }
         },
-        BONUS:{
+        BONUS: {
             SCORE: 0.1,
             DAMAGE: 0.1,
         }
@@ -54,7 +54,7 @@ const GameConfig = {
             LASER: [
                 { level: 1, damage: 20, reload: 3, cost: 500 },
                 { level: 2, damage: 30, reload: 3, cost: 1000 },
-                { level: 3, damage: 40, reload: 3, cost: 2000 },
+                { level: 3, damage: 40, reload: 2, cost: 2000 },
                 { level: 4, damage: 45, reload: 2, cost: 3000 },
                 { level: 5, damage: 55, reload: 2, cost: 4000 },
                 { level: 6, damage: 65, reload: 2, cost: 5000 },
@@ -75,7 +75,7 @@ const GameConfig = {
 
         SKILL: {
             SWITCH_GUN: [
-                { level: 1, cooldown: 5, cost: 0 },
+                { level: 1, cooldown: 4, cost: 0 },
             ],
             STUN: [
                 { level: 1, cooldown: 10, duration: 1, cost: 1000 },

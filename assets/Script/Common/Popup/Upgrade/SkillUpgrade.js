@@ -23,6 +23,7 @@ cc.Class({
     loadConfigInfo(){
         const upgradeData = GameConfig.STAT.SKILL.STUN;
         this.maxLevel = upgradeData.length;
+        this.upgradeCost = upgradeData[this.level - 1].cost;
         this.cooldown = upgradeData[this.level - 1].cooldown;
     },
 });

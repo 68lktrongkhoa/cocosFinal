@@ -49,5 +49,6 @@ module.exports = {
         TIME: 'updateTime',
         SCORE: 'updateScore',
         HEALTH: 'updateHealth',
+        DANGER: 'updateDanger'
     }
 };

@@ -104,7 +104,6 @@ cc.Class({
         const icon = this.node.getChildByName('Icon');
         icon.stopAllActions();
 
-        Emitter.emit(Events.GAME.ADD_SCORE, this.reward, this.node.position);
         const originalPos = this.node.position;
 
         cc.tween(this.node)
@@ -170,6 +169,7 @@ cc.Class({
         if (this.hp <= 0) {
             this.transition('hit');
             this.transition('die');
+            Emitter.emit(Events.GAME.ADD_SCORE, this.reward, this.node.position);
         } else {
             this.transition('hit');
             this.transition('move');

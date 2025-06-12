@@ -20,9 +20,10 @@ cc.Class({
         },
     },
 
-    onLoad() {
+    show(){
         this.loadSoundData();
         this.updateSliderProgress();
+        this._super();
     },
 
     removeEvents(){

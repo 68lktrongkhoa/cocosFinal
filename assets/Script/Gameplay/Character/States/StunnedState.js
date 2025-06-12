@@ -1,6 +1,6 @@
 import IdleState from './IdleState.js';
 
-const STUN_DURATION = 5;
+const STUN_DURATION = 1;
 const BLINK_INTERVAL = 0.2;
 
 export default class StunnedState {

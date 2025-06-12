@@ -12,6 +12,11 @@ class Emitter {
     }
 
     registerEvent(event, callback, context) {
+        if (!event || typeof callback !== 'function' || !context) {
+            cc.warn('[Emitter] Invalid event registration:', { event, callback, context });
+            return;
+        }
+
         const boundCallback = callback.bind(context);
         this._emiter.on(event, boundCallback);
 

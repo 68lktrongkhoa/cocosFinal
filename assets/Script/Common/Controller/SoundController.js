@@ -11,7 +11,7 @@ cc.Class({
             type: cc.AudioClip,
             default: null
         },
-        gameBMG:{
+        gameBMG: {
             type: cc.AudioClip,
             default: null
         },
@@ -23,33 +23,33 @@ cc.Class({
             type: cc.AudioSource,
             default: null,
         },
-        gunSFX:{
+        gunSFX: {
             type: cc.AudioClip,
             default: null
         },
-        hitSFX:{
+        hitSFX: {
             type: cc.AudioClip,
             default: null
         },
-        laserSFX:{
+        laserSFX: {
             type: cc.AudioClip,
             default: null
         },
-        upgradeSFX:{
+        upgradeSFX: {
             type: cc.AudioClip,
             default: null
         },
-        warningSFX:{
+        warningSFX: {
             type: cc.AudioClip,
             default: null
         },
-        victorySFX:{
+        victorySFX: {
             type: cc.AudioClip,
             default: null
         },
     },
 
-    onLoad () {
+    onLoad() {
         MainController.instance.addPersistRootNode(this.node);
         this.currentBMG = this.lobbyBGM;
         this.loadSoundData();
@@ -63,7 +63,7 @@ cc.Class({
 
     onDestroy() {
         cc.audioEngine.stopMusic();
-        this.removeEvents();       
+        this.removeEvents();
     },
 
     registerEvents() {
@@ -75,8 +75,8 @@ cc.Class({
         Emitter.registerEvent(EventKeys.SOUND.ENABLE_SOUND, this.setIsSoundEnable, this);
         Emitter.registerEvent(EventKeys.SOUND.CHANGE_CURRENT_BGM, this.changeCurrentBGM, this);
     },
-    
-    playMusic(){
+
+    playMusic() {
         cc.audioEngine.playMusic(this.currentBMG, true);
         this.musicEnabled = true;
         this.saveSoundData();
@@ -88,14 +88,14 @@ cc.Class({
         this.saveSoundData();
     },
 
-    stopMusic(){
+    stopMusic() {
         cc.audioEngine.stopMusic();
         this.musicEnabled = false;
         this.saveSoundData();
     },
 
-    playSoundEffect(sound){
-        if(!this.getIsSoundEnable()){
+    playSoundEffect(sound) {
+        if (!this.getIsSoundEnable()) {
             return;
         }
         switch (sound) {
@@ -167,7 +167,7 @@ cc.Class({
         DataStorageController.setSoundData(data);
     },
 
-    changeCurrentBGM(gameScene){
+    changeCurrentBGM(gameScene) {
         switch (gameScene) {
             case GameConfig.SCENE.LOBBY:
                 this.currentBMG = this.lobbyBGM;
@@ -179,6 +179,8 @@ cc.Class({
                 console.warn('Unknown BGM type:', bmg);
                 return;
         }
-        this.playMusic();
+        if (this.getIsMusicEnable()) {
+            this.playMusic();
+        }
     }
 });

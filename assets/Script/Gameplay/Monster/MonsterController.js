@@ -46,7 +46,7 @@ cc.Class({
 
         this.difficulty = Math.pow(MonsterConfig.DIFFICULTY.scale, Math.floor(this.monsterCount / MonsterConfig.DIFFICULTY.step));
         const type = this.getMonsterType();
-        monster.getComponent('Monster').initWithConfig(type, this.difficulty);
+        monster.getComponent('Monster').initWithConfig(type, this.difficulty, this.gameController.buff);
         this.monsterCount++;
     },
 

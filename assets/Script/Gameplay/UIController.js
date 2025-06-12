@@ -2,23 +2,60 @@ const MainController = require('MainController');
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
 const GameConfig = require('GameConfig');
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
         scoreLabel: cc.Label,
         timeLabel: cc.Label,
-        gameStartOverlay: cc.Node,
-        gameOverOverlay: cc.Node,
-        ingameOverlay: cc.Node,
-        warningOverlay: cc.Node,
-        dangerOverlay: cc.Node,
         healthNode: cc.Node,
         buttonsNode: cc.Node
     },
 
     onLoad() {
         this.registerEvent();
+    },
+
+    init() {
+        this.node.zIndex = 999;
+        this.ingameOverlay = this.node.getChildByName('InGame')
+        this.gameStartOverlay = this.node.getChildByName('GameStart')
+        this.gameOverOverlay = this.node.getChildByName('GameOver')
+        this.warningOverlay = this.node.getChildByName('Warning')
+        this.dangerOverlay = this.node.getChildByName('Danger')
+        this.buffSelectionOverlay = this.node.getChildByName('BuffSelection')
+
+        this.scoreLabel.string = '0';
+        this.timeLabel.string = '00:00';
+
+        this.gameStartOverlay.active = false;
+        this.gameStartOverlay.opacity = 255;
+
+        this.gameOverOverlay.active = false;
+        this.gameOverOverlay.opacity = 255;
+
+        this.ingameOverlay.active = false;
+        this.ingameOverlay.opacity = 255;
+
+        this.scoreBuff = this.ingameOverlay.getChildByName('ScoreBuff')
+        this.scoreBuff.active = false;
+
+        this.damageBuff = this.ingameOverlay.getChildByName('DamageBuff')
+        this.damageBuff.active = false;
+
+        this.gameStartOverlay.active = true;
+
+        this.isBuffEnable = false;
+        this.scoreBuff.x = -385
+        this.damageBuff.x = -385
+
+        this.animateWings();
+        this.animateGlow(this.gameStartOverlay);
+        this.startCountdown(() => {
+            this.hideGameStartOverlay();
+            Emitter.emit(Events.GAME.OPENING_DONE);
+        });
     },
 
     animateWings() {
@@ -106,6 +143,52 @@ cc.Class({
             .start();
     },
 
+    onBuffSelectionUpdate() {
+        this.buffSelectionOverlay.active = true;
+
+        this.dangerOverlay.opacity = 0;
+
+        cc.tween(this.dangerOverlay)
+            .to(0.2, { opacity: 255 }, { easing: 'sineOut' })
+            .call(() => {
+                MainController.instance.transition('pauseGame');
+            })
+            .start();
+    },
+
+    onBuffClicked(event, type) {
+        MainController.instance.transition('resumeGame');
+        this.buffSelectionOverlay.active = false;
+        Emitter.emit(Events.GAME.BUFF_SELECTED, type);
+    },
+
+    onBonusScoreChange(bonus) {
+        if (!this.isBuffEnable) {
+            this.scoreBuff.x = -450;
+            this.isBuffEnable = true;
+        }
+
+        if (bonus === 1)
+            this.scoreBuff.active = true;
+
+        const label = this.scoreBuff.getChildByName('Label').getComponent(cc.Label);
+        label.string = bonus
+    },
+
+    onBonusDamageChange(bonus) {
+        if (!this.isBuffEnable) {
+            this.damageBuff.x = -450;
+            this.isBuffEnable = true;
+        }
+
+        if (bonus === 1)
+            this.damageBuff.active = true;
+
+        const label = this.damageBuff.getChildByName('Label').getComponent(cc.Label);
+        label.string = bonus
+
+    },
+
     hideGameStartOverlay() {
         cc.tween(this.gameStartOverlay)
             .to(0.5, { opacity: 0 })
@@ -149,27 +232,7 @@ cc.Class({
         Emitter.emit(Events.GAME.START);
     },
 
-    init() {
-        this.scoreLabel.string = '0';
-        this.timeLabel.string = '00:00';
 
-        this.gameStartOverlay.active = false;
-        this.gameStartOverlay.opacity = 255;
-
-        this.gameOverOverlay.active = false;
-        this.gameOverOverlay.opacity = 255;
-
-        this.ingameOverlay.active = false;
-        this.ingameOverlay.opacity = 255;
-
-        this.gameStartOverlay.active = true;
-        this.animateWings();
-        this.animateGlow(this.gameStartOverlay);
-        this.startCountdown(() => {
-            this.hideGameStartOverlay();
-            Emitter.emit(Events.GAME.OPENING_DONE);
-        });
-    },
 
     onTimerUpdate(seconds) {
         const time = this.formatTimer(seconds);
@@ -245,10 +308,12 @@ cc.Class({
         Emitter.registerEvent(Events.UPDATE_UI.SCORE, this.onScoreUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.HEALTH, this.onHealthUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.DANGER, this.onDangerUpdate, this);
+        Emitter.registerEvent(Events.UPDATE_UI.BUFF_SELECTION, this.onBuffSelectionUpdate, this);
+        Emitter.registerEvent(Events.GAME.BUFF_SCORE_BONUS, this.onBonusScoreChange, this);
+        Emitter.registerEvent(Events.GAME.BUFF_DAMAGE_BONUS, this.onBonusDamageChange, this);
     },
 
     onDestroy() {
         Emitter.removeEventsByTarget(this);
-    }
-
+    },
 });

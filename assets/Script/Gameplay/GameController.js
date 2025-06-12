@@ -20,13 +20,13 @@ cc.Class({
 
     initCollision() {
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
     },
 
     initGame() {
         this.time = 0;
         this.score = 0;
-        this.isGameStart = false;
+        this.isGameRun = false;
+        this.buff = { score: 0, damage: 0 }
         const data = DataStorageController.getUpgradeStat()
         const castleLevel = data.castle;
         this.hp = GameConfig.STAT.CASTLE[castleLevel - 1].health;
@@ -51,7 +51,8 @@ cc.Class({
         Emitter.registerEvent(Events.GAME.TRY_AGAIN, this.initGame, this);
         Emitter.registerEvent(Events.GAME.OPENING_DONE, this.onInitPlayerAnimation, this);
         Emitter.registerEvent(Events.GAME.ADD_SCORE, this.addScore, this);
-
+        Emitter.registerEvent(Events.GAME.BUFF_SELECTED, this.onBuffSelected, this);
+        Emitter.registerEvent(Events.GAME.ON_GAME_OVER, this.onGameOver, this);
     },
 
     onInitPlayerAnimation() {
@@ -66,28 +67,57 @@ cc.Class({
         this.hp -= damage;
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
         if (this.hp <= 0) {
-            this.playerNode.active = false;
-            this.node.stopAllActions();
-            DataStorageController.setHighScoreData(this.score, this.time);
-            DataStorageController.setScoreData(this.score);
-            Emitter.emit(Events.GAME.OVER, this.score, this.time);
+            this.onGameOver()
         } else {
             Emitter.emit(Events.UPDATE_UI.DANGER);
         }
     },
 
+    onBuffSelected(type) {
+        switch (type) {
+            case GameConfig.GAME.BUFF.TYPE.SCORE: {
+                this.buff.score += 1;
+                Emitter.emit(Events.GAME.BUFF_SCORE_BONUS, this.buff.score);
+                break;
+            }
+            case GameConfig.GAME.BUFF.TYPE.HEALTH: {
+                this.hp += 1;
+                Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
+                break;
+            }
+            case GameConfig.GAME.BUFF.TYPE.DAMAGE: {
+                this.buff.damage += 1;
+                Emitter.emit(Events.GAME.BUFF_DAMAGE_BONUS, this.buff.damage);
+                break;
+            }
+        }
+    },
+
     onGameStart() {
         this.elapsed = 0;
-        this.isGameStart = true;
+        this.isGameRun = true;
+    },
+
+    onGameOver() {
+        this.isGameRun = false;
+        this.playerNode.active = false;
+        this.node.stopAllActions();
+        DataStorageController.setHighScoreData(this.score, this.time);
+        DataStorageController.setScoreData(this.score);
+        Emitter.emit(Events.GAME.OVER, this.score, this.time);
     },
 
     update(dt) {
-        if (this.isGameStart) {
+        if (this.isGameRun) {
             this.elapsed += dt;
             if (this.elapsed >= 1) {
                 this.time += Math.floor(this.elapsed);
                 this.elapsed %= 1;
                 Emitter.emit(Events.UPDATE_UI.TIME, this.time);
+
+                if (this.time % GameConfig.GAME.BUFF.SELECTION_TIME === 0) {
+                    Emitter.emit(Events.UPDATE_UI.BUFF_SELECTION, this.time);
+                }
             }
         }
     },

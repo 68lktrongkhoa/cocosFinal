@@ -8,36 +8,44 @@ cc.Class({
     properties: {
         musicToggle: cc.Toggle,
         musicSlider: cc.Slider,
-        musicSliderProgress: { 
+        musicSliderProgress: {
             type: require('SliderProgress'),
             default: null
         },
         soundToggle: cc.Toggle,
         soundSlider: cc.Slider,
-        soundSliderProgress: { 
+        soundSliderProgress: {
             type: require('SliderProgress'),
             default: null
         },
     },
 
-    show(){
+    show() {
         this.loadSoundData();
         this.updateSliderProgress();
         this._super();
     },
 
-    removeEvents(){
+    removeEvents() {
         Emitter.removeEventsByTarget(this);
     },
 
-    onSoundToggleChange(toggle){
+    onMusicToggleChange(toggle) {
+        if (toggle.isChecked) {
+            Emitter.emit(EventKeys.SOUND.PLAY_MUSIC);
+        } else {
+            Emitter.emit(EventKeys.SOUND.STOP_MUSIC);
+        }
+    },
+
+    onSoundToggleChange(toggle) {
         Emitter.emit(EventKeys.SOUND.ENABLE_SOUND, toggle.isChecked);
     },
 
     _onSliderChange(slider, toggleComponent, progressComponent, eventKey) {
         const volume = slider.progress;
         toggleComponent.isChecked = volume > 0;
-    
+
         progressComponent.updateSize(slider);
         Emitter.emit(eventKey, volume);
     },
@@ -49,7 +57,7 @@ cc.Class({
             EventKeys.SOUND.SET_MUSIC_VOLUME
         );
     },
-    
+
     onSoundSliderChange(slider) {
         this._onSliderChange(
             slider,
@@ -64,7 +72,8 @@ cc.Class({
     },
 
     onBackToLobbyClick() {
-        MainController.instance.transition('backToLobby');
+        MainController.instance.transition('resumeGame');
+        Emitter.emit(EventKeys.GAME.ON_GAME_OVER);
     },
 
     loadSoundData() {

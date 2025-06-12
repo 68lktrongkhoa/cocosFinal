@@ -9905,8 +9905,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "Game Over",
-    "_N$string": "Game Over",
+    "_string": "Result",
+    "_N$string": "Result",
     "_fontSize": 50,
     "_lineHeight": 6,
     "_enableWrapText": true,

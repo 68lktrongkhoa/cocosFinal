@@ -28,12 +28,12 @@ const GameConfig = {
                 { level: 1, damage: 10, reload: 0.5, cost: 500},
                 { level: 2, damage: 20, reload: 0.5, cost: 1000 },
                 { level: 3, damage: 20, reload: 0.5, cost: 2000},
-                { level: 4, damage: 30, reload: 0.25, cost: 3000 },
-                { level: 5, damage: 40, reload: 0.25, cost: 4000 },
-                { level: 6, damage: 50, reload: 0.25, cost: 5000 },
-                { level: 7, damage: 60, reload: 0, cost: 5000 },
-                { level: 8, damage: 60, reload: 0, cost: 5000 },
-                { level: 9, damage: 60, reload: 0, cost: 0 }
+                { level: 4, damage: 30, reload: 0.4, cost: 3000 },
+                { level: 5, damage: 40, reload: 0.4, cost: 4000 },
+                { level: 6, damage: 50, reload: 0.4, cost: 5000 },
+                { level: 7, damage: 60, reload: 0.3, cost: 5000 },
+                { level: 8, damage: 60, reload: 0.3, cost: 5000 },
+                { level: 9, damage: 60, reload: 0.3, cost: 0 }
             ],
 
             LASER: [

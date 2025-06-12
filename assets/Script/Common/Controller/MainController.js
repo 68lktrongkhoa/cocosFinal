@@ -1,5 +1,7 @@
 const GameConfig = require('GameConfig');
 const StateMachine = require('javascript-state-machine');
+const Emitter = require('Emitter');
+const EventKeys = require('EventKeys');
 
 const MainController = cc.Class({
     extends: cc.Component,
@@ -72,14 +74,15 @@ const MainController = cc.Class({
     },
 
     onPauseGame() {
-        cc.game.pause();
+        cc.director.pause();
     },
 
     onResumeGame() {
-        cc.game.resume();
+        cc.director.resume();
     },
 
     onSceneSwitch(sceneName) {
+        Emitter.emit(EventKeys.MAIN_CONTROLLER.CLEAR);
         cc.director.loadScene(sceneName);
     },
 

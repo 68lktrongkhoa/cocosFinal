@@ -1,20 +1,43 @@
 const Emitter = require('Emitter');
 const EventKeys = require("EventKeys");
 const DataStorageController = require('DataStorageController');
+const MainController = require('MainController');
 cc.Class({
     extends: require("PopupItem"),
 
     properties: {
         musicToggle: cc.Toggle,
         musicSlider: cc.Slider,
+        musicSliderProgress: { 
+            type: require('SliderProgress'),
+            default: null
+        },
         soundToggle: cc.Toggle,
         soundSlider: cc.Slider,
+        soundSliderProgress: { 
+            type: require('SliderProgress'),
+            default: null
+        },
+        pauseSetting: cc.Node,
+        exitButton: cc.Node,
     },
 
     onLoad() {
         this.loadSoundData();
+        this.registerEvents();
+        this.updateSilerProgress();
     },
 
+    registerEvents(){
+        Emitter.registerEvent(EventKeys.POPUP.SHOW_PAUSE_SETTING,this.showPauseSetting, this);
+    },
+    
+    hide(){
+        if(this.pauseSetting.active) {
+            this.hidePauseSetting();
+        }
+        this._super();
+    },
     onMusicToggleChange(toggle){
         if(toggle.isChecked){
             Emitter.emit(EventKeys.SOUND.PLAY_MUSIC);
@@ -38,6 +61,7 @@ cc.Class({
         } else {
             this.musicToggle.isChecked = true;
         }
+        this.musicSliderProgress.updateSize(slider);
         Emitter.emit(EventKeys.SOUND.SET_MUSIC_VOLUME, volume);
     },
 
@@ -48,7 +72,26 @@ cc.Class({
         } else {
             this.soundToggle.isChecked = true;
         }
+        this.soundSliderProgress.updateSize(slider);
         Emitter.emit(EventKeys.SOUND.SET_SOUND_VOLUME, volume);
+    },
+
+    showPauseSetting() {
+        this.pauseSetting.active = true;
+        this.exitButton.active = false;
+    },
+
+    hidePauseSetting() {
+        this.pauseSetting.active = false;
+        this.exitButton.active = true;
+    },
+
+    onResumeClick() {
+        MainController.instance.transition('resumeGame');
+    },
+
+    onBackToLobbyClick() {
+        MainController.instance.transition('backToLobby');
     },
 
     loadSoundData() {
@@ -57,5 +100,10 @@ cc.Class({
         this.musicSlider.progress = data.MUSIC_VOLUME;
         this.soundToggle.isChecked = data.SOUND_ENABLED;
         this.soundSlider.progress = data.SOUND_VOLUME;
+    },
+
+    updateSilerProgress() {
+        this.musicSliderProgress.updateSize(this.musicSlider);
+        this.soundSliderProgress.updateSize(this.soundSlider);
     }
 });

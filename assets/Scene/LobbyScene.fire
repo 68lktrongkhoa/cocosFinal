@@ -496,17 +496,11 @@
       "__id__": 8
     },
     "_enabled": true,
-    "autoChangeInterval": 5,
+    "loopingTime": 8,
+    "playOnceChainLength": 2,
     "loopingAnimations": [],
-    "animationsToExclude": [
-      "aim",
-      "idle-turn",
-      "dead",
-      "jump",
-      "run-to-idle",
-      "shoot"
-    ],
-    "_id": "46aTbw1btNioDlTzQYSYzg"
+    "animationsToExclude": [],
+    "_id": "13QcvF1lxPVaHzNKSqcON7"
   },
   {
     "__type__": "cc.Node",

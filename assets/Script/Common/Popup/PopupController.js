@@ -10,6 +10,8 @@ cc.Class({
         popupSetting: require("PopupItem"),
         popupHighScore: require("PopupItem"),
         popupUpgrade: require("PopupItem"),
+        pauseSetting: cc.Node,
+        exitButton: cc.Node,
         isShowing: {
             default: false,
         }
@@ -18,6 +20,7 @@ cc.Class({
     onLoad() {
         MainController.instance.addPersistRootNode(this.node);
         this.backPanel.active = false;
+        this.hidePauseSetting();
         this.hideSetting();
         this.hideHighScore();
         this.hideUpgrade();
@@ -30,6 +33,7 @@ cc.Class({
 
     registerEvents(){
         Emitter.registerEvent(EventKeys.POPUP.SHOW_SETTING, this.showSetting, this);
+        Emitter.registerEvent(EventKeys.POPUP.SHOW_PAUSE_SETTING,this.showPauseSetting, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_HIGHSCORE, this.showHighScore, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_UPGRADE, this.showUpgrade, this);
     },
@@ -43,6 +47,7 @@ cc.Class({
     },
 
     hideSetting(){
+        this.hidePauseSetting();
         this.popupSetting.hide();
         this.setIsShowing(false);
     },
@@ -72,6 +77,17 @@ cc.Class({
     hideUpgrade() {
         this.popupUpgrade.hide();
         this.setIsShowing(false);
+    },
+
+    showPauseSetting() {
+        this.pauseSetting.active = true;
+        this.exitButton.active = false;
+        this.showSetting();
+    },
+ 
+    hidePauseSetting() {
+        this.pauseSetting.active = false;
+        this.exitButton.active = true;
     },
 
     loadHighScoreData() {

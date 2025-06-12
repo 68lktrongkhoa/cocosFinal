@@ -8,7 +8,6 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        poolSize: 20,
     },
 
     onLoad() {

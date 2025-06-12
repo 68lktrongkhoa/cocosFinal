@@ -8,7 +8,7 @@ const WeaponStats = cc.Class({
             default: ProjectileType.BULLET,
             type: cc.Enum(ProjectileType),
         },
-        fireRate: {
+        reload: {
             default: 10,
             type: cc.Float,
         }

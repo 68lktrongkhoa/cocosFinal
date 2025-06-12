@@ -114,8 +114,8 @@ cc.Class({
             weaponConfig = GameConfig.STAT.GUN.LASER[laserLevel - 1];
         }
 
-        if (weaponConfig && weaponConfig.fireRate > 0) {
-            return 1 / weaponConfig.fireRate;
+        if (weaponConfig && weaponConfig.reload > 0) {
+            return weaponConfig.reload; 
         }
         return 0;
     },

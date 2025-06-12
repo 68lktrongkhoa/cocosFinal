@@ -19,8 +19,10 @@ cc.Class({
     },
 
     onLoad() {
+        this.spine = this.getComponent(sp.Skeleton); 
         Emitter.registerEvent(EventKey.GAMEPLAY.WEAPON_SWITCHED, this.resetFireCooldown, this);
         Emitter.registerEvent(EventKey.GAME.OPENING_DONE, this.init, this);
+        Emitter.registerEvent(EventKey.GAME.OVER, this.onGameOver, this);
 
     },
 
@@ -48,6 +50,14 @@ cc.Class({
         } else {
             this.setState(new StunnedState(this));
         }
+    },
+
+    onGameOver() {
+        this.node.stopAllActions();
+        if (this.spine) {
+            this.spine.clearTrack(0); 
+        }
+        this.setState(new IdleState(this));
     },
 
     onSpineAnimationComplete(trackEntry) {

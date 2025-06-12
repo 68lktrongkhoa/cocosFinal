@@ -1,4 +1,3 @@
-const MainController = require("../Controller/MainController");
 
 module.exports = {
     POPUP: {

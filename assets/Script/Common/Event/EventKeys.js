@@ -1,11 +1,11 @@
-const MainController = require("../Controller/MainController");
-
 module.exports = {
     POPUP: {
         SHOW_SETTING: 'showSettingPopup',
+        HIDE_SETTING: 'hideSettingPopup',
         SHOW_HIGHSCORE: 'showHighScorePopup',
+        HIDE_HIGHSCORE: 'hideHighScorePopup',
         SHOW_UPGRADE: 'showUpgradePopup',
-        SHOW_PAUSE_SETTING: 'showPauseSettingPopup',
+        HIDE_UPGRADE: 'hideUpgradePopup',
     },
     GAMEPLAY: {
         FIRE_BULLET: 'GAMEPLAY_FIRE_BULLET',
@@ -49,9 +49,5 @@ module.exports = {
         TIME: 'updateTime',
         SCORE: 'updateScore',
         HEALTH: 'updateHealth',
-    },
-
-    MAIN_CONTROLLER: {
-        CLEAR: 'clear',
     }
 };

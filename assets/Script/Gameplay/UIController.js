@@ -218,11 +218,6 @@ cc.Class({
         MainController.instance.transition('backToLobby');
     },
 
-    onPauseClick() {
-        MainController.instance.transition('pauseGame');
-        Emitter.emit(Events.POPUP.SHOW_PAUSE_SETTING);
-    },
-
     registerEvent() {
         Emitter.registerEvent(Events.GAME.INIT, this.init, this);
         Emitter.registerEvent(Events.GAME.PLAYER_ANIMATION_DONE, this.showIngameOverlay, this);

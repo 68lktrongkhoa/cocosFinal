@@ -24,6 +24,8 @@ module.exports = {
 
     UI: {
         UPDATE_SCORE: 'updateScore',
+        FADE_IN_WAITING: 'fadeInWaiting',
+        FADE_OUT_WAITING: 'fadeOutWaiting',
     },
 
     GAME: {

@@ -23,6 +23,7 @@ cc.Class({
     loadConfigInfo(){
         const upgradeData = GameConfig.STAT.CASTLE;
         this.maxLevel = upgradeData.length;
+        this.upgradeCost = upgradeData[this.level - 1].cost;
         this.health = upgradeData[this.level - 1].health;
     },
 });

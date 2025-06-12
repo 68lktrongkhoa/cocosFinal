@@ -180,7 +180,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 370.65887281973977
+      "z": 371.5248982235242
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -9905,8 +9905,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "Game Over",
-    "_N$string": "Game Over",
+    "_string": "Result",
+    "_N$string": "Result",
     "_fontSize": 50,
     "_lineHeight": 6,
     "_enableWrapText": true,
@@ -13581,7 +13581,7 @@
     "_prefab": {
       "__id__": 365
     },
-    "_opacity": 255,
+    "_opacity": 100,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -13592,7 +13592,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1560,
-      "height": 150
+      "height": 300
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -13684,7 +13684,7 @@
     "_prefab": {
       "__id__": 368
     },
-    "_opacity": 255,
+    "_opacity": 100,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -13695,7 +13695,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1560,
-      "height": 150
+      "height": 300
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -13787,7 +13787,7 @@
     "_prefab": {
       "__id__": 371
     },
-    "_opacity": 255,
+    "_opacity": 100,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -13798,7 +13798,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 150
+      "height": 300
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -13890,7 +13890,7 @@
     "_prefab": {
       "__id__": 374
     },
-    "_opacity": 255,
+    "_opacity": 100,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -13901,7 +13901,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 150
+      "height": 300
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -14011,6 +14011,9 @@
     },
     "warningOverlay": {
       "__id__": 314
+    },
+    "dangerOverlay": {
+      "__id__": 362
     },
     "healthNode": {
       "__id__": 93

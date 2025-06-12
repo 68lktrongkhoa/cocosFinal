@@ -16,7 +16,7 @@ cc.Class({
         this._initFSM();
     },
 
-    initWithConfig(type = 'MOB', difficulty = 1) {
+    initWithConfig(type = 'MOB', difficulty = 1, buffBonus = { score: 0, damage: 0 }) {
         difficulty = Math.min(difficulty, 3);
         const baseStat = MonsterConfig.BASE_STAT;
         const config = MonsterConfig[type.toString().toUpperCase()];
@@ -28,6 +28,7 @@ cc.Class({
         this.damage = baseStat.damage * config.damageScale;
         this.healthProgressBar.progress = 1;
         this.type = type;
+        this.buffBonus = buffBonus
         this.node.opacity = 255;
         this.node.scale = config.scale;
         this._loadSprite(config.sprite);
@@ -164,12 +165,14 @@ cc.Class({
     },
 
     takeDamage(amount) {
-        this.hp -= amount;
+        const totalAmount = amount * (1 + this.buffBonus.damage * GameConfig.GAME.BONUS.DAMAGE)
+        this.hp -= totalAmount;
 
         if (this.hp <= 0) {
             this.transition('hit');
             this.transition('die');
-            Emitter.emit(Events.GAME.ADD_SCORE, this.reward, this.node.position);
+            const reward = Math.floor(this.reward * (1 + this.buffBonus.score * GameConfig.GAME.BONUS.SCORE))
+            Emitter.emit(Events.GAME.ADD_SCORE, reward, this.node.position);
         } else {
             this.transition('hit');
             this.transition('move');
@@ -218,7 +221,4 @@ cc.Class({
             this.takeDamage(damageAmount);
         }
     },
-
-    onDestroy() {
-    }
 });

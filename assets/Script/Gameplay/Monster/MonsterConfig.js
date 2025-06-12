@@ -7,7 +7,7 @@ const MonsterConfig = {
 
     DIFFICULTY: {
         scale: 1.1,
-        step: 50
+        step: 20
     },
 
     BASE_STAT: {

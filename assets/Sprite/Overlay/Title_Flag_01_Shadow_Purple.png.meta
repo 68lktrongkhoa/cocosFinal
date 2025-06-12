@@ -1,6 +1,6 @@
 {
   "ver": "2.3.3",
-  "uuid": "803c391d-b921-4772-967d-3a5eec22b456",
+  "uuid": "0b626e4b-f4f6-4848-a1b7-ee7d32a98124",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -9,10 +9,10 @@
   "packable": true,
   "platformSettings": {},
   "subMetas": {
-    "Button_Rectangle_01_Convex_OffWhite": {
+    "Title_Flag_01_Shadow_Purple": {
       "ver": "1.0.4",
-      "uuid": "93d14b97-615e-4e3e-a1eb-48c781216375",
-      "rawTextureUuid": "803c391d-b921-4772-967d-3a5eec22b456",
+      "uuid": "11967ba3-c15e-488a-8ee9-122e1cee78fe",
+      "rawTextureUuid": "0b626e4b-f4f6-4848-a1b7-ee7d32a98124",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -20,14 +20,14 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 159,
-      "height": 104,
-      "rawWidth": 159,
-      "rawHeight": 104,
-      "borderTop": 24,
-      "borderBottom": 22,
-      "borderLeft": 22,
-      "borderRight": 22,
+      "width": 568,
+      "height": 147,
+      "rawWidth": 568,
+      "rawHeight": 147,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
       "subMetas": {}
     }
   }

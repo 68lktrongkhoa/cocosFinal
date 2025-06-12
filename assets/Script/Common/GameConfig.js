@@ -22,30 +22,45 @@ const GameConfig = {
         }
     },
 
+    GAME: {
+        BUFF: {
+            SELECTION_TIME: 10,
+            TYPE: {
+                SCORE: 'scoreBuff',
+                HEALTH: 'healthBuff',
+                DAMAGE: 'damageBuff',
+            }
+        },
+        BONUS:{
+            SCORE: 0.1,
+            DAMAGE: 0.1,
+        }
+    },
+
     STAT: {
         GUN: {
             BULLET: [
-                { level: 1, damage: 10, reload: 0.5, cost: 500},
-                { level: 2, damage: 20, reload: 0.5, cost: 1000 },
-                { level: 3, damage: 20, reload: 0.5, cost: 2000},
-                { level: 4, damage: 30, reload: 0.4, cost: 3000 },
-                { level: 5, damage: 40, reload: 0.4, cost: 4000 },
-                { level: 6, damage: 50, reload: 0.4, cost: 5000 },
-                { level: 7, damage: 60, reload: 0.3, cost: 5000 },
-                { level: 8, damage: 60, reload: 0.3, cost: 5000 },
-                { level: 9, damage: 60, reload: 0.3, cost: 0 }
+                { level: 1, damage: 10, reload: 1, cost: 500},
+                { level: 2, damage: 15, reload: 1, cost: 1000 },
+                { level: 3, damage: 20, reload: 1, cost: 2000},
+                { level: 4, damage: 20, reload: 0.7, cost: 3000 },
+                { level: 5, damage: 25, reload: 0.7, cost: 4000 },
+                { level: 6, damage: 30, reload: 0.7, cost: 5000 },
+                { level: 7, damage: 35, reload: 0.7, cost: 5000 },
+                { level: 8, damage: 35, reload: 0.5, cost: 5000 },
+                { level: 9, damage: 40, reload: 0.5, cost: 0 }
             ],
 
             LASER: [
-                { level: 1, damage: 20, reload: 2, cost: 500 },
-                { level: 2, damage: 30, reload: 2, cost: 1000 },
-                { level: 3, damage: 40, reload: 2, cost: 2000 },
-                { level: 4, damage: 45, reload: 1.5, cost: 3000 },
-                { level: 5, damage: 55, reload: 1.5, cost: 4000 },
-                { level: 6, damage: 65, reload: 1.5, cost: 5000 },
-                { level: 7, damage: 70, reload: 1, cost: 5000 },
-                { level: 8, damage: 80, reload: 1, cost: 5000 },
-                { level: 9, damage: 90, reload: 1, cost: 0 }
+                { level: 1, damage: 20, reload: 3, cost: 500 },
+                { level: 2, damage: 30, reload: 3, cost: 1000 },
+                { level: 3, damage: 40, reload: 3, cost: 2000 },
+                { level: 4, damage: 45, reload: 2, cost: 3000 },
+                { level: 5, damage: 55, reload: 2, cost: 4000 },
+                { level: 6, damage: 65, reload: 2, cost: 5000 },
+                { level: 7, damage: 75, reload: 2, cost: 5000 },
+                { level: 8, damage: 80, reload: 1.5, cost: 5000 },
+                { level: 9, damage: 90, reload: 1.5, cost: 0 }
             ]
         },
 
@@ -59,7 +74,7 @@ const GameConfig = {
         ],
 
         SKILL: {
-            SWITCH_GUN:[
+            SWITCH_GUN: [
                 { level: 1, cooldown: 5, cost: 0 },
             ],
             STUN: [

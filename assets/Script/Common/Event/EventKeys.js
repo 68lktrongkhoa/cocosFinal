@@ -12,7 +12,7 @@ module.exports = {
         WEAPON_SWITCHED: 'weaponSwitched',
     },
 
-    SOUND:{
+    SOUND: {
         SET_MUSIC_VOLUME: 'setMusicVolume',
         SET_SOUND_VOLUME: 'setSoundVolume',
         PLAY_MUSIC: 'playMusic',
@@ -36,21 +36,28 @@ module.exports = {
         ADD_SCORE: 'gameAddScore',
         OPENING_DONE: 'gameOpeningDone',
         BOSS_SPAWNED: 'gameBossSpawned',
+        PLAYER_ANIMATION_DONE: 'gamePlayerAnimationDone',
+        BUFF_SELECTED: 'gameBuffSelected',
+        BUFF_DAMAGE_BONUS: 'gameBuffDamageBonus',
+        BUFF_SCORE_BONUS: 'gameBuffScoreBonus',
+        ON_GAME_OVER: 'gameOnGameOver'
     },
 
     MONSTER: {
         ON_DIE: 'monsterOnDie',
     },
 
-    CASTLE:{
+    CASTLE: {
         ON_HIT: 'castleOnHit',
     },
 
-    UPDATE_UI:{
+    UPDATE_UI: {
         TIME: 'updateTime',
         SCORE: 'updateScore',
         HEALTH: 'updateHealth',
-        DANGER: 'updateDanger'
+        DANGER: 'updateDanger',
+        DANGER: 'updateDanger',
+        BUFF_SELECTION: 'updateBuffSelection'
     },
 
     MAIN_CONTROLLER: {

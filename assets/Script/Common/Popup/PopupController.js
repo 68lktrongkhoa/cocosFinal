@@ -18,6 +18,7 @@ cc.Class({
     onLoad() {
         MainController.instance.addPersistRootNode(this.node);
         this.backPanel.active = false;
+        this.showSetting();
         this.hideSetting();
         this.hideHighScore();
         this.hideUpgrade();
@@ -30,6 +31,7 @@ cc.Class({
 
     registerEvents(){
         Emitter.registerEvent(EventKeys.POPUP.SHOW_SETTING, this.showSetting, this);
+        Emitter.registerEvent(EventKeys.POPUP.SHOW_PAUSE_SETTING,this.showSetting, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_HIGHSCORE, this.showHighScore, this);
         Emitter.registerEvent(EventKeys.POPUP.SHOW_UPGRADE, this.showUpgrade, this);
     },

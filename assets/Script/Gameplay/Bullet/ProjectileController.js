@@ -34,11 +34,11 @@ cc.Class({
     },
 
     prepopulatePools() {
-        this._populatePool(this.bulletPool, this.bulletPrefab, GameConfig.PERFORMANCE.POOL_SIZE.BULLET,'Bullet');
-        this._populatePool(this.laserPool,this.laserPrefab,GameConfig.PERFORMANCE.POOL_SIZE.LASER,'Laser');
+        this._populatePool(this.bulletPool, this.bulletPrefab, GameConfig.PERFORMANCE.POOL_SIZE.BULLET);
+        this._populatePool(this.laserPool,this.laserPrefab,GameConfig.PERFORMANCE.POOL_SIZE.LASER);
     },
 
-    _populatePool(pool, prefab, size, name) {
+    _populatePool(pool, prefab, size) {
         if (!pool || !prefab || !size || size <= 0) {
             return;
         }

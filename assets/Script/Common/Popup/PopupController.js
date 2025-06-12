@@ -42,7 +42,6 @@ cc.Class({
         if(this.getIsShowing()){
             return;
         }
-        console.log("showSetting");
         this.popupSetting.show();
         this.setIsShowing(true);
     },

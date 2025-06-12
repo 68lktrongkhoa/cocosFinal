@@ -77,9 +77,6 @@ cc.Class({
     },
     
     playMusic(){
-        // if(!this.getIsMusicEnable()){
-        //     return;
-        // }
         cc.audioEngine.playMusic(this.currentBMG, true);
         this.musicEnabled = true;
         this.saveSoundData();

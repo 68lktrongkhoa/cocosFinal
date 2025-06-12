@@ -18,26 +18,17 @@ cc.Class({
             type: require('SliderProgress'),
             default: null
         },
-        pauseSetting: cc.Node,
-        exitButton: cc.Node,
     },
 
     onLoad() {
         this.loadSoundData();
-        this.registerEvents();
-        this.updateSilerProgress();
+        this.updateSliderProgress();
     },
 
-    registerEvents(){
-        Emitter.registerEvent(EventKeys.POPUP.SHOW_PAUSE_SETTING,this.showPauseSetting, this);
+    removeEvents(){
+        Emitter.removeEventsByTarget(this);
     },
     
-    hide(){
-        if(this.pauseSetting.active) {
-            this.hidePauseSetting();
-        }
-        this._super();
-    },
     onMusicToggleChange(toggle){
         if(toggle.isChecked){
             Emitter.emit(EventKeys.SOUND.PLAY_MUSIC);
@@ -76,16 +67,6 @@ cc.Class({
         Emitter.emit(EventKeys.SOUND.SET_SOUND_VOLUME, volume);
     },
 
-    showPauseSetting() {
-        this.pauseSetting.active = true;
-        this.exitButton.active = false;
-    },
-
-    hidePauseSetting() {
-        this.pauseSetting.active = false;
-        this.exitButton.active = true;
-    },
-
     onResumeClick() {
         MainController.instance.transition('resumeGame');
     },
@@ -102,7 +83,7 @@ cc.Class({
         this.soundSlider.progress = data.SOUND_VOLUME;
     },
 
-    updateSilerProgress() {
+    updateSliderProgress() {
         this.musicSliderProgress.updateSize(this.musicSlider);
         this.soundSliderProgress.updateSize(this.soundSlider);
     }

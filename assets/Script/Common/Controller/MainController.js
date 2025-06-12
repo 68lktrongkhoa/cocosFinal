@@ -83,7 +83,13 @@ const MainController = cc.Class({
 
     onSceneSwitch(sceneName) {
         Emitter.emit(EventKeys.MAIN_CONTROLLER.CLEAR);
-        cc.director.loadScene(sceneName);
+        Emitter.emit(EventKeys.UI.FADE_IN_WAITING);
+        cc.director.loadScene(sceneName, 
+            () => {
+                console.log("load scene callback");
+                
+                Emitter.emit(EventKeys.UI.FADE_OUT_WAITING);
+        });
     },
 
     onExitGame() {

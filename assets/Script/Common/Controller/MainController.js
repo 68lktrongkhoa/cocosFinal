@@ -74,14 +74,15 @@ const MainController = cc.Class({
     },
 
     onPauseGame() {
-        cc.game.pause();
+        cc.director.pause();
     },
 
     onResumeGame() {
-        cc.game.resume();
+        cc.director.resume();
     },
 
     onSceneSwitch(sceneName) {
+        Emitter.emit(EventKeys.MAIN_CONTROLLER.CLEAR);
         Emitter.emit(EventKeys.UI.FADE_IN_WAITING);
         cc.director.loadScene(sceneName, 
             () => {

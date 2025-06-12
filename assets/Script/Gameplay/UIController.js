@@ -12,6 +12,7 @@ cc.Class({
         gameOverOverlay: cc.Node,
         ingameOverlay: cc.Node,
         warningOverlay: cc.Node,
+        dangerOverlay: cc.Node,
         healthNode: cc.Node,
         buttonsNode: cc.Node
     },
@@ -92,6 +93,19 @@ cc.Class({
         })
     },
 
+    onDangerUpdate() {
+        this.dangerOverlay.active = true;
+        this.dangerOverlay.opacity = 0;
+
+        cc.tween(this.dangerOverlay)
+            .to(0.2, { opacity: 255 }, { easing: 'sineOut' })
+            .to(0.2, { opacity: 0 }, { easing: 'sineIn' })
+            .call(() => {
+                this.dangerOverlay.active = false;
+            })
+            .start();
+    },
+
     hideGameStartOverlay() {
         cc.tween(this.gameStartOverlay)
             .to(0.5, { opacity: 0 })
@@ -106,7 +120,6 @@ cc.Class({
     },
 
     hideIngameOverlay() {
-
         cc.tween(this.buttonsNode)
             .to(1, { opacity: 0 })
             .start();
@@ -226,6 +239,7 @@ cc.Class({
         Emitter.registerEvent(Events.UPDATE_UI.TIME, this.onTimerUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.SCORE, this.onScoreUpdate, this);
         Emitter.registerEvent(Events.UPDATE_UI.HEALTH, this.onHealthUpdate, this);
+        Emitter.registerEvent(Events.UPDATE_UI.DANGER, this.onDangerUpdate, this);
     },
 
     onDestroy() {

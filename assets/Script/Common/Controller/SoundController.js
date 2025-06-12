@@ -118,7 +118,7 @@ cc.Class({
                 cc.audioEngine.playEffect(this.upgradeSFX, false, this.soundVolume);
                 break;
             case GameConfig.SOUND.WARNING:
-                cc.audioEngine.playMusic(this.warningSFX, false, this.musicVolume);
+                cc.audioEngine.playEffect(this.warningSFX, false, this.musicVolume);
                 break;
             case GameConfig.SOUND.VICTORY:
                 cc.audioEngine.playMusic(this.victorySFX, false, this.musicVolume);

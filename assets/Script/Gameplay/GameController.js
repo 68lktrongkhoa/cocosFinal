@@ -24,13 +24,15 @@ cc.Class({
     },
 
     initGame() {
+        this.time = 0;
+        this.score = 0;
         this.isGameStart = false;
         const data = DataStorageController.getUpgradeStat()
         const castleLevel = data.castle;
         this.hp = GameConfig.STAT.CASTLE[castleLevel - 1].health;
         Emitter.emit(Events.GAME.INIT);
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
-        Emitter.emit(Events.SOUND.CHANGE_CURRENT_BGM,GameConfig.SCENE.GAME);
+        Emitter.emit(Events.SOUND.CHANGE_CURRENT_BGM, GameConfig.SCENE.GAME);
     },
 
     addScore(reward) {
@@ -64,19 +66,18 @@ cc.Class({
         this.hp -= damage;
         Emitter.emit(Events.UPDATE_UI.HEALTH, this.hp);
         if (this.hp <= 0) {
-
             this.playerNode.active = false;
             this.node.stopAllActions();
             DataStorageController.setHighScoreData(this.score, this.time);
             DataStorageController.setScoreData(this.score);
             Emitter.emit(Events.GAME.OVER, this.score, this.time);
+        } else {
+            Emitter.emit(Events.UPDATE_UI.DANGER);
         }
     },
 
     onGameStart() {
         this.elapsed = 0;
-        this.time = 0;
-        this.score = 0;
         this.isGameStart = true;
     },
 

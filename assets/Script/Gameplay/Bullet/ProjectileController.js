@@ -2,6 +2,7 @@ const Emitter = require('../../Common/Event/Emitter');
 const EventKey = require('../../Common/Event/EventKeys');
 const GameEnums = require('../../Common/GameEnums');
 const WeaponStats = require('../../Common/WeaponStats');
+const GameConfig = require("GameConfig");
 
 const ProjectileType = GameEnums.ProjectileType;
 
@@ -80,7 +81,6 @@ cc.Class({
 
     trySwitchWeapon() {
         if (this.cooldownTimer > 0) {
-            
             return; 
         }
     
@@ -124,6 +124,21 @@ cc.Class({
         const projectileType = eventData.type;
         const firePointNodePos = this.node.parent.convertToNodeSpaceAR(worldPos);
         this.getProjectile(projectileType, firePointNodePos, direction);
+        this.emitSFX(projectileType);
+    },
+
+    emitSFX(projectileType){
+        switch (projectileType) {
+            case ProjectileType.BULLET:
+                Emitter.emit(EventKey.SOUND.PLAY_SFX, GameConfig.SOUND.GUN);
+                break;
+            case ProjectileType.LASER:
+                Emitter.emit(EventKey.SOUND.PLAY_SFX, GameConfig.SOUND.LASER);
+                break;
+            default:
+                cc.warn(`Unknown projectile type: ${projectileType}`);
+                break;
+        }
     },
 
     getProjectile(type, position, direction) {

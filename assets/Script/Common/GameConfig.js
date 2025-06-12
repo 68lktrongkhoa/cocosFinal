@@ -1,3 +1,4 @@
+
 const GameConfig = {
     PORTAL: 'PortalScene',
 
@@ -11,6 +12,7 @@ const GameConfig = {
         SOUND_DATA: 'soundData',
         HIGHSCORE_DATA: 'highScoreData',
         SCORE_DATA: 'scoreData',
+        UPGRADE_STAT: 'upgradeStat',
         HIGHSCORE_MAX_LENGTH: 5,
     },
 
@@ -66,6 +68,16 @@ const GameConfig = {
                 { level: 9, cooldown: 7, duration: 2, cost: 0 }
             ]
         }
+    },
+
+    SOUND: {
+        CLICK: 'click',
+        GUN: 'gun',
+        LASER: 'laser',
+        HIT: 'hit',
+        UPGRADE: 'upgrade',
+        WARNING: 'warning',
+        VICTORY: 'victory',
     }
 };
 

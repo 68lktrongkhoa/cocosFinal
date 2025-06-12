@@ -33,6 +33,7 @@ cc.Class({
         this._loadSprite(config.sprite);
         if (type === 'BOSS') {
             Emitter.emit(Events.GAME.BOSS_SPAWNED);
+            Emitter.emit(Events.SOUND.PLAY_SFX, GameConfig.SOUND.WARNING);
         }
     },
 
@@ -78,13 +79,14 @@ cc.Class({
         this.rotation();
         this.moveToLeft(() => {
             Emitter.emit(Events.CASTLE.ON_HIT, this.damage);
+            this.transition('hit');
             this.transition('die');
         });
     },
 
     _handleHit() {
+        Emitter.emit(Events.SOUND.PLAY_SFX, GameConfig.SOUND.HIT);
         const icon = this.node.getChildByName('Icon');
-
         cc.tween(icon)
             .to(0.2, { color: cc.color(255, 0, 0) })
             .to(0.2, { color: cc.color(255, 255, 255) })
@@ -104,11 +106,6 @@ cc.Class({
 
         Emitter.emit(Events.GAME.ADD_SCORE, this.reward, this.node.position);
         const originalPos = this.node.position;
-
-        cc.tween(icon)
-            .to(0.5, { color: cc.color(255, 0, 0) })
-            .to(0.5, { color: cc.color(255, 255, 255) })
-            .start();
 
         cc.tween(this.node)
             .sequence(
@@ -145,7 +142,7 @@ cc.Class({
     },
 
     moveToLeft(onComplete) {
-        const targetX = -cc.winSize.width / 2 - this.node.width;
+        const targetX = -cc.winSize.width / 2;
 
         const totalDuration = (this.node.x - targetX) / this.speed;
         cc.tween(this.node)
@@ -171,6 +168,7 @@ cc.Class({
         this.hp -= amount;
 
         if (this.hp <= 0) {
+            this.transition('hit');
             this.transition('die');
         } else {
             this.transition('hit');

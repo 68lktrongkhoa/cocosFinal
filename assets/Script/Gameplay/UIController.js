@@ -1,7 +1,7 @@
 const MainController = require('MainController');
 const Emitter = require('Emitter');
 const Events = require('EventKeys');
-
+const GameConfig = require('GameConfig');
 cc.Class({
     extends: cc.Component,
 
@@ -174,6 +174,7 @@ cc.Class({
         this.displayGameOverOverlay();
         this.animateFlags();
         this.animateGlow(bannerNode);
+        Emitter.emit(Events.SOUND.PLAY_SFX, GameConfig.SOUND.VICTORY);
     },
 
     formatTimer(seconds) {
